@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GolfGains</title>
+<style>
+:root {
+  --green-50: #E8F5EE;
+  --mint: #6EE7B7;
+  --mint-soft: rgba(110, 231, 183, 0.12);
+  --mint-border: rgba(110, 231, 183, 0.25);
+  --mint-text: #A7F3D0;
+  --green-700: #0F6E56;
+  --green-800: #085041;
+  --green-900: #053D31;
+  --green-950: #022820;
+  --fairway: #1F4530;
+  --fairway-dark: #16332A;
+  --fairway-darker: #0F2820;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.72);
+  --text-tertiary: rgba(255, 255, 255, 0.48);
+  --text-faint: rgba(255, 255, 255, 0.28);
+  --bg-primary: #1F4530;
+  --bg-secondary: #16332A;
+  --bg-tertiary: #0F2820;
+  --bg-elevated: #244D38;
+  --border-faint: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-default: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --danger-bg: rgba(248, 113, 113, 0.10);
+  --danger-border: rgba(248, 113, 113, 0.35);
+  --danger-text: #FCA5A5;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.24);
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #1F4530 0%, #0F2820 60%, #053D31 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  letter-spacing: -0.011em;
+}
+.container {
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2.5rem;
+  margin-bottom: 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.brand-mark {
+  font-size: 18px;
+  line-height: 1;
+}
+.brand-name {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+.lang-switcher {
+  display: flex;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 100px;
+  padding: 3px;
+  border: 1px solid var(--border-faint);
+}
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 100px;
+  font-family: inherit;
+  transition: all var(--transition);
+  letter-spacing: 0.04em;
+}
+.lang-btn.active {
+  background: var(--mint);
+  color: var(--green-950);
+}
+
+/* ── Landing ── */
+.landing {
+  display: block;
+  padding: 1rem 0;
+}
+.landing > * { display: block; }
+.landing > .landing-cta-row { display: flex; }
+.landing-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.landing-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 8px rgba(110, 231, 183, 0.6);
+}
+.landing-headline {
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  max-width: 580px;
+}
+.landing-headline em {
+  font-style: normal;
+  color: var(--mint);
+}
+.landing-sub {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin-bottom: 2.75rem;
+  font-weight: 400;
+}
+.landing-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 3.5rem;
+}
+.landing-cta {
+  background: var(--mint);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 13px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--green-950);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.landing-cta:hover {
+  background: #84F0C5;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(110, 231, 183, 0.2);
+}
+.landing-cta:active { transform: translateY(0); }
+.landing-cta-arrow {
+  display: inline-block;
+  transition: transform var(--transition);
+}
+.landing-cta:hover .landing-cta-arrow { transform: translateX(3px); }
+.landing-meta {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.landing-meta-dot {
+  display: inline-block;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+
+/* Preview card */
+.preview {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.preview::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mint-border), transparent);
+}
+.preview-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview-tag {
+  background: var(--mint-soft);
+  color: var(--mint);
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--mint-border);
+}
+.preview-title {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+}
+.preview-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+.preview-phase {
+  border-top: 1px solid var(--border-faint);
+  padding-top: 1.25rem;
+  margin-top: 1.25rem;
+}
+.preview-phase-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 6px;
+}
+.preview-phase-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+.preview-drill {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-faint);
+}
+.preview-drill-num {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mint);
+  flex-shrink: 0;
+  min-width: 24px;
+}
+.preview-drill-content { flex: 1; }
+.preview-drill-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  color: var(--text-primary);
+}
+.preview-drill-detail {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.preview-fade {
+  height: 32px;
+  margin: -8px -1.5rem -1.5rem;
+  background: linear-gradient(180deg, transparent, var(--bg-secondary) 80%);
+  position: relative;
+  z-index: 2;
+}
+
+.landing-disclaimer {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.6;
+  max-width: 520px;
+  border-top: 1px solid var(--border-faint);
+  padding-top: 1.5rem;
+}
+
+/* ── Stepper ── */
+.stepper-wrap { margin-bottom: 2.5rem; }
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+.stepper-section {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--border-faint);
+  transition: all var(--transition);
+  text-align: center;
+}
+.stepper-section.active {
+  color: var(--mint);
+  border-bottom-color: var(--mint);
+}
+.stepper-section.complete {
+  color: var(--text-tertiary);
+  border-bottom-color: var(--border-subtle);
+}
+.progress-bar { display: none; }
+
+/* ── Steps ── */
+.step { display: none; }
+.step.active {
+  display: block;
+  animation: fadeIn 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.question {
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+.sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.55;
+  max-width: 540px;
+}
+
+/* ── Options ── */
+.option-grid { display: grid; gap: 8px; margin-bottom: 2rem; }
+.option-grid.cols2 { grid-template-columns: 1fr 1fr; }
+.option-grid.cols1 { grid-template-columns: 1fr; }
+.opt {
+  position: relative;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-primary);
+  text-align: left;
+  transition: all var(--transition);
+  font-family: inherit;
+  line-height: 1.4;
+}
+.opt:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+}
+.opt.selected {
+  background: var(--mint-soft);
+  border: 1px solid var(--mint);
+}
+.opt.selected .opt-title { color: var(--mint-text); }
+.opt.selected .opt-desc { color: rgba(167, 243, 208, 0.7); }
+.opt .opt-title {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.005em;
+}
+.opt .opt-desc {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  margin-top: 3px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* ── Checkboxes ── */
+.chk-grid { display: grid; gap: 8px; margin-bottom: 1.5rem; }
+.chk-grid.cols2 { grid-template-columns: 1fr 1fr; }
+.chk-opt {
+  position: relative;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition);
+  text-align: left;
+  font-family: inherit;
+  font-weight: 400;
+}
+.chk-opt:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+}
+.chk-opt.checked {
+  background: var(--mint-soft);
+  border-color: var(--mint);
+  color: var(--mint-text);
+  font-weight: 500;
+}
+.chk-box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border-default);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  background: rgba(0,0,0,0.15);
+}
+.chk-opt.checked .chk-box {
+  background: var(--mint);
+  border-color: var(--mint);
+}
+.chk-mark {
+  display: none;
+  color: var(--green-950);
+  font-size: 11px;
+  font-weight: 700;
+}
+.chk-opt.checked .chk-mark { display: block; }
+
+/* ── Bottom nav ── */
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-faint);
+}
+.btn-back {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  transition: color var(--transition);
+}
+.btn-back:hover { color: var(--text-secondary); }
+.btn-back::before { content: '← '; opacity: 0.6; }
+.btn-next {
+  background: var(--mint);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 11px 20px;
+  font-size: 14px;
+  color: var(--green-950);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition);
+  font-family: inherit;
+  letter-spacing: -0.005em;
+}
+.btn-next:hover { background: #84F0C5; transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+.btn-next:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  cursor: not-allowed;
+  color: var(--text-faint);
+  transform: none;
+}
+.step-counter {
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+  font-feature-settings: "tnum";
+}
+
+/* ── Inputs ── */
+.name-input, .text-input, .email-input {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  outline: none;
+  font-family: inherit;
+  margin-bottom: 2rem;
+  transition: all var(--transition);
+  letter-spacing: -0.005em;
+}
+.name-input::placeholder, .email-input::placeholder { color: var(--text-faint); }
+.name-input:focus, .text-input:focus, .email-input:focus {
+  border-color: var(--mint);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.08);
+}
+
+/* ── Club section ── */
+.club-section { margin-bottom: 1.5rem; }
+.club-section-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+.club-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+.club-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 110px;
+  cursor: pointer;
+  padding: 8px 10px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.025);
+  transition: all var(--transition);
+  font-size: 13px;
+  font-weight: 400;
+}
+.club-checkbox:hover { background: rgba(255, 255, 255, 0.05); }
+.club-checkbox.checked {
+  border-color: var(--mint);
+  background: var(--mint-soft);
+  color: var(--mint-text);
+  font-weight: 500;
+}
+.club-checkbox .chk-box { width: 14px; height: 14px; border-radius: 3px; }
+.club-checkbox.checked .chk-box { background: var(--mint); border-color: var(--mint); }
+.club-checkbox.checked .chk-mark { display: block; font-size: 9px; color: var(--green-950); }
+.club-input, .loft-input {
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-primary);
+  outline: none;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+.club-input { flex: 1; min-width: 140px; }
+.loft-input { flex: 0 0 70px; text-align: center; }
+.club-input::placeholder, .loft-input::placeholder { color: var(--text-faint); }
+.club-input:focus, .loft-input:focus { border-color: var(--mint); background: rgba(255, 255, 255, 0.05); }
+.club-input:disabled, .loft-input:disabled { opacity: 0.35; }
+.section-divider { border: none; border-top: 1px solid var(--border-faint); margin: 1.25rem 0; }
+#bag-content { transition: opacity var(--transition); }
+.no-clubs-toggle { display: block; }
+
+/* ── Result page ── */
+.result-wrap { display: none; padding: 0; }
+.result-header { margin-bottom: 2rem; }
+.result-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 8px;
+}
+.result-header h2 {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.result-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.plan-output {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem;
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.7;
+  min-height: 200px;
+}
+.plan-output h1 {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.75rem 0;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+.plan-output h2 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 2rem 0 0.75rem 0;
+  color: var(--mint);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-faint);
+}
+.plan-output h3 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 1.5rem 0 0.5rem 0;
+  color: var(--text-primary);
+}
+.plan-output h4 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  margin: 1.25rem 0 0.4rem 0;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+.plan-output p { margin: 0 0 1rem 0; color: var(--text-secondary); }
+.plan-output ul, .plan-output ol { margin: 0 0 1.25rem 1.25rem; padding: 0; }
+.plan-output li { margin-bottom: 0.5rem; line-height: 1.65; color: var(--text-secondary); }
+.plan-output strong { font-weight: 500; color: var(--text-primary); }
+.plan-output em { font-style: italic; color: var(--text-secondary); }
+.plan-output hr { border: none; border-top: 1px solid var(--border-faint); margin: 1.75rem 0; }
+.plan-output table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 13.5px; }
+.plan-output th, .plan-output td {
+  border-bottom: 1px solid var(--border-faint);
+  padding: 10px 14px;
+  text-align: left;
+  color: var(--text-secondary);
+}
+.plan-output th {
+  background: rgba(255, 255, 255, 0.03);
+  font-weight: 500;
+  color: var(--mint);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.plan-output blockquote {
+  border-left: 2px solid var(--mint);
+  padding-left: 1.25rem;
+  margin: 1.25rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.plan-output code {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  color: var(--mint-text);
+}
+
+/* ── Loading state ── */
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  padding: 3rem 0;
+  line-height: 1.5;
+}
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border-subtle);
+  border-top-color: var(--mint);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Actions ── */
+.action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.action-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 18px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  transition: all var(--transition);
+  letter-spacing: -0.005em;
+}
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+}
+.action-btn.primary {
+  background: var(--mint);
+  color: var(--green-950);
+  border-color: var(--mint);
+  font-weight: 500;
+}
+.action-btn.primary:hover {
+  background: #84F0C5;
+  color: var(--green-950);
+}
+
+/* ── Email capture ── */
+.email-capture {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1.75rem;
+  margin-top: 1.5rem;
+  display: none;
+}
+.email-capture.visible { display: block; }
+.email-capture-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.email-capture-sub {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+.email-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.email-input {
+  flex: 1;
+  min-width: 200px;
+  font-size: 14px;
+  padding: 11px 14px;
+  margin-bottom: 0;
+}
+.email-submit-btn {
+  background: var(--mint);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-950);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all var(--transition);
+  letter-spacing: -0.005em;
+}
+.email-submit-btn:hover { background: #84F0C5; transform: translateY(-1px); }
+.email-submit-btn:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+.email-success {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--mint);
+  font-weight: 500;
+}
+.email-success.visible { display: flex; }
+.email-note {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ── Error state ── */
+.error-state {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1rem;
+}
+.err-title {
+  color: var(--danger-text);
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.err-detail {
+  color: var(--danger-text);
+  opacity: 0.85;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-faint);
+  font-size: 12px;
+  color: var(--text-faint);
+  letter-spacing: -0.005em;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .container { padding: 1.5rem 1.25rem 2.5rem; }
+  .option-grid.cols2, .chk-grid.cols2 { grid-template-columns: 1fr; }
+  .landing-headline { font-size: 30px; }
+  .landing-sub { font-size: 16px; }
+  .question { font-size: 22px; }
+  .plan-output { padding: 1.5rem 1.25rem; }
+  .result-header h2 { font-size: 22px; }
+  .stepper { gap: 6px; }
+  .stepper-section { font-size: 10px; }
+  .header { padding-bottom: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <span class="brand-mark">⛳</span>
+      <span class="brand-name">GolfGains</span>
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="lang-en" onclick="setLanguage('en')">EN</button>
+      <button class="lang-btn" id="lang-es" onclick="setLanguage('es')">ES</button>
+    </div>
+  </header>
+
+  <section id="landing" class="landing">
+    <div class="landing-eyebrow"><span data-i18n="landing.eyebrow">AI golf coach · Free during beta</span></div>
+    <h1 class="landing-headline" id="landing-headline" data-i18n-html="landing.headline">Your game has patterns. <em>We turn them into a plan.</em></h1>
+    <p class="landing-sub" id="landing-sub" data-i18n="landing.sub">Tell us about your bag, your weaknesses, and your schedule. Get a 12-week training plan built specifically for your game.</p>
+
+    <div class="preview">
+      <div class="preview-label">
+        <span data-i18n="preview.label">Sample plan output</span>
+        <span class="preview-tag" data-i18n="preview.tag">Personalized</span>
+      </div>
+      <div class="preview-title" data-i18n="preview.title">Luis's 12-week plan to break 100</div>
+      <div class="preview-meta" data-i18n="preview.meta">Built around your Callaway Edge irons · 1hr practice 2x/week · Driving range &amp; chipping area</div>
+      <div class="preview-phase">
+        <div class="preview-phase-label" data-i18n="preview.phase">Phase 1 · Weeks 1–4</div>
+        <div class="preview-phase-title" data-i18n="preview.phaseTitle">Foundation — Contact &amp; fundamentals</div>
+        <div class="preview-drill">
+          <div class="preview-drill-num">01</div>
+          <div class="preview-drill-content">
+            <div class="preview-drill-name" data-i18n="preview.drillName">Hybrid tee drill — 5-hybrid</div>
+            <div class="preview-drill-detail" data-i18n="preview.drillDetail">15 balls per session, 70% effort, tee at half-inch. Goal: 10 of 15 airborne and 120+ yards consistently.</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-fade"></div>
+    </div>
+
+    <div class="landing-cta-row">
+      <button class="landing-cta" id="landing-cta-btn" onclick="startQuestionnaire()">
+        <span data-i18n="landing.cta">Start</span>
+        <span class="landing-cta-arrow">→</span>
+      </button>
+      <div class="landing-meta">
+        <span data-i18n="landing.metaTime">~3 minutes</span>
+        <span class="landing-meta-dot"></span>
+        <span data-i18n="landing.metaFree">No signup required</span>
+      </div>
+    </div>
+
+    <p class="landing-disclaimer" id="landing-disclaimer" data-i18n="landing.disclaimer">Built for golfers who want to improve. AI-generated plans — not a substitute for professional coaching or medical advice.</p>
+  </section>
+
+  <div id="questionnaire" style="display:none">
+    <div class="stepper-wrap">
+      <div class="stepper">
+        <div class="stepper-section" id="stepper-1" data-i18n="stepper.profile">Profile</div>
+        <div class="stepper-section" id="stepper-2" data-i18n="stepper.game">Game</div>
+        <div class="stepper-section" id="stepper-3" data-i18n="stepper.bag">Bag</div>
+        <div class="stepper-section" id="stepper-4" data-i18n="stepper.practice">Practice</div>
+      </div>
+    </div>
+
+    <div class="step active" id="step-0">
+      <div class="step-label" data-i18n="s0.label">Welcome</div>
+      <div class="question" data-i18n="s0.q">What's your name?</div>
+      <div class="sub" data-i18n="s0.sub">We'll personalize your plan just for you.</div>
+      <input class="name-input" type="text" id="name-input" placeholder="Your first name" data-i18n-placeholder="s0.placeholder" />
+      <div class="nav-row"><span></span><button class="btn-next" id="btn-0" data-i18n="btn.next" onclick="nextStep(0)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-1">
+      <div class="step-label" data-i18n="s1.label">Experience</div>
+      <div class="question" data-i18n="s1.q">How long have you been playing golf?</div>
+      <div class="sub" data-i18n="s1.sub">Be honest — it helps us set the right baseline.</div>
+      <div class="option-grid cols2">
+        <button class="opt" onclick="selectOpt(this,'experience','Less than 6 months')"><div class="opt-title">Less than 6 months</div><div class="opt-desc">Just getting started</div></button>
+        <button class="opt" onclick="selectOpt(this,'experience','6–12 months')"><div class="opt-title">6–12 months</div><div class="opt-desc">Finding my rhythm</div></button>
+        <button class="opt" onclick="selectOpt(this,'experience','1–2 years')"><div class="opt-title">1–2 years</div><div class="opt-desc">Getting consistent</div></button>
+        <button class="opt" onclick="selectOpt(this,'experience','More than 2 years')"><div class="opt-title">More than 2 years</div><div class="opt-desc">Working on refinement</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(1)">Back</button><div class="step-counter" id="counter-1"></div><button class="btn-next" id="btn-1" data-i18n="btn.next" onclick="nextStep(1)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-2">
+      <div class="step-label" data-i18n="s2.label">Current scoring</div>
+      <div class="question" data-i18n="s2.q">What's your typical score for 18 holes?</div>
+      <div class="sub" data-i18n="s2.sub">Approximate is fine.</div>
+      <div class="option-grid cols2">
+        <button class="opt" onclick="selectOpt(this,'score','I don\'t keep score yet')"><div class="opt-title">No score yet</div><div class="opt-desc">Still learning the basics</div></button>
+        <button class="opt" onclick="selectOpt(this,'score','Over 120')"><div class="opt-title">Over 120</div><div class="opt-desc">Building fundamentals</div></button>
+        <button class="opt" onclick="selectOpt(this,'score','100–120')"><div class="opt-title">100–120</div><div class="opt-desc">Working toward breaking 100</div></button>
+        <button class="opt" onclick="selectOpt(this,'score','90–100')"><div class="opt-title">90–100</div><div class="opt-desc">Chasing that first 89</div></button>
+        <button class="opt" onclick="selectOpt(this,'score','80–90')"><div class="opt-title">80–90</div><div class="opt-desc">Solid player, fine-tuning</div></button>
+        <button class="opt" onclick="selectOpt(this,'score','Under 80')"><div class="opt-title">Under 80</div><div class="opt-desc">Low handicapper</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(2)">Back</button><div class="step-counter" id="counter-2"></div><button class="btn-next" id="btn-2" data-i18n="btn.next" onclick="nextStep(2)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-3">
+      <div class="step-label" data-i18n="s3.label">Your goal</div>
+      <div class="question" data-i18n="s3.q">What's your main goal right now?</div>
+      <div class="sub" data-i18n="s3.sub">Pick the one that matters most to you.</div>
+      <div class="option-grid cols1">
+        <button class="opt" onclick="selectOpt(this,'goal','Just enjoy the game and not embarrass myself')"><div class="opt-title">Enjoy the game</div><div class="opt-desc">Have fun, keep up with playing partners</div></button>
+        <button class="opt" onclick="selectOpt(this,'goal','Break 100')"><div class="opt-title">Break 100</div><div class="opt-desc">A major milestone for most beginners</div></button>
+        <button class="opt" onclick="selectOpt(this,'goal','Break 90')"><div class="opt-title">Break 90</div><div class="opt-desc">Move into serious amateur territory</div></button>
+        <button class="opt" onclick="selectOpt(this,'goal','Build a handicap and compete')"><div class="opt-title">Build a handicap and compete</div><div class="opt-desc">Play in club events and track progress officially</div></button>
+        <button class="opt" onclick="selectOpt(this,'goal','General improvement — get better overall')"><div class="opt-title">General improvement</div><div class="opt-desc">No specific score target, just getting better</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(3)">Back</button><div class="step-counter" id="counter-3"></div><button class="btn-next" id="btn-3" data-i18n="btn.next" onclick="nextStep(3)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-4">
+      <div class="step-label" data-i18n="s4.label">What's in the bag</div>
+      <div class="question" data-i18n="s4.q">Tell us about your clubs</div>
+      <div class="sub" data-i18n="s4.sub">Check the clubs you own. Loft degree and brand/model are optional — they help us personalize the plan but aren't required.</div>
+
+      <button class="opt no-clubs-toggle" id="no-clubs-btn" onclick="toggleNoClubs()" style="margin-bottom:1.25rem;width:100%">
+        <div class="opt-title" data-i18n="s4.noclubs.t">I don't have my own clubs yet</div>
+        <div class="opt-desc" data-i18n="s4.noclubs.d">I use rentals, borrow clubs, or play with what's available</div>
+      </button>
+
+      <div id="bag-content">
+      <div class="club-section"><div class="club-section-title" data-i18n="s4.sec.woods">Woods · loft optional</div><div id="woods-list"></div></div>
+      <hr class="section-divider">
+      <div class="club-section"><div class="club-section-title" data-i18n="s4.sec.hybrids">Hybrids · loft optional</div><div id="hybrids-list"></div></div>
+      <hr class="section-divider">
+      <div class="club-section"><div class="club-section-title" data-i18n="s4.sec.irons">Irons</div><div id="irons-list"></div></div>
+      <hr class="section-divider">
+      <div class="club-section"><div class="club-section-title" data-i18n="s4.sec.wedges">Wedges · loft optional</div><div id="wedges-list"></div></div>
+      <hr class="section-divider">
+      <div class="club-section"><div class="club-section-title" data-i18n="s4.sec.putter">Putter</div><div id="putter-list"></div></div>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(4)">Back</button><div class="step-counter" id="counter-4"></div><button class="btn-next" id="btn-4" data-i18n="btn.next" onclick="nextStep(4)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-5">
+      <div class="step-label" data-i18n="s5.label">Biggest struggles</div>
+      <div class="question" data-i18n="s5.q">Where do you lose the most strokes?</div>
+      <div class="sub" data-i18n="s5.sub">Pick up to 3 areas.</div>
+      <div class="chk-grid cols2">
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Driver / off the tee',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Driver / off the tee</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Fairway woods & hybrids',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Woods & hybrids</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Iron play / approach shots',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Iron play</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Chipping & pitching',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Chipping & pitching</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Bunker shots',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Bunker shots</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Putting',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Putting</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Course management & decision making',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Course management</button>
+        <button class="chk-opt" onclick="toggleChkMax(this,'struggles','Consistency — good and bad shots randomly',3)"><div class="chk-box"><span class="chk-mark">✓</span></div>Consistency</button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(5)">Back</button><div class="step-counter" id="counter-5"></div><button class="btn-next" id="btn-5" data-i18n="btn.next" onclick="nextStep(5)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-6">
+      <div class="step-label" data-i18n="s6.label">Rounds & practice</div>
+      <div class="question" data-i18n="s6.q">How often do you play and practice?</div>
+      <div class="sub" data-i18n="s6.sub">Select one for each.</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px;margin-top:4px">Rounds per week</div>
+      <div class="option-grid cols2" style="margin-bottom:1.25rem">
+        <button class="opt" onclick="selectOptGroup(this,'rounds','Less than once a week')"><div class="opt-title">Less than once</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'rounds','Once a week')"><div class="opt-title">Once a week</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'rounds','Twice a week')"><div class="opt-title">Twice a week</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'rounds','3+ times a week')"><div class="opt-title">3+ times a week</div></button>
+      </div>
+      <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:8px">Practice sessions (outside rounds)</div>
+      <div class="option-grid cols2">
+        <button class="opt" onclick="selectOptGroup(this,'practice','I mostly just play rounds')"><div class="opt-title">Rounds only</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'practice','1 session, about 30 min')"><div class="opt-title">1× / 30 min</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'practice','1–2 sessions, about 1 hour each')"><div class="opt-title">1–2× / 1 hour</div></button>
+        <button class="opt" onclick="selectOptGroup(this,'practice','3+ sessions per week')"><div class="opt-title">3+ sessions</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(6)">Back</button><div class="step-counter" id="counter-6"></div><button class="btn-next" id="btn-6" data-i18n="btn.next" onclick="nextStep(6)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-7">
+      <div class="step-label" data-i18n="s7.label">Facilities</div>
+      <div class="question" data-i18n="s7.q">What practice facilities do you have access to?</div>
+      <div class="sub" data-i18n="s7.sub">Select all that apply.</div>
+      <div class="chk-grid cols2">
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','Driving range')"><div class="chk-box"><span class="chk-mark">✓</span></div>Driving range</button>
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','Putting green')"><div class="chk-box"><span class="chk-mark">✓</span></div>Putting green</button>
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','Chipping / short game area')"><div class="chk-box"><span class="chk-mark">✓</span></div>Chipping area</button>
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','Practice bunker')"><div class="chk-box"><span class="chk-mark">✓</span></div>Practice bunker</button>
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','Indoor simulator')"><div class="chk-box"><span class="chk-mark">✓</span></div>Indoor simulator</button>
+        <button class="chk-opt" onclick="toggleChk(this,'facilities','My home (backyard / putting mat)')"><div class="chk-box"><span class="chk-mark">✓</span></div>Home practice</button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(7)">Back</button><div class="step-counter" id="counter-7"></div><button class="btn-next" id="btn-7" data-i18n="btn.next" onclick="nextStep(7)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-8">
+      <div class="step-label" data-i18n="s8.label">Lessons</div>
+      <div class="question" data-i18n="s8.q">Do you take lessons with a golf pro?</div>
+      <div class="sub" data-i18n="s8.sub">This shapes how much we rely on self-correction vs coached fixes.</div>
+      <div class="option-grid cols1">
+        <button class="opt" onclick="selectOpt(this,'lessons','No lessons — self-taught')"><div class="opt-title">No lessons</div><div class="opt-desc">Learning on my own from videos, friends, rounds</div></button>
+        <button class="opt" onclick="selectOpt(this,'lessons','Occasionally — a few times a year')"><div class="opt-title">Occasionally</div><div class="opt-desc">A few times a year when I feel stuck</div></button>
+        <button class="opt" onclick="selectOpt(this,'lessons','Monthly lessons')"><div class="opt-title">Monthly</div><div class="opt-desc">Regular check-ins with a pro</div></button>
+        <button class="opt" onclick="selectOpt(this,'lessons','Weekly lessons')"><div class="opt-title">Weekly</div><div class="opt-desc">Actively working with a coach on my swing</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(8)">Back</button><div class="step-counter" id="counter-8"></div><button class="btn-next" id="btn-8" data-i18n="btn.next" onclick="nextStep(8)" disabled>Next</button></div>
+    </div>
+
+    <div class="step" id="step-9">
+      <div class="step-label" data-i18n="s9.label">Physical</div>
+      <div class="question" data-i18n="s9.q">Any physical limitations to factor in?</div>
+      <div class="sub" data-i18n="s9.sub">This helps us avoid drills that could cause discomfort or injury.</div>
+      <div class="option-grid cols1">
+        <button class="opt" onclick="selectOpt(this,'physical','No limitations — I\'m physically fine')"><div class="opt-title">No limitations</div><div class="opt-desc">Full range of motion, no injuries</div></button>
+        <button class="opt" onclick="selectOpt(this,'physical','Back issues — need low-impact drills')"><div class="opt-title">Back issues</div><div class="opt-desc">Need to be careful with rotation and bending</div></button>
+        <button class="opt" onclick="selectOpt(this,'physical','Knee or hip issues')"><div class="opt-title">Knee or hip issues</div><div class="opt-desc">Limited lower body mobility</div></button>
+        <button class="opt" onclick="selectOpt(this,'physical','Shoulder or wrist issues')"><div class="opt-title">Shoulder or wrist issues</div><div class="opt-desc">Swing power and follow-through may be limited</div></button>
+        <button class="opt" onclick="selectOpt(this,'physical','Other — I\'ll manage around it')"><div class="opt-title">Other</div><div class="opt-desc">I adapt as needed on the course</div></button>
+      </div>
+      <div class="nav-row"><button class="btn-back" data-i18n="btn.back" onclick="prevStep(9)">Back</button><div class="step-counter" id="counter-9"></div><button class="btn-next" id="btn-9" data-i18n="btn.generate" onclick="nextStep(9)" disabled>Generate my plan ↗</button></div>
+    </div>
+  </div>
+
+  <div class="result-wrap" id="result-wrap">
+    <div class="result-header">
+      <h2 id="result-title" data-i18n="result.title">Your personalized golf training plan</h2>
+      <p id="result-sub" data-i18n="result.sub">Generated based on your profile</p>
+    </div>
+    <div id="loading-state" class="loading-state"><div class="spinner"></div><span data-i18n="result.loading">Building your plan — this takes 30–60 seconds. We're crafting a real plan tailored to your bag and your game, not a template.</span></div>
+    <div class="plan-output" id="plan-output" style="display:none"></div>
+
+    <div class="email-capture" id="email-capture">
+      <div class="email-capture-title" id="email-capture-title">📩 Save your plan</div>
+      <div class="email-capture-sub" id="email-capture-sub">Enter your email and we'll send this plan to you so you can access it anytime.</div>
+      <div class="email-row">
+        <input type="email" class="email-input" id="email-input" placeholder="your@email.com" />
+        <button class="email-submit-btn" id="email-submit-btn" onclick="savePlan()">Send my plan</button>
+      </div>
+      <div class="email-note" id="email-note">We'll only use your email to send your plan. No spam, ever.</div>
+      <div class="email-success" id="email-success">
+        <span>✓</span><span id="email-success-msg">Plan sent! Check your inbox.</span>
+      </div>
+    </div>
+    <div class="error-state" id="error-state" style="display:none">
+      <div class="err-title" data-i18n="result.errtitle">Something went wrong</div>
+      <div class="err-detail" id="err-detail"></div>
+    </div>
+    <div class="action-row" id="action-row" style="display:none">
+      <button class="action-btn primary" data-i18n="btn.download" onclick="downloadPdf()">Download as PDF</button>
+      <button class="action-btn" data-i18n="btn.tryagain" onclick="retryGeneration()">Try again</button>
+      <button class="action-btn" data-i18n="btn.startover" onclick="restart()">Start over</button>
+    </div>
+  </div>
+
+  <div class="footer" data-i18n="footer">GolfGains · Built by Luis Acosta</div>
+</div>
+
+<script>
+// API key is securely stored on the server — never exposed in browser code
+
+const I18N = {
+  en: {
+    'footer': 'GolfGains · Built by Luis Acosta',
+    'landing.eyebrow': 'AI golf coach · Free during beta',
+    'landing.headline': 'Your game has patterns. <em>We turn them into a plan.</em>',
+    'landing.sub': 'Tell us about your bag, your weaknesses, and your schedule. Get a 12-week training plan built specifically for your game.',
+    'landing.cta': 'Start',
+    'landing.metaTime': '~3 minutes',
+    'landing.metaFree': 'No signup required',
+    'landing.disclaimer': 'Built for golfers who want to improve. AI-generated plans — not a substitute for professional coaching or medical advice.',
+    'preview.label': 'Sample plan output',
+    'preview.tag': 'Personalized',
+    'preview.title': "Luis's 12-week plan to break 100",
+    'preview.meta': 'Built around your Callaway Edge irons · 1hr practice 2x/week · Driving range & chipping area',
+    'preview.phase': 'Phase 1 · Weeks 1–4',
+    'preview.phaseTitle': 'Foundation — Contact & fundamentals',
+    'preview.drillName': 'Hybrid tee drill — 5-hybrid',
+    'preview.drillDetail': '15 balls per session, 70% effort, tee at half-inch. Goal: 10 of 15 airborne and 120+ yards consistently.',
+    'stepper.profile': 'Profile',
+    'stepper.game': 'Game',
+    'stepper.bag': 'Bag',
+    'stepper.practice': 'Practice',
+    'email.capture.title': '📩 Save your plan',
+    'email.capture.sub': 'Enter your email and we will send this plan to you so you can access it anytime.',
+    'email.capture.placeholder': 'your@email.com',
+    'email.capture.btn': 'Send my plan',
+    'email.capture.note': 'We will only use your email to send your plan. No spam, ever.',
+    'email.capture.success': 'Plan sent! Check your inbox.',
+    'email.capture.saved': 'Email saved! Delivery may be limited during beta.',
+    'email.capture.error': 'Something went wrong. Try again.',
+    'header.title': '⛳ GolfGains',
+    'header.sub': 'Your AI golf coach. Get a personalized 12-week training plan based on your game.',
+    'btn.next': 'Next',
+    'btn.back': 'Back',
+    'btn.generate': 'Generate my plan ↗',
+    'btn.tryagain': 'Try again',
+    'btn.startover': 'Start over',
+    'btn.download': 'Download as PDF',
+    'btn.email': 'Email me this plan',
+    'email.subject': 'Your GolfGains Training Plan',
+    'email.intro': 'Here is my personalized 12-week golf training plan, generated based on my game profile.',
+    's0.label': 'Welcome',
+    's0.q': "What's your name?",
+    's0.sub': "We'll personalize your plan just for you.",
+    's0.placeholder': 'Your first name',
+    's1.label': 'Experience',
+    's1.q': 'How long have you been playing golf?',
+    's1.sub': 'Be honest — it helps us set the right baseline.',
+    's1.opt1.t': 'Less than 6 months',
+    's1.opt1.d': 'Just getting started',
+    's1.opt2.t': '6–12 months',
+    's1.opt2.d': 'Finding my rhythm',
+    's1.opt3.t': '1–2 years',
+    's1.opt3.d': 'Getting consistent',
+    's1.opt4.t': 'More than 2 years',
+    's1.opt4.d': 'Working on refinement',
+    's2.label': 'Current scoring',
+    's2.q': "What's your typical score for 18 holes?",
+    's2.sub': 'Approximate is fine.',
+    's2.opt1.t': 'No score yet',
+    's2.opt1.d': 'Still learning the basics',
+    's2.opt2.t': 'Over 120',
+    's2.opt2.d': 'Building fundamentals',
+    's2.opt3.t': '100–120',
+    's2.opt3.d': 'Working toward breaking 100',
+    's2.opt4.t': '90–100',
+    's2.opt4.d': 'Chasing that first 89',
+    's2.opt5.t': '80–90',
+    's2.opt5.d': 'Solid player, fine-tuning',
+    's2.opt6.t': 'Under 80',
+    's2.opt6.d': 'Low handicapper',
+    's3.label': 'Your goal',
+    's3.q': "What's your main goal right now?",
+    's3.sub': 'Pick the one that matters most to you.',
+    's3.opt1.t': 'Enjoy the game',
+    's3.opt1.d': 'Have fun, keep up with playing partners',
+    's3.opt2.t': 'Break 100',
+    's3.opt2.d': 'A major milestone for most beginners',
+    's3.opt3.t': 'Break 90',
+    's3.opt3.d': 'Move into serious amateur territory',
+    's3.opt4.t': 'Build a handicap and compete',
+    's3.opt4.d': 'Play in club events and track progress officially',
+    's3.opt5.t': 'General improvement',
+    's3.opt5.d': 'No specific score target, just getting better',
+    's4.label': "What's in the bag",
+    's4.q': 'Tell us about your clubs',
+    's4.sub': "Check the clubs you own. Loft degree and brand/model are optional — they help us personalize the plan but aren't required.",
+    's4.noclubs.t': "I don't have my own clubs yet",
+    's4.noclubs.d': "I use rentals, borrow clubs, or play with what's available",
+    's4.sec.woods': 'Woods · loft optional',
+    's4.sec.hybrids': 'Hybrids · loft optional',
+    's4.sec.irons': 'Irons',
+    's4.sec.wedges': 'Wedges · loft optional',
+    's4.sec.putter': 'Putter',
+    's4.placeholder.model': 'Brand & model (optional)',
+    's5.label': 'Biggest struggles',
+    's5.q': 'Where do you lose the most strokes?',
+    's5.sub': 'Pick up to 3 areas.',
+    's5.opt.driver': 'Driver / off the tee',
+    's5.opt.woods': 'Woods & hybrids',
+    's5.opt.iron': 'Iron play',
+    's5.opt.chip': 'Chipping & pitching',
+    's5.opt.bunker': 'Bunker shots',
+    's5.opt.putt': 'Putting',
+    's5.opt.mgmt': 'Course management',
+    's5.opt.cons': 'Consistency',
+    's6.label': 'Rounds & practice',
+    's6.q': 'How often do you play and practice?',
+    's6.sub': 'Select one for each.',
+    's6.rounds': 'Rounds per week',
+    's6.practice': 'Practice sessions (outside rounds)',
+    's6.rounds.opt1': 'Less than once',
+    's6.rounds.opt2': 'Once a week',
+    's6.rounds.opt3': 'Twice a week',
+    's6.rounds.opt4': '3+ times a week',
+    's6.prac.opt1': 'Rounds only',
+    's6.prac.opt2': '1× / 30 min',
+    's6.prac.opt3': '1–2× / 1 hour',
+    's6.prac.opt4': '3+ sessions',
+    's7.label': 'Facilities',
+    's7.q': 'What practice facilities do you have access to?',
+    's7.sub': 'Select all that apply.',
+    's7.opt.range': 'Driving range',
+    's7.opt.green': 'Putting green',
+    's7.opt.chip': 'Chipping area',
+    's7.opt.bunker': 'Practice bunker',
+    's7.opt.sim': 'Indoor simulator',
+    's7.opt.home': 'Home practice',
+    's8.label': 'Lessons',
+    's8.q': 'Do you take lessons with a golf pro?',
+    's8.sub': 'This shapes how much we rely on self-correction vs coached fixes.',
+    's8.opt1.t': 'No lessons',
+    's8.opt1.d': 'Learning on my own from videos, friends, rounds',
+    's8.opt2.t': 'Occasionally',
+    's8.opt2.d': 'A few times a year when I feel stuck',
+    's8.opt3.t': 'Monthly',
+    's8.opt3.d': 'Regular check-ins with a pro',
+    's8.opt4.t': 'Weekly',
+    's8.opt4.d': 'Actively working with a coach on my swing',
+    's9.label': 'Physical',
+    's9.q': 'Any physical limitations to factor in?',
+    's9.sub': 'This helps us avoid drills that could cause discomfort or injury.',
+    's9.opt1.t': 'No limitations',
+    's9.opt1.d': 'Full range of motion, no injuries',
+    's9.opt2.t': 'Back issues',
+    's9.opt2.d': 'Need to be careful with rotation and bending',
+    's9.opt3.t': 'Knee or hip issues',
+    's9.opt3.d': 'Limited lower body mobility',
+    's9.opt4.t': 'Shoulder or wrist issues',
+    's9.opt4.d': 'Swing power and follow-through may be limited',
+    's9.opt5.t': 'Other',
+    's9.opt5.d': 'I adapt as needed on the course',
+    'result.title': 'Your personalized golf training plan',
+    'result.sub': 'Generated based on your profile',
+    'result.loading': "Building your plan — this takes 30–60 seconds. We're crafting a real plan tailored to your bag and your game, not a template.",
+    'result.errtitle': 'Something went wrong',
+    'result.truncated': '<strong>Heads up:</strong> Your plan was longer than expected and got cut off at the end. Click "Try again" to regenerate, or use the existing plan as-is — the first three phases are usually the most important.',
+    'btn.generate': 'Generate my plan ↗'
+  },
+  es: {
+    'footer': 'GolfGains · Construido por Luis Acosta',
+    'landing.eyebrow': 'Coach de golf con IA · Gratis durante beta',
+    'landing.headline': 'Tu juego tiene patrones. <em>Los convertimos en un plan.</em>',
+    'landing.sub': 'Cuéntanos sobre tus palos, tus debilidades y tu horario. Obtén un plan de entrenamiento de 12 semanas hecho para tu juego.',
+    'landing.cta': 'Empezar',
+    'landing.metaTime': '~3 minutos',
+    'landing.metaFree': 'Sin registro',
+    'landing.disclaimer': 'Para golfistas que quieren mejorar. Planes generados por IA — no sustituyen el consejo de un coach profesional o médico.',
+    'preview.label': 'Ejemplo de plan',
+    'preview.tag': 'Personalizado',
+    'preview.title': 'Plan de 12 semanas de Luis para bajar de 100',
+    'preview.meta': 'Construido alrededor de tus hierros Callaway Edge · 1h de práctica 2x/semana · Driving range y área de chipping',
+    'preview.phase': 'Fase 1 · Semanas 1–4',
+    'preview.phaseTitle': 'Fundamentos — Contacto y técnica básica',
+    'preview.drillName': 'Drill del híbrido en tee — 5-híbrido',
+    'preview.drillDetail': '15 bolas por sesión, 70% de fuerza, tee a media pulgada. Meta: 10 de 15 en el aire y 120+ yardas consistentemente.',
+    'stepper.profile': 'Perfil',
+    'stepper.game': 'Juego',
+    'stepper.bag': 'Bolsa',
+    'stepper.practice': 'Práctica',
+    'email.capture.title': '📩 Guardar tu plan',
+    'email.capture.sub': 'Ingresa tu email y te enviaremos el plan para que puedas acceder cuando quieras.',
+    'email.capture.placeholder': 'tu@email.com',
+    'email.capture.btn': 'Enviar mi plan',
+    'email.capture.note': 'Solo usaremos tu email para enviarte el plan. Sin spam, nunca.',
+    'email.capture.success': '¡Plan enviado! Revisa tu bandeja de entrada.',
+    'email.capture.saved': '¡Email guardado! La entrega puede ser limitada durante la beta.',
+    'email.capture.error': 'Algo salió mal. Inténtalo de nuevo.',
+    'header.title': '⛳ GolfGains',
+    'header.sub': 'Tu coach de golf con IA. Obtén un plan de entrenamiento personalizado de 12 semanas basado en tu juego.',
+    'btn.next': 'Siguiente',
+    'btn.back': 'Atrás',
+    'btn.generate': 'Generar mi plan ↗',
+    'btn.tryagain': 'Reintentar',
+    'btn.startover': 'Empezar de nuevo',
+    'btn.download': 'Descargar como PDF',
+    'btn.email': 'Enviarme este plan por email',
+    'email.subject': 'Tu Plan Personalizado de GolfGains',
+    'email.intro': 'Aquí está mi plan de entrenamiento de golf personalizado de 12 semanas, generado según mi perfil de juego.',
+    's0.label': 'Bienvenido',
+    's0.q': '¿Cuál es tu nombre?',
+    's0.sub': 'Personalizaremos tu plan solo para ti.',
+    's0.placeholder': 'Tu nombre',
+    's1.label': 'Experiencia',
+    's1.q': '¿Cuánto tiempo llevas jugando al golf?',
+    's1.sub': 'Sé honesto — nos ayuda a establecer la base correcta.',
+    's1.opt1.t': 'Menos de 6 meses',
+    's1.opt1.d': 'Apenas empezando',
+    's1.opt2.t': '6–12 meses',
+    's1.opt2.d': 'Encontrando mi ritmo',
+    's1.opt3.t': '1–2 años',
+    's1.opt3.d': 'Volviéndome consistente',
+    's1.opt4.t': 'Más de 2 años',
+    's1.opt4.d': 'Refinando mi juego',
+    's2.label': 'Puntuación actual',
+    's2.q': '¿Cuál es tu puntuación típica en 18 hoyos?',
+    's2.sub': 'Aproximado está bien.',
+    's2.opt1.t': 'Aún sin puntuación',
+    's2.opt1.d': 'Aún aprendiendo lo básico',
+    's2.opt2.t': 'Más de 120',
+    's2.opt2.d': 'Construyendo los fundamentos',
+    's2.opt3.t': '100–120',
+    's2.opt3.d': 'Buscando bajar de 100',
+    's2.opt4.t': '90–100',
+    's2.opt4.d': 'Persiguiendo ese primer 89',
+    's2.opt5.t': '80–90',
+    's2.opt5.d': 'Jugador sólido, afinando',
+    's2.opt6.t': 'Menos de 80',
+    's2.opt6.d': 'Hándicap bajo',
+    's3.label': 'Tu objetivo',
+    's3.q': '¿Cuál es tu objetivo principal ahora?',
+    's3.sub': 'Elige el que más te importa.',
+    's3.opt1.t': 'Disfrutar el juego',
+    's3.opt1.d': 'Divertirme y seguir el ritmo de mis compañeros',
+    's3.opt2.t': 'Bajar de 100',
+    's3.opt2.d': 'Un hito importante para la mayoría de principiantes',
+    's3.opt3.t': 'Bajar de 90',
+    's3.opt3.d': 'Entrar en territorio amateur serio',
+    's3.opt4.t': 'Construir un hándicap y competir',
+    's3.opt4.d': 'Jugar eventos del club y registrar progreso oficialmente',
+    's3.opt5.t': 'Mejora general',
+    's3.opt5.d': 'Sin meta específica, solo mejorar',
+    's4.label': 'Qué hay en la bolsa',
+    's4.q': 'Cuéntanos sobre tus palos',
+    's4.sub': 'Marca los palos que tienes. El grado de loft y marca/modelo son opcionales — nos ayudan a personalizar el plan pero no son requeridos.',
+    's4.noclubs.t': 'Aún no tengo mis propios palos',
+    's4.noclubs.d': 'Uso alquilados, prestados, o juego con lo disponible',
+    's4.sec.woods': 'Maderas · loft opcional',
+    's4.sec.hybrids': 'Híbridos · loft opcional',
+    's4.sec.irons': 'Hierros',
+    's4.sec.wedges': 'Wedges · loft opcional',
+    's4.sec.putter': 'Putter',
+    's4.placeholder.model': 'Marca y modelo (opcional)',
+    's5.label': 'Mayores dificultades',
+    's5.q': '¿Dónde pierdes más golpes?',
+    's5.sub': 'Elige hasta 3 áreas.',
+    's5.opt.driver': 'Driver / desde el tee',
+    's5.opt.woods': 'Maderas e híbridos',
+    's5.opt.iron': 'Juego de hierros',
+    's5.opt.chip': 'Chipping y pitching',
+    's5.opt.bunker': 'Tiros desde el búnker',
+    's5.opt.putt': 'Putting',
+    's5.opt.mgmt': 'Manejo del campo',
+    's5.opt.cons': 'Consistencia',
+    's6.label': 'Rondas y práctica',
+    's6.q': '¿Con qué frecuencia juegas y practicas?',
+    's6.sub': 'Selecciona uno para cada uno.',
+    's6.rounds': 'Rondas por semana',
+    's6.practice': 'Sesiones de práctica (fuera de rondas)',
+    's6.rounds.opt1': 'Menos de una vez',
+    's6.rounds.opt2': 'Una vez por semana',
+    's6.rounds.opt3': 'Dos veces por semana',
+    's6.rounds.opt4': '3+ veces por semana',
+    's6.prac.opt1': 'Solo rondas',
+    's6.prac.opt2': '1× / 30 min',
+    's6.prac.opt3': '1–2× / 1 hora',
+    's6.prac.opt4': '3+ sesiones',
+    's7.label': 'Instalaciones',
+    's7.q': '¿A qué instalaciones de práctica tienes acceso?',
+    's7.sub': 'Selecciona todas las que apliquen.',
+    's7.opt.range': 'Campo de práctica',
+    's7.opt.green': 'Green de putt',
+    's7.opt.chip': 'Área de chipping',
+    's7.opt.bunker': 'Búnker de práctica',
+    's7.opt.sim': 'Simulador interior',
+    's7.opt.home': 'Práctica en casa',
+    's8.label': 'Clases',
+    's8.q': '¿Tomas clases con un pro de golf?',
+    's8.sub': 'Esto define cuánto dependemos de auto-corrección vs ajustes guiados.',
+    's8.opt1.t': 'Sin clases',
+    's8.opt1.d': 'Aprendiendo por mi cuenta de videos, amigos, rondas',
+    's8.opt2.t': 'Ocasionalmente',
+    's8.opt2.d': 'Algunas veces al año cuando me siento estancado',
+    's8.opt3.t': 'Mensual',
+    's8.opt3.d': 'Sesiones regulares con un pro',
+    's8.opt4.t': 'Semanal',
+    's8.opt4.d': 'Trabajando activamente con un coach en mi swing',
+    's9.label': 'Físico',
+    's9.q': '¿Alguna limitación física a considerar?',
+    's9.sub': 'Esto nos ayuda a evitar drills que podrían causar molestias o lesiones.',
+    's9.opt1.t': 'Sin limitaciones',
+    's9.opt1.d': 'Rango completo de movimiento, sin lesiones',
+    's9.opt2.t': 'Problemas de espalda',
+    's9.opt2.d': 'Debo cuidar la rotación y flexión',
+    's9.opt3.t': 'Problemas de rodilla o cadera',
+    's9.opt3.d': 'Movilidad limitada del tren inferior',
+    's9.opt4.t': 'Problemas de hombro o muñeca',
+    's9.opt4.d': 'Potencia del swing y follow-through pueden estar limitados',
+    's9.opt5.t': 'Otro',
+    's9.opt5.d': 'Me adapto según sea necesario en el campo',
+    'result.title': 'Tu plan de entrenamiento personalizado',
+    'result.sub': 'Generado basado en tu perfil',
+    'result.loading': 'Construyendo tu plan — esto toma 30–60 segundos. Estamos creando un plan real adaptado a tu bolsa y tu juego, no una plantilla.',
+    'result.errtitle': 'Algo salió mal',
+    'result.truncated': '<strong>Atención:</strong> Tu plan fue más largo de lo esperado y se cortó al final. Haz clic en "Reintentar" para regenerar, o usa el plan actual — las primeras tres fases suelen ser las más importantes.',
+    'btn.generate': 'Generar mi plan ↗'
+  }
+};
+let currentLang = 'en';
+
+function startQuestionnaire() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('questionnaire').style.display = 'block';
+  updateProgress(0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-es').classList.toggle('active', lang === 'es');
+  document.documentElement.lang = lang;
+  // Update text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(I18N[lang][key]) {
+      // For elements with HTML (like the truncation warning), use innerHTML
+      if(I18N[lang][key].includes('<')) el.innerHTML = I18N[lang][key];
+      else el.textContent = I18N[lang][key];
+    }
+  });
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(I18N[lang][key]) el.placeholder = I18N[lang][key];
+  });
+  // Update option titles/descriptions inside buttons — these have generated content
+  retranslateOptions();
+  if(typeof updateClubPlaceholders === 'function') updateClubPlaceholders();
+  // Translate email capture card
+  const ecTitle = document.getElementById('email-capture-title');
+  const ecSub = document.getElementById('email-capture-sub');
+  const ecInput = document.getElementById('email-input');
+  const ecBtn = document.getElementById('email-submit-btn');
+  const ecNote = document.getElementById('email-note');
+  // Translate elements with data-i18n-html (allows HTML tags like <em>)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if(I18N[lang][key]) el.innerHTML = I18N[lang][key];
+  });
+  if(ecTitle) ecTitle.textContent = I18N[lang]['email.capture.title'];
+  if(ecSub) ecSub.textContent = I18N[lang]['email.capture.sub'];
+  if(ecInput) ecInput.placeholder = I18N[lang]['email.capture.placeholder'];
+  if(ecBtn && !ecBtn.disabled) ecBtn.textContent = I18N[lang]['email.capture.btn'];
+  if(ecNote) ecNote.textContent = I18N[lang]['email.capture.note'];
+}
+
+// Mapping of opt-title text patterns to translation keys, for the option grids
+const OPT_TRANSLATIONS = {
+  // Step 1
+  'Less than 6 months': {en: I18N.en['s1.opt1.t'], es: I18N.es['s1.opt1.t']},
+  'Just getting started': {en: I18N.en['s1.opt1.d'], es: I18N.es['s1.opt1.d']},
+  '6–12 months': {en: I18N.en['s1.opt2.t'], es: I18N.es['s1.opt2.t']},
+  'Finding my rhythm': {en: I18N.en['s1.opt2.d'], es: I18N.es['s1.opt2.d']},
+  '1–2 years': {en: I18N.en['s1.opt3.t'], es: I18N.es['s1.opt3.t']},
+  'Getting consistent': {en: I18N.en['s1.opt3.d'], es: I18N.es['s1.opt3.d']},
+  'More than 2 years': {en: I18N.en['s1.opt4.t'], es: I18N.es['s1.opt4.t']},
+  'Working on refinement': {en: I18N.en['s1.opt4.d'], es: I18N.es['s1.opt4.d']},
+  // Step 2
+  'No score yet': {en: I18N.en['s2.opt1.t'], es: I18N.es['s2.opt1.t']},
+  'Still learning the basics': {en: I18N.en['s2.opt1.d'], es: I18N.es['s2.opt1.d']},
+  'Over 120': {en: I18N.en['s2.opt2.t'], es: I18N.es['s2.opt2.t']},
+  'Building fundamentals': {en: I18N.en['s2.opt2.d'], es: I18N.es['s2.opt2.d']},
+  '100–120': {en: I18N.en['s2.opt3.t'], es: I18N.es['s2.opt3.t']},
+  'Working toward breaking 100': {en: I18N.en['s2.opt3.d'], es: I18N.es['s2.opt3.d']},
+  '90–100': {en: I18N.en['s2.opt4.t'], es: I18N.es['s2.opt4.t']},
+  'Chasing that first 89': {en: I18N.en['s2.opt4.d'], es: I18N.es['s2.opt4.d']},
+  '80–90': {en: I18N.en['s2.opt5.t'], es: I18N.es['s2.opt5.t']},
+  'Solid player, fine-tuning': {en: I18N.en['s2.opt5.d'], es: I18N.es['s2.opt5.d']},
+  'Under 80': {en: I18N.en['s2.opt6.t'], es: I18N.es['s2.opt6.t']},
+  'Low handicapper': {en: I18N.en['s2.opt6.d'], es: I18N.es['s2.opt6.d']},
+  // Step 3
+  'Enjoy the game': {en: I18N.en['s3.opt1.t'], es: I18N.es['s3.opt1.t']},
+  'Have fun, keep up with playing partners': {en: I18N.en['s3.opt1.d'], es: I18N.es['s3.opt1.d']},
+  'Break 100': {en: I18N.en['s3.opt2.t'], es: I18N.es['s3.opt2.t']},
+  'A major milestone for most beginners': {en: I18N.en['s3.opt2.d'], es: I18N.es['s3.opt2.d']},
+  'Break 90': {en: I18N.en['s3.opt3.t'], es: I18N.es['s3.opt3.t']},
+  'Move into serious amateur territory': {en: I18N.en['s3.opt3.d'], es: I18N.es['s3.opt3.d']},
+  'Build a handicap and compete': {en: I18N.en['s3.opt4.t'], es: I18N.es['s3.opt4.t']},
+  'Play in club events and track progress officially': {en: I18N.en['s3.opt4.d'], es: I18N.es['s3.opt4.d']},
+  'General improvement': {en: I18N.en['s3.opt5.t'], es: I18N.es['s3.opt5.t']},
+  'No specific score target, just getting better': {en: I18N.en['s3.opt5.d'], es: I18N.es['s3.opt5.d']},
+  // Step 8
+  'No lessons': {en: I18N.en['s8.opt1.t'], es: I18N.es['s8.opt1.t']},
+  'Learning on my own from videos, friends, rounds': {en: I18N.en['s8.opt1.d'], es: I18N.es['s8.opt1.d']},
+  'Occasionally': {en: I18N.en['s8.opt2.t'], es: I18N.es['s8.opt2.t']},
+  'A few times a year when I feel stuck': {en: I18N.en['s8.opt2.d'], es: I18N.es['s8.opt2.d']},
+  'Monthly': {en: I18N.en['s8.opt3.t'], es: I18N.es['s8.opt3.t']},
+  'Regular check-ins with a pro': {en: I18N.en['s8.opt3.d'], es: I18N.es['s8.opt3.d']},
+  'Weekly': {en: I18N.en['s8.opt4.t'], es: I18N.es['s8.opt4.t']},
+  'Actively working with a coach on my swing': {en: I18N.en['s8.opt4.d'], es: I18N.es['s8.opt4.d']},
+  // Step 9
+  'No limitations': {en: I18N.en['s9.opt1.t'], es: I18N.es['s9.opt1.t']},
+  'Full range of motion, no injuries': {en: I18N.en['s9.opt1.d'], es: I18N.es['s9.opt1.d']},
+  'Back issues': {en: I18N.en['s9.opt2.t'], es: I18N.es['s9.opt2.t']},
+  'Need to be careful with rotation and bending': {en: I18N.en['s9.opt2.d'], es: I18N.es['s9.opt2.d']},
+  'Knee or hip issues': {en: I18N.en['s9.opt3.t'], es: I18N.es['s9.opt3.t']},
+  'Limited lower body mobility': {en: I18N.en['s9.opt3.d'], es: I18N.es['s9.opt3.d']},
+  'Shoulder or wrist issues': {en: I18N.en['s9.opt4.t'], es: I18N.es['s9.opt4.t']},
+  'Swing power and follow-through may be limited': {en: I18N.en['s9.opt4.d'], es: I18N.es['s9.opt4.d']},
+  'Other': {en: I18N.en['s9.opt5.t'], es: I18N.es['s9.opt5.t']},
+  'I adapt as needed on the course': {en: I18N.en['s9.opt5.d'], es: I18N.es['s9.opt5.d']},
+  // Step 5 struggles (these are in chk-opt, just text nodes)
+  'Driver / off the tee': {en: I18N.en['s5.opt.driver'], es: I18N.es['s5.opt.driver']},
+  'Woods & hybrids': {en: I18N.en['s5.opt.woods'], es: I18N.es['s5.opt.woods']},
+  'Iron play': {en: I18N.en['s5.opt.iron'], es: I18N.es['s5.opt.iron']},
+  'Chipping & pitching': {en: I18N.en['s5.opt.chip'], es: I18N.es['s5.opt.chip']},
+  'Bunker shots': {en: I18N.en['s5.opt.bunker'], es: I18N.es['s5.opt.bunker']},
+  'Putting': {en: I18N.en['s5.opt.putt'], es: I18N.es['s5.opt.putt']},
+  'Course management': {en: I18N.en['s5.opt.mgmt'], es: I18N.es['s5.opt.mgmt']},
+  'Consistency': {en: I18N.en['s5.opt.cons'], es: I18N.es['s5.opt.cons']},
+  // Step 6 rounds
+  'Less than once': {en: I18N.en['s6.rounds.opt1'], es: I18N.es['s6.rounds.opt1']},
+  'Once a week': {en: I18N.en['s6.rounds.opt2'], es: I18N.es['s6.rounds.opt2']},
+  'Twice a week': {en: I18N.en['s6.rounds.opt3'], es: I18N.es['s6.rounds.opt3']},
+  '3+ times a week': {en: I18N.en['s6.rounds.opt4'], es: I18N.es['s6.rounds.opt4']},
+  // Step 6 practice
+  'Rounds only': {en: I18N.en['s6.prac.opt1'], es: I18N.es['s6.prac.opt1']},
+  '1× / 30 min': {en: I18N.en['s6.prac.opt2'], es: I18N.es['s6.prac.opt2']},
+  '1–2× / 1 hour': {en: I18N.en['s6.prac.opt3'], es: I18N.es['s6.prac.opt3']},
+  '3+ sessions': {en: I18N.en['s6.prac.opt4'], es: I18N.es['s6.prac.opt4']},
+  // Step 7
+  'Driving range': {en: I18N.en['s7.opt.range'], es: I18N.es['s7.opt.range']},
+  'Putting green': {en: I18N.en['s7.opt.green'], es: I18N.es['s7.opt.green']},
+  'Chipping area': {en: I18N.en['s7.opt.chip'], es: I18N.es['s7.opt.chip']},
+  'Practice bunker': {en: I18N.en['s7.opt.bunker'], es: I18N.es['s7.opt.bunker']},
+  'Indoor simulator': {en: I18N.en['s7.opt.sim'], es: I18N.es['s7.opt.sim']},
+  'Home practice': {en: I18N.en['s7.opt.home'], es: I18N.es['s7.opt.home']},
+  // Section labels for rounds/practice
+  'Rounds per week': {en: I18N.en['s6.rounds'], es: I18N.es['s6.rounds']},
+  'Practice sessions (outside rounds)': {en: I18N.en['s6.practice'], es: I18N.es['s6.practice']}
+};
+
+function retranslateOptions() {
+  document.querySelectorAll('.opt-title, .opt-desc').forEach(el => {
+    const en = el.getAttribute('data-orig-en') || el.textContent.trim();
+    if(!el.getAttribute('data-orig-en')) el.setAttribute('data-orig-en', en);
+    if(OPT_TRANSLATIONS[en]) el.textContent = OPT_TRANSLATIONS[en][currentLang];
+  });
+  // Translate text nodes inside .chk-opt and .opt elements that aren't wrapped
+  document.querySelectorAll('.chk-opt').forEach(el => {
+    // Find the last text node (after the chk-box span)
+    for(let node of el.childNodes) {
+      if(node.nodeType === 3 && node.textContent.trim()) {
+        const en = el.getAttribute('data-orig-en') || node.textContent.trim();
+        if(!el.getAttribute('data-orig-en')) el.setAttribute('data-orig-en', en);
+        if(OPT_TRANSLATIONS[en]) node.textContent = OPT_TRANSLATIONS[en][currentLang];
+      }
+    }
+  });
+  // Translate the "Rounds per week" and "Practice sessions" sub-labels
+  document.querySelectorAll('#step-6 > div[style]').forEach(el => {
+    const en = el.getAttribute('data-orig-en') || el.textContent.trim();
+    if(!el.getAttribute('data-orig-en')) el.setAttribute('data-orig-en', en);
+    if(OPT_TRANSLATIONS[en]) el.textContent = OPT_TRANSLATIONS[en][currentLang];
+  });
+  // Re-render club section titles via section update
+}
+
+const TOTAL_STEPS = 10;
+const CLUB_DEFS = {
+  woods: [
+    {id:'driver',label:'Driver',hasLoft:true,defaultLoft:'10.5'},
+    {id:'2w',label:'2-wood',hasLoft:true,defaultLoft:'13'},
+    {id:'3w',label:'3-wood',hasLoft:true,defaultLoft:'15'},
+    {id:'4w',label:'4-wood',hasLoft:true,defaultLoft:'17'},
+    {id:'5w',label:'5-wood',hasLoft:true,defaultLoft:'18'},
+    {id:'7w',label:'7-wood',hasLoft:true,defaultLoft:'21'},
+    {id:'9w',label:'9-wood',hasLoft:true,defaultLoft:'24'}
+  ],
+  hybrids: [
+    {id:'2h',label:'2-hybrid',hasLoft:true,defaultLoft:'17'},
+    {id:'3h',label:'3-hybrid',hasLoft:true,defaultLoft:'19'},
+    {id:'4h',label:'4-hybrid',hasLoft:true,defaultLoft:'22'},
+    {id:'5h',label:'5-hybrid',hasLoft:true,defaultLoft:'25'},
+    {id:'6h',label:'6-hybrid',hasLoft:true,defaultLoft:'28'},
+    {id:'7h',label:'7-hybrid',hasLoft:true,defaultLoft:'31'}
+  ],
+  irons: [
+    {id:'2i',label:'2-iron',hasLoft:false},
+    {id:'3i',label:'3-iron',hasLoft:false},
+    {id:'4i',label:'4-iron',hasLoft:false},
+    {id:'5i',label:'5-iron',hasLoft:false},
+    {id:'6i',label:'6-iron',hasLoft:false},
+    {id:'7i',label:'7-iron',hasLoft:false},
+    {id:'8i',label:'8-iron',hasLoft:false},
+    {id:'9i',label:'9-iron',hasLoft:false}
+  ],
+  wedges: [
+    {id:'pw',label:'PW',hasLoft:true,defaultLoft:'46'},
+    {id:'gw',label:'Gap',hasLoft:true,defaultLoft:'50'},
+    {id:'sw',label:'Sand',hasLoft:true,defaultLoft:'56'},
+    {id:'lw',label:'Lob',hasLoft:true,defaultLoft:'60'},
+    {id:'xlw',label:'X-Lob',hasLoft:true,defaultLoft:'64'}
+  ],
+  putter: [{id:'putter',label:'Putter',hasLoft:false}]
+};
+
+const answers = {struggles:[],facilities:[],clubs:{}};
+let currentStep = 0;
+
+function renderClubSection(category, containerId) {
+  const container = document.getElementById(containerId);
+  CLUB_DEFS[category].forEach(club => {
+    const row = document.createElement('div');
+    row.className = 'club-row';
+    const loftInput = club.hasLoft ? `<input type="text" class="loft-input" placeholder="${club.defaultLoft}°" disabled data-club-id="${club.id}" oninput="updateClubLoft('${club.id}',this.value)" />` : '';
+    row.innerHTML = `
+      <div class="club-checkbox" onclick="toggleClub(this,'${club.id}','${club.label}','${category}')">
+        <div class="chk-box"><span class="chk-mark">✓</span></div>
+        <span>${club.label}</span>
+      </div>
+      ${loftInput}
+      <input type="text" class="club-input" placeholder="Brand & model (optional)" data-club-placeholder="s4.placeholder.model" disabled data-club-id="${club.id}" oninput="updateClubModel('${club.id}',this.value)" />
+    `;
+    container.appendChild(row);
+  });
+}
+
+renderClubSection('woods','woods-list');
+renderClubSection('hybrids','hybrids-list');
+renderClubSection('irons','irons-list');
+renderClubSection('wedges','wedges-list');
+renderClubSection('putter','putter-list');
+retranslateOptions();
+// Translate club model placeholders
+function updateClubPlaceholders() {
+  document.querySelectorAll('[data-club-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-club-placeholder');
+    if(I18N[currentLang][key]) el.placeholder = I18N[currentLang][key];
+  });
+}
+
+function toggleClub(el, clubId, label, category) {
+  el.classList.toggle('checked');
+  const row = el.parentElement;
+  const modelInput = row.querySelector('.club-input');
+  const loftInput = row.querySelector('.loft-input');
+  if(el.classList.contains('checked')) {
+    answers.clubs[clubId] = {label:label, category:category, model:'', loft:''};
+    modelInput.disabled = false;
+    if(loftInput) loftInput.disabled = false;
+  } else {
+    delete answers.clubs[clubId];
+    modelInput.disabled = true;
+    modelInput.value = '';
+    if(loftInput) { loftInput.disabled = true; loftInput.value = ''; }
+  }
+  updateClubsButton();
+}
+
+function updateClubModel(clubId, val) {
+  if(answers.clubs[clubId]) answers.clubs[clubId].model = val;
+}
+
+function updateClubLoft(clubId, val) {
+  if(answers.clubs[clubId]) answers.clubs[clubId].loft = val.replace(/[^\d.]/g,'');
+}
+
+function updateClubsButton() {
+  if(answers.noClubs) {
+    document.getElementById('btn-4').disabled = false;
+  } else {
+    document.getElementById('btn-4').disabled = Object.keys(answers.clubs).length === 0;
+  }
+}
+
+function toggleNoClubs() {
+  const btn = document.getElementById('no-clubs-btn');
+  const bagContent = document.getElementById('bag-content');
+  if(btn.classList.contains('selected')) {
+    btn.classList.remove('selected');
+    bagContent.style.opacity = '1';
+    bagContent.style.pointerEvents = 'auto';
+    answers.noClubs = false;
+  } else {
+    btn.classList.add('selected');
+    bagContent.style.opacity = '0.4';
+    bagContent.style.pointerEvents = 'none';
+    answers.noClubs = true;
+    document.querySelectorAll('.club-checkbox').forEach(b => b.classList.remove('checked'));
+    document.querySelectorAll('.club-input').forEach(i => { i.value=''; i.disabled=true; });
+    document.querySelectorAll('.loft-input').forEach(i => { i.value=''; i.disabled=true; });
+    answers.clubs = {};
+  }
+  updateClubsButton();
+}
+
+const nameInput = document.getElementById('name-input');
+nameInput.addEventListener('input', () => {
+  document.getElementById('btn-0').disabled = nameInput.value.trim().length < 2;
+});
+nameInput.addEventListener('keydown', e => { if(e.key==='Enter' && nameInput.value.trim().length>=2) nextStep(0); });
+
+function updateProgress(step) {
+  // Map step (0-9) to section (1-4)
+  // Profile: 0,1  Game: 2,3,5  Bag: 4  Practice: 6,7,8,9
+  const sectionMap = {0:1, 1:1, 2:2, 3:2, 4:3, 5:2, 6:4, 7:4, 8:4, 9:4};
+  const currentSection = sectionMap[step] || 1;
+  for(let s=1; s<=4; s++) {
+    const el = document.getElementById('stepper-'+s);
+    if(!el) continue;
+    el.classList.remove('active', 'complete');
+    if(s < currentSection) el.classList.add('complete');
+    else if(s === currentSection) el.classList.add('active');
+  }
+  for(let i=1;i<TOTAL_STEPS;i++){
+    const c = document.getElementById('counter-'+i);
+    if(c) c.textContent = (i+1) + ' of ' + TOTAL_STEPS;
+  }
+}
+
+function selectOpt(el, key, val) {
+  el.closest('.option-grid').querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = val;
+  const stepNum = parseInt(el.closest('.step').id.replace('step-',''));
+  document.getElementById('btn-'+stepNum).disabled = false;
+}
+
+function selectOptGroup(el, key, val) {
+  const grid = el.closest('.option-grid');
+  grid.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = val;
+  const stepEl = el.closest('.step');
+  const stepNum = parseInt(stepEl.id.replace('step-',''));
+  if(answers['rounds'] && answers['practice']) {
+    document.getElementById('btn-'+stepNum).disabled = false;
+  }
+}
+
+function toggleChk(el, key, val) {
+  el.classList.toggle('checked');
+  if(!Array.isArray(answers[key])) answers[key] = [];
+  if(el.classList.contains('checked')) answers[key].push(val);
+  else answers[key] = answers[key].filter(v => v !== val);
+  const stepNum = parseInt(el.closest('.step').id.replace('step-',''));
+  document.getElementById('btn-'+stepNum).disabled = answers[key].length === 0;
+}
+
+function toggleChkMax(el, key, val, max) {
+  if(!Array.isArray(answers[key])) answers[key] = [];
+  if(el.classList.contains('checked')) {
+    el.classList.remove('checked');
+    answers[key] = answers[key].filter(v => v !== val);
+  } else {
+    if(answers[key].length >= max) return;
+    el.classList.add('checked');
+    answers[key].push(val);
+  }
+  const stepNum = parseInt(el.closest('.step').id.replace('step-',''));
+  document.getElementById('btn-'+stepNum).disabled = answers[key].length === 0;
+}
+
+function nextStep(from) {
+  document.getElementById('step-'+from).classList.remove('active');
+  if(from === 0) answers.name = nameInput.value.trim();
+  const next = from + 1;
+  if(next < TOTAL_STEPS) {
+    document.getElementById('step-'+next).classList.add('active');
+    currentStep = next;
+    updateProgress(next);
+    window.scrollTo({top:0,behavior:'smooth'});
+  } else {
+    generatePlan();
+  }
+}
+
+function prevStep(from) {
+  document.getElementById('step-'+from).classList.remove('active');
+  const prev = from - 1;
+  document.getElementById('step-'+prev).classList.add('active');
+  currentStep = prev;
+  updateProgress(prev);
+}
+
+function formatClubs() {
+  if(answers.noClubs) {
+    return "The golfer doesn't have their own clubs yet — they use rentals, borrowed clubs, or whatever's available. Tailor practice recommendations to be club-agnostic where possible, and include guidance on what clubs to focus on when they get access to a set (or eventually buy their own).";
+  }
+  const lines = [];
+  Object.values(answers.clubs).forEach(c => {
+    let parts = ['- ' + c.label];
+    if(c.loft) parts.push(c.loft + '°');
+    if(c.model) parts.push(c.model);
+    lines.push(parts.length > 1 ? parts[0] + ' (' + parts.slice(1).join(', ') + ')' : parts[0]);
+  });
+  return lines.join('\n');
+}
+
+function buildPrompt() {
+  return `You are a top-tier golf coach writing a personalized 12-week training plan. The golfer below has filled out a detailed questionnaire. Write their plan now.
+
+GOLFER PROFILE:
+Name: ${answers.name}
+Experience: ${answers.experience}
+Typical score: ${answers.score}
+Main goal: ${answers.goal}
+
+Equipment situation:
+${formatClubs()}
+
+Biggest struggles (in priority order): ${answers.struggles.join(', ')}
+Rounds frequency: ${answers.rounds}
+Practice frequency: ${answers.practice}
+Practice facilities available: ${answers.facilities.join(', ')}
+Lessons: ${answers.lessons}
+Physical considerations: ${answers.physical}
+
+CRITICAL WRITING RULES — read these carefully before you write a single word:
+
+1. ZERO GENERIC ADVICE. Every single drill, instruction, and example must reference THIS golfer's actual clubs (by name and brand when provided), their actual struggles (in priority order), their actual facilities, and their actual practice time. If you find yourself writing something that could apply to any beginner, STOP and rewrite it to be specific to ${answers.name}.
+
+2. THE INTRO PARAGRAPH SETS THE TONE — KEEP IT THROUGHOUT. Write in a direct, encouraging, slightly conversational voice. Like a coach who knows the player personally. Never drop into stiff instructional textbook language. If a sentence feels like it belongs in a generic golf manual, rewrite it.
+
+3. EVERY DRILL MUST HAVE: a name, the exact clubs to use (referencing their bag), specific reps or time, a clear "why this matters for YOU" reason tied to one of their stated struggles, and a measurable success marker. No vague drills.
+
+4. NO GIANT TABLES. A simple "Plan Overview" table at the top is fine (Phase / Weeks / Theme). After that, write in prose and bullet points. Do NOT structure every phase as a table.
+
+5. NUMBERS, NOT VIBES. "Hit 15 balls" not "hit several balls". "Pace within 2 feet" not "good distance control". "30-yard target" not "a target".
+
+6. ADDRESS THEM BY NAME ONCE IN THE INTRO, then twice more across the rest of the plan in moments that feel natural (encouragement, calling out a specific challenge). Don't overdo it.
+
+STRUCTURE:
+
+Start with a 1-paragraph intro that:
+- Addresses ${answers.name} by name
+- Acknowledges where they are honestly
+- Connects their stated goal to what's realistic in 12 weeks
+- References at least 2 specific things from their profile (their clubs OR their struggles OR their facilities)
+- Sets an encouraging but honest tone
+
+Then a simple Plan Overview table (3 columns: Phase, Weeks, Theme).
+
+Then for each of the 3 phases (Weeks 1–4, 5–8, 9–12):
+- ## Phase header with theme
+- A 2–3 sentence "Why this phase matters for YOU, ${answers.name}" — tying directly to their specific struggles and clubs
+- ### Weekly Schedule with their actual session structure
+- ### Drills — broken into named drills (use ### subheaders for each drill). Each drill: equipment, reps, why, success marker
+- ### Phase milestone — how they'll KNOW they're improving (specific, measurable)
+- A 1-sentence mindset tip at the end of each phase
+
+End with a short closing note (2-3 sentences) that's motivating and specific to their goal.
+
+Use Markdown: # for the title, ## for phase headers, ### for sections within phases, **bold** for emphasis on key terms, bullet lists for drill steps. Use --- for horizontal rules between phases.
+
+LENGTH: Be comprehensive but focused. Target roughly 1200 words total — enough to be specific and useful, not so long that it becomes overwhelming. Quality and specificity over volume. Every sentence should earn its place.
+
+PACING: Allocate your words wisely. Don't write 600 words on Phase 1 and rush through Phase 3 in 200. Each phase should get roughly equal depth. Make sure you include the closing note at the end — don't run out of room.
+
+${currentLang === 'es' ? '\n\nCRITICAL: Write the ENTIRE plan in natural, fluent Spanish. Use proper golf terminology in Spanish (drive, hierro, palo, swing are commonly used as-is in Spanish golf vocabulary). Be encouraging and direct in tone. All headings, drill names, and body text must be in Spanish.' : ''}
+
+Begin writing the plan now.`;
+}
+
+function markdownToHtml(md) {
+  const escape = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  let text = escape(md);
+  text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+
+  const lines = text.split('\n');
+  let out = [];
+  let inList = null;
+  let inTable = false;
+  let tableRows = [];
+
+  function closeList() { if(inList) { out.push('</' + inList + '>'); inList = null; } }
+  function flushTable() {
+    if(!inTable || tableRows.length === 0) return;
+    let html = '<table>';
+    tableRows.forEach((row, i) => {
+      if(/^\s*\|?[\s\-\|:]+\|?\s*$/.test(row)) return;
+      const cells = row.split('|').map(c => c.trim()).filter((c,idx,arr)=>!(idx===0 && c==='') && !(idx===arr.length-1 && c===''));
+      const tag = i === 0 ? 'th' : 'td';
+      html += '<tr>' + cells.map(c => '<'+tag+'>'+c+'</'+tag+'>').join('') + '</tr>';
+    });
+    html += '</table>';
+    out.push(html);
+    inTable = false;
+    tableRows = [];
+  }
+
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    if(trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      closeList();
+      inTable = true;
+      tableRows.push(trimmed);
+      continue;
+    } else if(inTable) { flushTable(); }
+    if(/^-{3,}$/.test(trimmed) || /^_{3,}$/.test(trimmed) || /^\*{3,}$/.test(trimmed)) {
+      closeList(); out.push('<hr>'); continue;
+    }
+    const headerMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    if(headerMatch) {
+      closeList();
+      const level = headerMatch[1].length;
+      out.push('<h' + level + '>' + headerMatch[2] + '</h' + level + '>');
+      continue;
+    }
+    const ulMatch = trimmed.match(/^[-*+]\s+(.+)$/);
+    if(ulMatch) {
+      if(inList !== 'ul') { closeList(); out.push('<ul>'); inList = 'ul'; }
+      out.push('<li>' + ulMatch[1] + '</li>');
+      continue;
+    }
+    const olMatch = trimmed.match(/^\d+\.\s+(.+)$/);
+    if(olMatch) {
+      if(inList !== 'ol') { closeList(); out.push('<ol>'); inList = 'ol'; }
+      out.push('<li>' + olMatch[1] + '</li>');
+      continue;
+    }
+    const bqMatch = trimmed.match(/^>\s+(.+)$/);
+    if(bqMatch) { closeList(); out.push('<blockquote>' + bqMatch[1] + '</blockquote>'); continue; }
+    if(trimmed === '') { closeList(); continue; }
+    closeList();
+    out.push('<p>' + trimmed + '</p>');
+  }
+  closeList();
+  flushTable();
+  return out.join('\n');
+}
+
+async function generatePlan() {
+  document.getElementById('questionnaire').style.display = 'none';
+  const rw = document.getElementById('result-wrap');
+  rw.style.display = 'block';
+  document.getElementById('result-title').textContent = answers.name + "'s personalized golf plan";
+  document.getElementById('result-sub').textContent = 'Goal: ' + answers.goal + ' · ' + answers.experience + ' experience';
+  document.getElementById('loading-state').style.display = 'flex';
+  document.getElementById('plan-output').style.display = 'none';
+  document.getElementById('error-state').style.display = 'none';
+  document.getElementById('action-row').style.display = 'none';
+
+  try {
+    const resp = await fetch('/api/generate-plan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        prompt: buildPrompt()
+      })
+    });
+    if(!resp.ok) {
+      const errData = await resp.json().catch(()=>({}));
+      throw new Error(errData.error?.message || ('HTTP ' + resp.status));
+    }
+    const data = await resp.json();
+    const text = (data.content || []).filter(b=>b.type==='text').map(b=>b.text).join('');
+    if(!text) throw new Error('No content returned from the API.');
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('plan-output').style.display = 'block';
+    document.getElementById('plan-output').innerHTML = markdownToHtml(text);
+    document.getElementById('email-capture').classList.add('visible');
+    // Allow Enter key to submit email
+    document.getElementById('email-input').onkeydown = e => { if(e.key === 'Enter') savePlan(); };
+    if(data.stop_reason === 'max_tokens') {
+      const warningHtml = '<div style="background:#FFF4E5;border:1px solid #FFB84D;border-radius:8px;padding:1rem;margin-top:1rem;color:#7A4A00;font-size:13px;line-height:1.6"><strong>Heads up:</strong> Your plan was longer than expected and got cut off at the end. Click "Try again" to regenerate, or use the existing plan as-is — the first three phases are usually the most important.</div>';
+      document.getElementById('plan-output').insertAdjacentHTML('beforeend', warningHtml);
+    }
+    document.getElementById('action-row').style.display = 'flex';
+  } catch(err) {
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('error-state').style.display = 'block';
+    document.getElementById('err-detail').textContent = 'Could not generate plan: ' + (err.message || 'unknown error');
+    document.getElementById('action-row').style.display = 'flex';
+  }
+}
+
+function emailPlan() {
+  // Convert the plan HTML back to clean plain text for the email body
+  const planEl = document.getElementById('plan-output').cloneNode(true);
+  // Remove any truncation warning banner if present
+  planEl.querySelectorAll('div[style*="background:#FFF4E5"]').forEach(el => el.remove());
+
+  function htmlToText(node) {
+    let out = '';
+    node.childNodes.forEach(child => {
+      if(child.nodeType === 3) { out += child.textContent; return; }
+      if(child.nodeType !== 1) return;
+      const tag = child.tagName.toLowerCase();
+      const inner = htmlToText(child);
+      if(tag === 'h1') out += '\n\n=== ' + inner.trim() + ' ===\n\n';
+      else if(tag === 'h2') out += '\n\n--- ' + inner.trim() + ' ---\n\n';
+      else if(tag === 'h3') out += '\n\n' + inner.trim() + '\n' + '-'.repeat(Math.min(inner.trim().length, 40)) + '\n';
+      else if(tag === 'h4') out += '\n' + inner.trim().toUpperCase() + '\n';
+      else if(tag === 'p') out += inner.trim() + '\n\n';
+      else if(tag === 'li') out += '  • ' + inner.trim() + '\n';
+      else if(tag === 'ul' || tag === 'ol') out += inner + '\n';
+      else if(tag === 'hr') out += '\n' + '─'.repeat(40) + '\n\n';
+      else if(tag === 'br') out += '\n';
+      else if(tag === 'table') {
+        // Simple table rendering for plain text
+        const rows = child.querySelectorAll('tr');
+        rows.forEach(r => {
+          const cells = Array.from(r.querySelectorAll('th, td')).map(c => c.textContent.trim());
+          out += cells.join(' | ') + '\n';
+        });
+        out += '\n';
+      }
+      else if(tag === 'strong' || tag === 'b') out += inner;
+      else if(tag === 'em' || tag === 'i') out += inner;
+      else if(tag === 'blockquote') out += '\n> ' + inner.trim() + '\n\n';
+      else out += inner;
+    });
+    return out;
+  }
+
+  const planText = htmlToText(planEl).replace(/\n{3,}/g, '\n\n').trim();
+  const subject = I18N[currentLang]['email.subject'];
+  const intro = I18N[currentLang]['email.intro'];
+  const footer = currentLang === 'es'
+    ? '\n\n---\nGenerado por GolfGains · Construido por Luis Acosta'
+    : '\n\n---\nGenerated by GolfGains · Built by Luis Acosta';
+  const body = intro + '\n\n' + planText + footer;
+
+  // mailto: has length limits in some clients (~2000 chars in older Outlook).
+  // Most modern clients (Gmail, Apple Mail, Outlook 365) handle 5000+ fine.
+  const mailto = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+  if(mailto.length > 8000) {
+    // Fallback: copy to clipboard instead
+    navigator.clipboard.writeText(body).then(() => {
+      alert(currentLang === 'es'
+        ? 'Tu plan es muy largo para email directo. Lo copiamos al portapapeles — pégalo en un nuevo correo.'
+        : "Your plan is too long for a direct email link. We copied it to your clipboard — paste it into a new email.");
+    }).catch(() => {
+      alert(currentLang === 'es' ? 'No se pudo abrir el email. Usa el botón de descargar PDF.' : 'Could not open email. Use the Download PDF button instead.');
+    });
+    return;
+  }
+
+  window.location.href = mailto;
+}
+
+async function savePlan() {
+  const emailInput = document.getElementById('email-input');
+  const submitBtn = document.getElementById('email-submit-btn');
+  const successEl = document.getElementById('email-success');
+  const successMsg = document.getElementById('email-success-msg');
+  const email = emailInput.value.trim();
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailInput.focus();
+    emailInput.style.borderColor = '#F09595';
+    setTimeout(() => emailInput.style.borderColor = '', 2000);
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = '...';
+
+  try {
+    const planHtml = document.getElementById('plan-output').innerHTML;
+    const planTitle = document.getElementById('result-title').textContent;
+    const planSub = document.getElementById('result-sub').textContent;
+
+    const resp = await fetch('/api/save-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        planHtml,
+        planTitle,
+        planSub,
+        language: currentLang
+      })
+    });
+
+    const data = await resp.json();
+
+    // Hide the input row, show success
+    document.querySelector('.email-row').style.display = 'none';
+    document.getElementById('email-note').style.display = 'none';
+    successEl.classList.add('visible');
+
+    if (data.emailSent) {
+      successMsg.textContent = I18N[currentLang]['email.capture.success'];
+    } else {
+      successMsg.textContent = I18N[currentLang]['email.capture.saved'];
+    }
+
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = I18N[currentLang]['email.capture.btn'];
+    emailInput.style.borderColor = '#F09595';
+    setTimeout(() => emailInput.style.borderColor = '', 2000);
+  }
+}
+
+function retryGeneration() { generatePlan(); }
+
+function downloadPdf() {
+  const planHtml = document.getElementById('plan-output').innerHTML;
+  const title = document.getElementById('result-title').textContent;
+  const sub = document.getElementById('result-sub').textContent;
+  const w = window.open('', '_blank');
+  if(!w) { alert(currentLang === 'es' ? 'Por favor permite las ventanas emergentes para descargar el PDF.' : 'Please allow popups to download the PDF.'); return; }
+  w.document.write(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>${title}</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 1.5rem; color: #1a1a1a; line-height: 1.7; }
+  .header { border-bottom: 2px solid #0F6E56; padding-bottom: 1rem; margin-bottom: 2rem; }
+  .header h1 { font-size: 24px; margin: 0 0 4px; color: #0F6E56; }
+  .header p { font-size: 14px; color: #5a5a5a; margin: 0; }
+  h1, h2, h3, h4 { color: #0F6E56; page-break-after: avoid; }
+  h2 { font-size: 18px; border-bottom: 1px solid #d0d0d0; padding-bottom: 0.3rem; margin-top: 1.5rem; }
+  h3 { font-size: 16px; margin-top: 1.25rem; }
+  h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: #5a5a5a; }
+  p { margin: 0 0 0.8rem; }
+  ul, ol { margin: 0 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  strong { color: #1a1a1a; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  th, td { border: 1px solid #d0d0d0; padding: 8px 12px; text-align: left; font-size: 14px; }
+  th { background: #f0f0ed; color: #0F6E56; }
+  hr { border: none; border-top: 1px solid #d0d0d0; margin: 1.5rem 0; }
+  blockquote { border-left: 3px solid #0F6E56; padding-left: 1rem; margin: 1rem 0; color: #5a5a5a; font-style: italic; }
+  .footer-note { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #d0d0d0; font-size: 11px; color: #8a8a8a; text-align: center; }
+  @media print { body { margin: 0; padding: 1rem; } }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>${title}</h1>
+    <p>${sub}</p>
+  </div>
+  ${planHtml}
+  <div class="footer-note">GolfGains · Built by Luis Acosta</div>
+</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.print(); }, 500);
+}
+
+function restart() {
+  Object.keys(answers).forEach(k => {
+    if(k === 'clubs') answers[k] = {};
+    else if(Array.isArray(answers[k])) answers[k] = [];
+    else answers[k] = '';
+  });
+  // Reset email capture card
+  document.getElementById('email-capture').classList.remove('visible');
+  document.getElementById('email-input').value = '';
+  document.getElementById('email-input').style.borderColor = '';
+  document.querySelector('.email-row').style.display = 'flex';
+  document.getElementById('email-note').style.display = 'block';
+  document.getElementById('email-success').classList.remove('visible');
+  const ecBtn = document.getElementById('email-submit-btn');
+  ecBtn.disabled = false;
+  ecBtn.textContent = I18N[currentLang]['email.capture.btn'];
+  document.getElementById('bag-content').style.opacity = '1';
+  document.getElementById('bag-content').style.pointerEvents = 'auto';
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.chk-opt').forEach(b => b.classList.remove('checked'));
+  document.querySelectorAll('.club-checkbox').forEach(b => b.classList.remove('checked'));
+  document.querySelectorAll('.club-input').forEach(i => { i.value=''; i.disabled=true; });
+  document.querySelectorAll('.loft-input').forEach(i => { i.value=''; i.disabled=true; });
+  document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+  nameInput.value = '';
+  document.getElementById('result-wrap').style.display = 'none';
+  document.getElementById('plan-output').style.display = 'none';
+  document.getElementById('plan-output').innerHTML = '';
+  document.getElementById('error-state').style.display = 'none';
+  document.getElementById('action-row').style.display = 'none';
+  document.getElementById('loading-state').style.display = 'flex';
+  document.getElementById('questionnaire').style.display = 'none';
+  document.getElementById('landing').style.display = 'block';
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  currentStep = 0;
+  updateProgress(0);
+}
+
+updateProgress(0);
+</script>
+
+</body>
+</html>
