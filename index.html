@@ -306,6 +306,9 @@ body {
   z-index: 2;
 }
 
+.landing-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.25rem; }
+.landing-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-secondary); background: var(--mint-soft); border: 1px solid var(--mint-border); border-radius: 20px; padding: 4px 12px; letter-spacing: 0.01em; }
+
 .landing-disclaimer {
   font-size: 12px;
   color: var(--text-tertiary);
@@ -593,10 +596,16 @@ body {
   transition: all var(--transition);
 }
 .club-input { flex: 1; min-width: 140px; }
-.loft-input { flex: 0 0 70px; text-align: center; }
+.loft-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.loft-input { flex: 0 0 54px; text-align: center; font-size: 11px; opacity: 0.38; }
+.loft-input:not(:disabled) { opacity: 0.5; }
 .club-input::placeholder, .loft-input::placeholder { color: var(--text-faint); }
-.club-input:focus, .loft-input:focus { border-color: var(--mint); background: rgba(255, 255, 255, 0.05); }
-.club-input:disabled, .loft-input:disabled { opacity: 0.35; }
+.club-input:focus { border-color: var(--mint); background: rgba(255, 255, 255, 0.05); }
+.loft-input:focus { border-color: var(--mint); background: rgba(255, 255, 255, 0.03); opacity: 0.72; }
+.club-input:disabled, .loft-input:disabled { opacity: 0.15; }
+.loft-info { position: relative; width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--border-subtle); color: var(--text-faint); font-size: 9px; display: flex; align-items: center; justify-content: center; cursor: default; flex-shrink: 0; user-select: none; }
+.loft-tooltip { display: none; position: absolute; bottom: calc(100% + 7px); right: -4px; width: 210px; background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-md); color: var(--text-secondary); font-size: 12px; line-height: 1.5; padding: 9px 11px; z-index: 20; pointer-events: none; box-shadow: var(--shadow-md); white-space: normal; text-align: left; }
+.loft-info:hover .loft-tooltip, .loft-info:focus .loft-tooltip { display: block; }
 .section-divider { border: none; border-top: 1px solid var(--border-faint); margin: 1.25rem 0; }
 #bag-content { transition: opacity var(--transition); }
 .no-clubs-toggle { display: block; }
@@ -926,6 +935,11 @@ body {
       </div>
     </div>
 
+    <div class="landing-badges">
+      <span class="landing-badge">⚡ AI-personalized plan</span>
+      <span class="landing-badge">🎯 Built for your game</span>
+    </div>
+
     <p class="landing-disclaimer" id="landing-disclaimer" data-i18n="landing.disclaimer">Built for golfers who want to improve. AI-generated plans — not a substitute for professional coaching or medical advice.</p>
   </section>
 
@@ -1134,9 +1148,9 @@ body {
 const I18N = {
   en: {
     'footer': 'GolfGains · Built by Luis Acosta',
-    'landing.eyebrow': 'AI golf coach · Free during beta',
+    'landing.eyebrow': 'Built for players trying to break 100 · Free during beta',
     'landing.headline': 'Your game has patterns. <em>We turn them into a plan.</em>',
-    'landing.sub': 'Tell us about your bag, your weaknesses, and your schedule. Get a 12-week training plan built specifically for your game.',
+    'landing.sub': 'Built for everyday golfers — not tour pros. Tell us about your bag, your weaknesses, and your schedule. Get a 12-week plan built specifically for your game.',
     'landing.cta': 'Start',
     'landing.metaTime': '~3 minutes',
     'landing.metaFree': 'No signup required',
@@ -1292,9 +1306,9 @@ const I18N = {
   },
   es: {
     'footer': 'GolfGains · Construido por Luis Acosta',
-    'landing.eyebrow': 'Coach de golf con IA · Gratis durante beta',
+    'landing.eyebrow': 'Diseñado para bajar de 100 · Gratis en beta',
     'landing.headline': 'Tu juego tiene patrones. <em>Los convertimos en un plan.</em>',
-    'landing.sub': 'Cuéntanos sobre tus palos, tus debilidades y tu horario. Obtén un plan de entrenamiento de 12 semanas hecho para tu juego.',
+    'landing.sub': 'Para golfistas del día a día — no pros. Cuéntanos sobre tus palos, tus debilidades y tu horario. Obtén un plan de 12 semanas hecho para tu juego.',
     'landing.cta': 'Empezar',
     'landing.metaTime': '~3 minutos',
     'landing.metaFree': 'Sin registro',
@@ -1657,7 +1671,7 @@ function renderClubSection(category, containerId) {
   CLUB_DEFS[category].forEach(club => {
     const row = document.createElement('div');
     row.className = 'club-row';
-    const loftInput = club.hasLoft ? `<input type="text" class="loft-input" placeholder="${club.defaultLoft}°" disabled data-club-id="${club.id}" oninput="updateClubLoft('${club.id}',this.value)" />` : '';
+    const loftInput = club.hasLoft ? `<div class="loft-wrap"><input type="text" class="loft-input" placeholder="${club.defaultLoft}°" disabled data-club-id="${club.id}" oninput="updateClubLoft('${club.id}',this.value)" /><span class="loft-info" tabindex="0">?<span class="loft-tooltip">Loft is the angle of the club face (e.g. 10.5°). Skip it if you're unsure — it's optional and won't affect your plan.</span></span></div>` : '';
     row.innerHTML = `
       <div class="club-checkbox" onclick="toggleClub(this,'${club.id}','${club.label}','${category}')">
         <div class="chk-box"><span class="chk-mark">✓</span></div>
@@ -2001,7 +2015,7 @@ async function generatePlan() {
     });
     if(!resp.ok) {
       const errData = await resp.json().catch(()=>({}));
-      throw new Error(errData.error?.message || ('HTTP ' + resp.status));
+      throw new Error(errData.error || ('HTTP ' + resp.status));
     }
     const data = await resp.json();
     const text = (data.content || []).filter(b=>b.type==='text').map(b=>b.text).join('');
@@ -2127,16 +2141,15 @@ async function savePlan() {
 
     const data = await resp.json();
 
+    if (!resp.ok) {
+      throw new Error(data.error || 'Could not send email.');
+    }
+
     // Hide the input row, show success
     document.querySelector('.email-row').style.display = 'none';
     document.getElementById('email-note').style.display = 'none';
     successEl.classList.add('visible');
-
-    if (data.emailSent) {
-      successMsg.textContent = I18N[currentLang]['email.capture.success'];
-    } else {
-      successMsg.textContent = I18N[currentLang]['email.capture.saved'];
-    }
+    successMsg.textContent = I18N[currentLang]['email.capture.success'];
 
   } catch (err) {
     submitBtn.disabled = false;

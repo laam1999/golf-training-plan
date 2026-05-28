@@ -1,14 +1,33 @@
 // Vercel serverless function — runs on Vercel's servers, NOT in the user's browser.
 // The Anthropic API key lives here as an environment variable, never exposed.
 
+// ── Rate limiting (in-memory) ──────────────────────────────────────────────────
+// Resets on server cold starts — good enough to block casual abuse.
+const RATE_LIMIT = 3;
+const WINDOW_MS = 24 * 60 * 60 * 1000;
+const ipLog = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const cutoff = now - WINDOW_MS;
+  const timestamps = (ipLog.get(ip) || []).filter(t => t > cutoff);
+  if (timestamps.length >= RATE_LIMIT) return true;
+  timestamps.push(now);
+  ipLog.set(ip, timestamps);
+  return false;
+}
+
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  // Basic CORS headers (allows the frontend to call this endpoint)
   res.setHeader('Content-Type', 'application/json');
+
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (isRateLimited(ip)) {
+    return res.status(429).json({ error: 'You have reached the limit of 3 plans per 24 hours. Please come back tomorrow!' });
+  }
 
   try {
     const { prompt } = req.body || {};
@@ -17,12 +36,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing or invalid prompt.' });
     }
 
-    // Safety check — reject anything too short (likely abuse)
     if (prompt.length < 100) {
       return res.status(400).json({ error: 'Prompt too short.' });
     }
 
-    // Safety check — reject anything way too long (could be abuse)
     if (prompt.length > 10000) {
       return res.status(400).json({ error: 'Prompt too long.' });
     }
@@ -40,7 +57,7 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 8000,
         messages: [{ role: 'user', content: prompt }]
       })
@@ -49,16 +66,14 @@ export default async function handler(req, res) {
     const data = await anthropicResp.json();
 
     if (!anthropicResp.ok) {
-      // Return a safe error message — don't leak internal details
       const message = data?.error?.message || 'Plan generation failed.';
       return res.status(anthropicResp.status).json({ error: message });
     }
 
-    // Pass the successful response back to the frontend
     return res.status(200).json(data);
 
   } catch (err) {
-    console.error('Generate plan error:', err);
+    console.error('Generate plan error:', err.message);
     return res.status(500).json({ error: 'Server error generating plan. Please try again.' });
   }
 }
