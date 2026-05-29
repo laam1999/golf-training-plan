@@ -5,4 +5,8 @@ node_modules/
 .vercel
 .DS_Store
 .claude/
-generate-plan.js
+
+# Next.js
+.next/
+next-env.d.ts
+out/

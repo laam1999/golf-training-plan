@@ -4,49 +4,59 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GolfGains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
+/* Design tokens — mirror the landing page (app/globals.css) so the
+   questionnaire and the marketing site read as one product. */
 :root {
-  --green-50: #E8F5EE;
-  --mint: #6EE7B7;
-  --mint-soft: rgba(110, 231, 183, 0.12);
-  --mint-border: rgba(110, 231, 183, 0.25);
-  --mint-text: #A7F3D0;
-  --green-700: #0F6E56;
-  --green-800: #085041;
-  --green-900: #053D31;
-  --green-950: #022820;
-  --fairway: #1F4530;
-  --fairway-dark: #16332A;
-  --fairway-darker: #0F2820;
-  --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.72);
-  --text-tertiary: rgba(255, 255, 255, 0.48);
-  --text-faint: rgba(255, 255, 255, 0.28);
-  --bg-primary: #1F4530;
-  --bg-secondary: #16332A;
-  --bg-tertiary: #0F2820;
-  --bg-elevated: #244D38;
-  --border-faint: rgba(255, 255, 255, 0.06);
-  --border-subtle: rgba(255, 255, 255, 0.10);
-  --border-default: rgba(255, 255, 255, 0.16);
-  --border-strong: rgba(255, 255, 255, 0.28);
-  --danger-bg: rgba(248, 113, 113, 0.10);
-  --danger-border: rgba(248, 113, 113, 0.35);
-  --danger-text: #FCA5A5;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.24);
+  --green-50: oklch(0.95 0.03 150);
+  --mint: oklch(0.65 0.18 145);
+  --mint-hover: oklch(0.70 0.17 145);
+  --mint-soft: oklch(0.65 0.18 145 / 0.12);
+  --mint-border: oklch(0.65 0.18 145 / 0.30);
+  --mint-text: oklch(0.80 0.15 145);
+  --mint-glow: oklch(0.65 0.18 145 / 0.55);
+  --green-700: oklch(0.55 0.16 145);
+  --green-800: oklch(0.45 0.13 145);
+  --green-900: oklch(0.12 0.015 150);
+  --green-950: oklch(0.08 0.01 150);
+  --fairway: oklch(0.16 0.02 150);
+  --fairway-dark: oklch(0.12 0.015 150);
+  --fairway-darker: oklch(0.10 0.012 150);
+  --text-primary: oklch(0.98 0 0);
+  --text-secondary: oklch(0.98 0 0 / 0.72);
+  --text-tertiary: oklch(0.65 0.01 150);
+  --text-faint: oklch(0.98 0 0 / 0.30);
+  --bg-primary: oklch(0.08 0.01 150);
+  --bg-secondary: oklch(0.12 0.015 150);
+  --bg-tertiary: oklch(0.10 0.012 150);
+  --bg-elevated: oklch(0.16 0.02 150);
+  --border-faint: oklch(1 0 0 / 0.06);
+  --border-subtle: oklch(1 0 0 / 0.10);
+  --border-default: oklch(0.30 0.02 150);
+  --border-strong: oklch(1 0 0 / 0.28);
+  --danger-bg: oklch(0.55 0.20 25 / 0.12);
+  --danger-border: oklch(0.55 0.20 25 / 0.38);
+  --danger-text: oklch(0.78 0.12 25);
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.20);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
   --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Glassmorphism — matches landing .glass-card */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, #1F4530 0%, #0F2820 60%, #053D31 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: oklch(0.08 0.01 150);
+  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.18 0.04 145 / 0.5) 0%, transparent 60%);
   background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
@@ -74,15 +84,23 @@ body {
   display: flex;
   align-items: center;
   gap: 9px;
+  text-decoration: none;
 }
-.brand-mark {
-  font-size: 18px;
-  line-height: 1;
+.brand-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--mint);
+  color: var(--green-950);
 }
+.brand-logo svg { width: 20px; height: 20px; }
 .brand-name {
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 .lang-switcher {
@@ -134,7 +152,7 @@ body {
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--mint);
-  box-shadow: 0 0 8px rgba(110, 231, 183, 0.6);
+  box-shadow: 0 0 8px var(--mint-glow);
 }
 .landing-headline {
   font-size: 38px;
@@ -180,9 +198,9 @@ body {
   gap: 8px;
 }
 .landing-cta:hover {
-  background: #84F0C5;
+  background: var(--mint-hover);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(110, 231, 183, 0.2);
+  box-shadow: 0 8px 24px oklch(0.65 0.18 145 / 0.28);
 }
 .landing-cta:active { transform: translateY(0); }
 .landing-cta-arrow {
@@ -206,7 +224,9 @@ body {
 
 /* Preview card */
 .preview {
-  background: var(--bg-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 1.5rem;
@@ -301,7 +321,7 @@ body {
 .preview-fade {
   height: 32px;
   margin: -8px -1.5rem -1.5rem;
-  background: linear-gradient(180deg, transparent, var(--bg-secondary) 80%);
+  background: linear-gradient(180deg, transparent, oklch(0.10 0.012 150) 90%);
   position: relative;
   z-index: 2;
 }
@@ -512,7 +532,7 @@ body {
   font-family: inherit;
   letter-spacing: -0.005em;
 }
-.btn-next:hover { background: #84F0C5; transform: translateY(-1px); }
+.btn-next:hover { background: var(--mint-hover); transform: translateY(-1px); }
 .btn-next:active { transform: translateY(0); }
 .btn-next:disabled {
   background: rgba(255, 255, 255, 0.08);
@@ -546,7 +566,7 @@ body {
 .name-input:focus, .text-input:focus, .email-input:focus {
   border-color: var(--mint);
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.08);
+  box-shadow: 0 0 0 4px oklch(0.65 0.18 145 / 0.18);
 }
 
 /* ── Club section ── */
@@ -635,7 +655,9 @@ body {
   line-height: 1.5;
 }
 .plan-output {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 2rem 2.25rem;
@@ -765,13 +787,15 @@ body {
   font-weight: 500;
 }
 .action-btn.primary:hover {
-  background: #84F0C5;
+  background: var(--mint-hover);
   color: var(--green-950);
 }
 
 /* ── Email capture ── */
 .email-capture {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 1.5rem 1.75rem;
@@ -814,7 +838,7 @@ body {
   transition: all var(--transition);
   letter-spacing: -0.005em;
 }
-.email-submit-btn:hover { background: #84F0C5; transform: translateY(-1px); }
+.email-submit-btn:hover { background: var(--mint-hover); transform: translateY(-1px); }
 .email-submit-btn:disabled {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text-faint);
@@ -887,17 +911,22 @@ body {
 
 <div class="container">
   <header class="header">
-    <div class="brand">
-      <span class="brand-mark">⛳</span>
+    <a href="/" class="brand" aria-label="GolfGains home">
+      <span class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="3" fill="currentColor" />
+          <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </span>
       <span class="brand-name">GolfGains</span>
-    </div>
+    </a>
     <div class="lang-switcher">
       <button class="lang-btn active" id="lang-en" onclick="setLanguage('en')">EN</button>
       <button class="lang-btn" id="lang-es" onclick="setLanguage('es')">ES</button>
     </div>
   </header>
 
-  <section id="landing" class="landing">
+  <section id="landing" class="landing" style="display:none">
     <div class="landing-eyebrow"><span data-i18n="landing.eyebrow">AI golf coach · Free during beta</span></div>
     <h1 class="landing-headline" id="landing-headline" data-i18n-html="landing.headline">Your game has patterns. <em>We turn them into a plan.</em></h1>
     <p class="landing-sub" id="landing-sub" data-i18n="landing.sub">Tell us about your bag, your weaknesses, and your schedule. Get a 12-week training plan built specifically for your game.</p>
@@ -943,7 +972,7 @@ body {
     <p class="landing-disclaimer" id="landing-disclaimer" data-i18n="landing.disclaimer">Built for golfers who want to improve. AI-generated plans — not a substitute for professional coaching or medical advice.</p>
   </section>
 
-  <div id="questionnaire" style="display:none">
+  <div id="questionnaire">
     <div class="stepper-wrap">
       <div class="stepper">
         <div class="stepper-section" id="stepper-1" data-i18n="stepper.profile">Profile</div>
@@ -2234,8 +2263,7 @@ function restart() {
   document.getElementById('error-state').style.display = 'none';
   document.getElementById('action-row').style.display = 'none';
   document.getElementById('loading-state').style.display = 'flex';
-  document.getElementById('questionnaire').style.display = 'none';
-  document.getElementById('landing').style.display = 'block';
+  document.getElementById('questionnaire').style.display = 'block';
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-0').classList.add('active');
   currentStep = 0;

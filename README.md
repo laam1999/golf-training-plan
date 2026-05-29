@@ -1,16 +1,29 @@
-# Golf Training Plan Generator
+# GolfGains
 
 AI-powered personalized 12-week golf training plans. Built by Luis Acosta.
 
 ## Structure
 
-- `index.html` — The frontend (the questionnaire and result page)
-- `api/generate-plan.js` — Serverless function that calls Anthropic API securely
+- `app/` — Next.js landing page (marketing site)
+- `components/landing/` — Landing page sections
+- `components/ui/` — shadcn/ui components
+- `public/plan.html` — The questionnaire + result page (served at `/plan.html`)
+- `pages/api/generate-plan.js` — Serverless function that calls the Anthropic API securely
+- `pages/api/save-email.js` — Serverless function that emails the plan via Resend
 
 ## Environment Variables
 
-The Anthropic API key must be set as `ANTHROPIC_API_KEY` in Vercel's environment variables. Never commit the key to GitHub.
+Set these in Vercel's environment variables (never commit keys):
+
+- `ANTHROPIC_API_KEY` — for plan generation
+- `RESEND_API_KEY` — for emailing plans
+- `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` — for persistent rate limiting
 
 ## Local Development
 
-This app requires the Vercel serverless function to work. To run locally, use Vercel CLI (`vercel dev`). Otherwise, deploy to Vercel for full functionality.
+```bash
+npm install
+npm run dev
+```
+
+Visit `http://localhost:3000` for the landing page and `http://localhost:3000/plan.html` for the questionnaire.
