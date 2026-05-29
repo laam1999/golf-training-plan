@@ -82,10 +82,10 @@ export function OnboardingPreview() {
 
             <ul className="mt-8 space-y-4">
               {[
-                "Takes less than 2 minutes",
-                "No credit card required",
-                "Instant personalized plan",
-                "Start practicing immediately",
+                "Takes just a few minutes",
+                "No signup, no credit card",
+                "Plan generates in ~30 seconds",
+                "Email or print it and start today",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-foreground">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20">
@@ -171,13 +171,25 @@ export function OnboardingPreview() {
                 >
                   Back
                 </button>
-                <Button
-                  onClick={handleNext}
-                  className="group bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  {currentStep === steps.length - 1 ? "Get My Plan" : "Continue"}
-                  <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
+                {currentStep === steps.length - 1 ? (
+                  <Button
+                    asChild
+                    className="group bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    <a href="/plan.html">
+                      Get My Plan
+                      <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </a>
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleNext}
+                    className="group bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Continue
+                    <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </Button>
+                )}
               </div>
             </div>
 

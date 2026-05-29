@@ -60,12 +60,6 @@ export function Header() {
             >
               Features
             </a>
-            <a
-              href="#testimonials"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Testimonials
-            </a>
           </nav>
 
           {/* CTA Button */}
@@ -102,13 +96,6 @@ export function Header() {
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Features
-              </a>
-              <a
-                href="#testimonials"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Testimonials
               </a>
               <div className="pt-4 border-t border-border">
                 <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">

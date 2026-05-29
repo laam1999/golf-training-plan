@@ -1,35 +1,28 @@
 "use client"
 
-import { Clipboard, LineChart, Sparkles, UserCheck } from "lucide-react"
+import { Clipboard, Sparkles, Flag } from "lucide-react"
 
 const steps = [
   {
     number: "01",
     icon: Clipboard,
-    title: "Tell Us About Your Game",
+    title: "Tell us about your game",
     description:
-      "Share your handicap, clubs in the bag, available practice time, and what aspects of your game need work.",
+      "Your handicap, the clubs in your bag, how often you practice, and the parts of your game that need work.",
   },
   {
     number: "02",
     icon: Sparkles,
-    title: "AI Builds Your Plan",
+    title: "AI builds your plan in ~30 seconds",
     description:
-      "Our AI analyzes your profile against thousands of improvement patterns to create your personalized 12-week roadmap.",
+      "A 12-week roadmap in 3 phases — every drill references your actual clubs, with specific reps and a measurable success marker.",
   },
   {
     number: "03",
-    icon: UserCheck,
-    title: "Practice With Purpose",
+    icon: Flag,
+    title: "Take it to the range",
     description:
-      "Follow structured drills with video guidance, track your sessions, and get real-time feedback on your progress.",
-  },
-  {
-    number: "04",
-    icon: LineChart,
-    title: "Watch Your Scores Drop",
-    description:
-      "See measurable improvement as the plan adapts to your progress. Average users drop 4+ strokes in 12 weeks.",
+      "Email your plan to yourself or print it, and practice with a clear week-by-week structure. It's yours to keep.",
   },
 ]
 
@@ -49,12 +42,12 @@ export function HowItWorks() {
             How GolfGains Works
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground text-pretty">
-            From assessment to achievement in four simple steps.
+            From questionnaire to practice plan in three simple steps.
           </p>
         </div>
 
         {/* Steps grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-3">
           {steps.map((step, index) => {
             const Icon = step.icon
             return (

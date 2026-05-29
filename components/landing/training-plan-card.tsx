@@ -19,7 +19,7 @@ export function TrainingPlanCard() {
               Training Built Around Your Life
             </h2>
             <p className="mt-6 text-lg text-muted-foreground leading-relaxed text-pretty">
-              Tell us about your clubs, schedule, and goals. Our AI analyzes thousands of data points to create a plan that fits your game and your lifestyle.
+              Tell us about your clubs, schedule, and goals. Every plan is written from scratch for you — specific drills tied to the equipment you actually own and the time you actually have.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -45,86 +45,58 @@ export function TrainingPlanCard() {
             </div>
           </div>
 
-          {/* Sample Plan Card */}
+          {/* Sample Plan Card — an honest excerpt of a real generated plan */}
           <div className="relative">
             <div className="glass-card rounded-2xl p-6 md:p-8">
               {/* Card header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <div>
-                  <span className="text-xs font-medium text-muted-foreground">Week 5 of 12</span>
-                  <h3 className="text-xl font-semibold text-foreground">Mike&apos;s Training Plan</h3>
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Sample plan output
+                  </span>
+                  <h3 className="text-xl font-semibold text-foreground">Your 12-week plan</h3>
                 </div>
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20">
-                  <span className="text-lg font-bold text-primary">M</span>
-                </div>
+                <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs text-primary">
+                  Personalized
+                </span>
               </div>
 
-              {/* Progress bar */}
-              <div className="mb-6">
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-muted-foreground">Overall Progress</span>
-                  <span className="text-foreground font-medium">42%</span>
-                </div>
-                <div className="h-2 rounded-full bg-secondary">
-                  <div className="h-full w-[42%] rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-500" />
-                </div>
-              </div>
-
-              {/* This week's focus */}
+              {/* Phase 1 excerpt */}
               <div className="space-y-4">
-                <h4 className="text-sm font-semibold text-foreground">This Week&apos;s Focus</h4>
-                
-                {/* Drill items */}
+                <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                  Phase 1 · Weeks 1–4 · Foundation
+                </span>
+
                 {[
-                  { name: "50-Yard Pitch Control", duration: "20 min", complete: true },
-                  { name: "Bunker Exit Drill", duration: "15 min", complete: true },
-                  { name: "Lag Putting Distance", duration: "25 min", complete: false },
-                  { name: "Pre-Shot Routine Practice", duration: "10 min", complete: false },
-                ].map((drill) => (
-                  <div
-                    key={drill.name}
-                    className={`flex items-center justify-between rounded-lg p-3 transition-colors ${
-                      drill.complete ? "bg-primary/10" : "bg-secondary"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
-                          drill.complete
-                            ? "border-primary bg-primary"
-                            : "border-muted-foreground"
-                        }`}
-                      >
-                        {drill.complete && (
-                          <svg className="h-3 w-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
-                        )}
-                      </div>
-                      <span className={`text-sm ${drill.complete ? "text-primary" : "text-foreground"}`}>
-                        {drill.name}
-                      </span>
+                  {
+                    name: "Hybrid tee drill — 5-hybrid",
+                    detail: "15 balls, 70% effort. Goal: 10 of 15 airborne, 120+ yds.",
+                  },
+                  {
+                    name: "Gate putting — your blade putter",
+                    detail: "2 tees a putter-head wide, 6 ft. Goal: 8 of 10 through clean.",
+                  },
+                  {
+                    name: "Wedge ladder — 52° / 56°",
+                    detail: "10 balls each to 30/50/70 yds. Goal: land within 15 ft.",
+                  },
+                ].map((drill, i) => (
+                  <div key={drill.name} className="flex gap-3 rounded-lg border border-border bg-secondary/40 p-3">
+                    <span className="shrink-0 text-sm font-semibold text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <div className="text-sm font-medium text-foreground">{drill.name}</div>
+                      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{drill.detail}</p>
                     </div>
-                    <span className="text-xs text-muted-foreground">{drill.duration}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Stats row */}
-              <div className="mt-6 grid grid-cols-3 gap-4 pt-6 border-t border-border">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">-2.4</div>
-                  <div className="text-xs text-muted-foreground">Strokes</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">18</div>
-                  <div className="text-xs text-muted-foreground">Drills Done</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground">6.5</div>
-                  <div className="text-xs text-muted-foreground">Hours</div>
-                </div>
-              </div>
+              {/* Footer note */}
+              <p className="mt-6 border-t border-border pt-4 text-xs text-muted-foreground">
+                Every drill names your clubs, sets real reps, and gives a measurable success marker — across all 12 weeks.
+              </p>
             </div>
 
             {/* Decorative elements */}

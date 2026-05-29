@@ -15,7 +15,7 @@ export function CTASection() {
           Ready to Transform Your Game?
         </h2>
         <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto text-pretty">
-          Join 50,000+ golfers who are lowering their scores with personalized AI coaching. Your 12-week journey starts now.
+          Answer a few questions about your game and get a specific 12-week practice plan in about 30 seconds. Free, no signup.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -40,22 +40,20 @@ export function CTASection() {
             <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span className="text-sm">Secure & Private</span>
+            <span className="text-sm">Secure & private</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
-            <span className="text-sm">4.9 App Store Rating</span>
+            <span className="text-sm">Ready in ~30 seconds</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M20 6L9 17l-5-5" />
             </svg>
-            <span className="text-sm">50K+ Active Users</span>
+            <span className="text-sm">Free · no signup</span>
           </div>
         </div>
       </div>

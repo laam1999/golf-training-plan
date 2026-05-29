@@ -19,19 +19,19 @@ export function Hero() {
           <div className="glass-card mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse-soft" />
             <span className="text-xs font-medium text-muted-foreground">
-              AI-Powered Golf Coaching
+              Free AI golf coach · No signup
             </span>
           </div>
 
           {/* Main headline */}
           <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl text-balance">
-            Your Personal Path to
-            <span className="block text-primary mt-2">Lower Scores</span>
+            A 12-week practice plan
+            <span className="block text-primary mt-2">built around your game</span>
           </h1>
 
           {/* Subheadline */}
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl leading-relaxed text-pretty">
-            Transform your golf game with a personalized 12-week improvement plan built around your clubs, weaknesses, practice schedule, and goals.
+            Tell us your clubs, your weak spots, and how often you practice. Get a specific, drill-by-drill 12-week roadmap — named clubs, real reps, measurable goals, not generic tips. Email it or print it and start this week.
           </p>
 
           {/* CTA Buttons */}
@@ -51,9 +51,9 @@ export function Hero() {
           {/* Proof points */}
           <div className="mt-16 flex flex-wrap justify-center gap-4">
             {[
-              "12-week personalized plan",
+              "Generates in ~30 seconds",
               "Built around your clubs & schedule",
-              "100% free · no signup needed",
+              "Free · no signup",
             ].map((item) => (
               <span
                 key={item}
@@ -64,48 +64,43 @@ export function Hero() {
             ))}
           </div>
 
-          {/* Preview Card */}
-          <div className="mt-16 w-full max-w-4xl">
+          {/* Preview Card — an honest excerpt of a real generated plan */}
+          <div className="mt-16 w-full max-w-3xl">
             <div className="glass-card rounded-2xl p-1">
-              <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-card">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="grid w-full max-w-2xl gap-4 p-6">
-                    {/* Sample plan preview */}
-                    <div className="glass-card rounded-xl p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-medium text-foreground">Week 3 Focus</span>
-                        <span className="text-xs text-primary">In Progress</span>
+              <div className="relative overflow-hidden rounded-xl bg-card p-6 text-left sm:p-8">
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    Sample plan output
+                  </span>
+                  <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs text-primary">
+                    Personalized
+                  </span>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">
+                  Luis&apos;s 12-week plan to break 100
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Built around your Callaway Edge irons · 1hr practice 2x/week · range &amp; chipping area
+                </p>
+
+                <div className="mt-5 border-t border-border pt-5">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                    Phase 1 · Weeks 1–4 · Foundation
+                  </span>
+                  <div className="mt-3 flex gap-3 rounded-xl border border-border bg-secondary/40 p-4">
+                    <span className="shrink-0 text-sm font-semibold text-primary">01</span>
+                    <div>
+                      <div className="text-sm font-medium text-foreground">
+                        Hybrid tee drill — 5-hybrid
                       </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Short Game Mastery</h3>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                          <div className="h-2 flex-1 rounded-full bg-secondary">
-                            <div className="h-full w-[65%] rounded-full bg-primary" />
-                          </div>
-                          <span className="text-xs text-muted-foreground">65%</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">Chipping</span>
-                          <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">Pitching</span>
-                          <span className="rounded-full bg-primary/20 px-3 py-1 text-xs text-primary">Bunker Play</span>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Mini stats */}
-                    <div className="grid grid-cols-3 gap-3">
-                      {[
-                        { label: "Drills Done", value: "12/18" },
-                        { label: "Practice Time", value: "4.5hrs" },
-                        { label: "Improvement", value: "+2.3" },
-                      ].map((item) => (
-                        <div key={item.label} className="glass-card rounded-lg p-3 text-center">
-                          <div className="text-lg font-semibold text-foreground">{item.value}</div>
-                          <div className="text-xs text-muted-foreground">{item.label}</div>
-                        </div>
-                      ))}
+                      <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                        15 balls per session, 70% effort, tee at half-inch. Goal: 10 of 15 airborne and 120+ yards consistently.
+                      </p>
                     </div>
                   </div>
                 </div>
+                {/* Fade to imply more content below */}
+                <div className="pointer-events-none mt-2 h-10 bg-gradient-to-b from-transparent to-card" />
               </div>
             </div>
           </div>

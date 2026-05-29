@@ -4,36 +4,28 @@ import { Check, Target, TrendingUp, Trophy } from "lucide-react"
 
 const phases = [
   {
-    week: "Weeks 1-3",
+    week: "Weeks 1-4",
     title: "Foundation",
-    description: "Build your baseline with assessment rounds and identify key improvement areas.",
+    description: "Lock in solid contact and fundamentals with drills built around the clubs in your bag.",
     icon: Target,
     color: "primary",
-    milestones: ["Handicap assessment", "Swing analysis", "Goal setting"],
+    milestones: ["Named-club drills", "Weekly practice structure", "Measurable success markers"],
   },
   {
-    week: "Weeks 4-6",
-    title: "Development",
-    description: "Targeted drills and practice routines designed for your specific weaknesses.",
+    week: "Weeks 5-8",
+    title: "Sharpening",
+    description: "Attack the specific weaknesses you told us about, with progressively harder drills.",
     icon: TrendingUp,
     color: "accent",
-    milestones: ["Custom drill library", "Video feedback", "Weekly check-ins"],
+    milestones: ["Drills for your weak spots", "Progressive difficulty", "Mid-plan checkpoint"],
   },
   {
-    week: "Weeks 7-9",
-    title: "Integration",
-    description: "Combine skills on the course with strategic play and mental game coaching.",
-    icon: Check,
-    color: "primary",
-    milestones: ["Course management", "Mental strategies", "Pressure practice"],
-  },
-  {
-    week: "Weeks 10-12",
+    week: "Weeks 9-12",
     title: "Performance",
-    description: "Peak performance phase with tournament prep and score optimization.",
+    description: "Bring it to the course — pre-shot routine, course management, and your 12-week goal.",
     icon: Trophy,
-    color: "accent",
-    milestones: ["Score tracking", "Competition prep", "Goal achievement"],
+    color: "primary",
+    milestones: ["Course-play focus", "Pre-shot routine", "12-week goal check"],
   },
 ]
 
@@ -50,7 +42,7 @@ export function ProgressionTimeline() {
             Your 12-Week Journey
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground text-pretty">
-            A scientifically-designed progression that transforms your game phase by phase.
+            A focused 12-week progression — fundamentals first, then your weak spots, then the course.
           </p>
         </div>
 
@@ -62,7 +54,7 @@ export function ProgressionTimeline() {
           </div>
 
           {/* Timeline cards */}
-          <div className="grid gap-8 lg:grid-cols-4">
+          <div className="grid gap-8 lg:grid-cols-3">
             {phases.map((phase, index) => {
               const Icon = phase.icon
               return (

@@ -3,7 +3,6 @@ import { Hero } from "@/components/landing/hero"
 import { ProgressionTimeline } from "@/components/landing/progression-timeline"
 import { HowItWorks } from "@/components/landing/how-it-works"
 import { TrainingPlanCard } from "@/components/landing/training-plan-card"
-import { PersonalizedInsights } from "@/components/landing/personalized-insights"
 import { OnboardingPreview } from "@/components/landing/onboarding-preview"
 import { CTASection } from "@/components/landing/cta-section"
 import { Footer } from "@/components/landing/footer"
@@ -16,7 +15,6 @@ export default function Home() {
       <ProgressionTimeline />
       <HowItWorks />
       <TrainingPlanCard />
-      <PersonalizedInsights />
       <OnboardingPreview />
       <CTASection />
       <Footer />
