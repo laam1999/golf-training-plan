@@ -9,9 +9,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'GolfGains | AI-Powered Golf Coaching',
-  description: 'Transform your golf game with personalized 12-week improvement plans powered by AI. Get coaching tailored to your clubs, weaknesses, schedule, and goals.',
-  generator: 'v0.app',
+  metadataBase: new URL('https://www.golfgains.app'),
+  title: 'GolfGains | A 12-week golf practice plan built around your game',
+  description: 'Get a specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup — email or print it and start this week.',
+  applicationName: 'GolfGains',
+  keywords: ['golf practice plan', 'AI golf coach', 'golf training plan', 'lower your handicap', 'golf drills'],
+  authors: [{ name: 'Luis Acosta' }],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'GolfGains',
+    url: 'https://www.golfgains.app',
+    title: 'GolfGains | A 12-week golf practice plan built around your game',
+    description: 'A specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GolfGains | Your 12-week golf practice plan',
+    description: 'A specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup.',
+  },
   icons: {
     icon: [
       {
