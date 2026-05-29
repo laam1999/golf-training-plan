@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ArrowRight, Check, ChevronRight } from "lucide-react"
+import { track } from "@vercel/analytics"
 import { Button } from "@/components/ui/button"
 
 const steps = [
@@ -176,7 +177,7 @@ export function OnboardingPreview() {
                     asChild
                     className="group bg-primary text-primary-foreground hover:bg-primary/90"
                   >
-                    <a href="/plan.html">
+                    <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "onboarding_preview" })}>
                       Get My Plan
                       <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </a>

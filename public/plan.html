@@ -7,6 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Vercel Web Analytics — custom funnel events. No-ops locally; live on Vercel. -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  function trackEvent(name, data) {
+    try { window.va('event', { name: name, data: data || {} }); } catch (e) {}
+  }
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <style>
 /* Design tokens — mirror the landing page (app/globals.css) so the
    questionnaire and the marketing site read as one product. */
@@ -1851,12 +1859,13 @@ function toggleChkMax(el, key, val, max) {
 
 function nextStep(from) {
   document.getElementById('step-'+from).classList.remove('active');
-  if(from === 0) answers.name = nameInput.value.trim();
+  if(from === 0) { answers.name = nameInput.value.trim(); trackEvent('questionnaire_started'); }
   const next = from + 1;
   if(next < TOTAL_STEPS) {
     document.getElementById('step-'+next).classList.add('active');
     currentStep = next;
     updateProgress(next);
+    trackEvent('questionnaire_step', { step: next });
     window.scrollTo({top:0,behavior:'smooth'});
   } else {
     generatePlan();
@@ -2060,11 +2069,13 @@ async function generatePlan() {
       document.getElementById('plan-output').insertAdjacentHTML('beforeend', warningHtml);
     }
     document.getElementById('action-row').style.display = 'flex';
+    trackEvent('plan_generated', { language: currentLang, truncated: data.stop_reason === 'max_tokens' });
   } catch(err) {
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('error-state').style.display = 'block';
     document.getElementById('err-detail').textContent = 'Could not generate plan: ' + (err.message || 'unknown error');
     document.getElementById('action-row').style.display = 'flex';
+    trackEvent('plan_generate_failed', { message: (err.message || 'unknown').slice(0, 80) });
   }
 }
 
@@ -2107,6 +2118,7 @@ function emailPlan() {
     return out;
   }
 
+  trackEvent('plan_emailed_self', { language: currentLang });
   const planText = htmlToText(planEl).replace(/\n{3,}/g, '\n\n').trim();
   const subject = I18N[currentLang]['email.subject'];
   const intro = I18N[currentLang]['email.intro'];
@@ -2179,6 +2191,7 @@ async function savePlan() {
     document.getElementById('email-note').style.display = 'none';
     successEl.classList.add('visible');
     successMsg.textContent = I18N[currentLang]['email.capture.success'];
+    trackEvent('email_saved', { language: currentLang });
 
   } catch (err) {
     submitBtn.disabled = false;
@@ -2196,6 +2209,7 @@ function downloadPdf() {
   const sub = document.getElementById('result-sub').textContent;
   const w = window.open('', '_blank');
   if(!w) { alert(currentLang === 'es' ? 'Por favor permite las ventanas emergentes para descargar el PDF.' : 'Please allow popups to download the PDF.'); return; }
+  trackEvent('plan_downloaded_pdf', { language: currentLang });
   w.document.write(`<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>${title}</title>
 <style>

@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowRight } from "lucide-react"
+import { track } from "@vercel/analytics"
 import { Button } from "@/components/ui/button"
 
 export function Hero() {
@@ -41,7 +42,7 @@ export function Hero() {
               size="lg"
               className="group bg-primary text-primary-foreground hover:bg-primary/90 px-8"
             >
-              <a href="/plan.html">
+              <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "hero" })}>
                 Get Your Free Plan
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>

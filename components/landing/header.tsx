@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
+import { track } from "@vercel/analytics"
 import { Button } from "@/components/ui/button"
 
 export function Header() {
@@ -65,7 +66,7 @@ export function Header() {
           {/* CTA Button */}
           <div className="hidden items-center md:flex">
             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="/plan.html">Get My Plan</a>
+              <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "header" })}>Get My Plan</a>
             </Button>
           </div>
 
@@ -99,7 +100,7 @@ export function Header() {
               </a>
               <div className="pt-4 border-t border-border">
                 <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  <a href="/plan.html">Get My Plan</a>
+                  <a href="/plan.html" onClick={() => { setIsMobileMenuOpen(false); track("cta_get_plan", { location: "header_mobile" }); }}>Get My Plan</a>
                 </Button>
               </div>
             </nav>
