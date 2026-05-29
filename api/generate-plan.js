@@ -1,20 +1,42 @@
 // Vercel serverless function — runs on Vercel's servers, NOT in the user's browser.
 // The Anthropic API key lives here as an environment variable, never exposed.
 
-// ── Rate limiting (in-memory) ──────────────────────────────────────────────────
-// Resets on server cold starts — good enough to block casual abuse.
 const RATE_LIMIT = 3;
-const WINDOW_MS = 24 * 60 * 60 * 1000;
-const ipLog = new Map();
+const WINDOW_SECS = 24 * 60 * 60; // 24 hours
 
-function isRateLimited(ip) {
-  const now = Date.now();
-  const cutoff = now - WINDOW_MS;
-  const timestamps = (ipLog.get(ip) || []).filter(t => t > cutoff);
-  if (timestamps.length >= RATE_LIMIT) return true;
-  timestamps.push(now);
-  ipLog.set(ip, timestamps);
-  return false;
+// ── Persistent rate limiting via Upstash Redis REST API ───────────────────────
+// Falls back to allowing the request if Redis isn't configured (dev/local).
+async function isRateLimited(ip) {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    // Redis not configured — skip rate limiting (safe for local dev)
+    return false;
+  }
+
+  const key = `rl:${ip}`;
+
+  try {
+    // Increment the counter for this IP
+    const incrResp = await fetch(`${url}/incr/${key}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const { result: count } = await incrResp.json();
+
+    // On first request, set a 24-hour expiry
+    if (count === 1) {
+      await fetch(`${url}/expire/${key}/${WINDOW_SECS}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }
+
+    return count > RATE_LIMIT;
+  } catch (err) {
+    // If Redis is unreachable, fail open (don't block users)
+    console.warn('Rate limit check failed:', err.message);
+    return false;
+  }
 }
 
 export default async function handler(req, res) {
@@ -25,7 +47,8 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
-  if (isRateLimited(ip)) {
+
+  if (await isRateLimited(ip)) {
     return res.status(429).json({ error: 'You have reached the limit of 3 plans per 24 hours. Please come back tomorrow!' });
   }
 
