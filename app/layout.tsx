@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.golfgains.app'),
+  metadataBase: new URL('https://www.caddova.com'),
   title: 'Caddova | A 12-week golf practice plan built around your game',
   description: 'Get a specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup — email or print it and start this week.',
   applicationName: 'Caddova',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Caddova',
-    url: 'https://www.golfgains.app',
+    url: 'https://www.caddova.com',
     title: 'Caddova | A 12-week golf practice plan built around your game',
     description: 'A specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup.',
   },

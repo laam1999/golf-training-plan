@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const BASE = 'https://www.golfgains.app'
+const BASE = 'https://www.caddova.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
