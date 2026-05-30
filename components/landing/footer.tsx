@@ -70,7 +70,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:hello@golfgains.app" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a href="mailto:hello@caddova.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </a>
               </li>

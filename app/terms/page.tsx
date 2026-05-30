@@ -13,7 +13,7 @@ export default function TermsPage() {
       <p>
         By using Caddova, you agree to these terms. If you don&rsquo;t agree, please don&rsquo;t
         use the service. Questions? Email{" "}
-        <a href="mailto:hello@golfgains.app">hello@golfgains.app</a>.
+        <a href="mailto:hello@caddova.com">hello@caddova.com</a>.
       </p>
 
       <h2>What Caddova is</h2>

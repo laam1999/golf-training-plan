@@ -14,7 +14,7 @@ export default function PrivacyPage() {
         Caddova (&ldquo;we,&rdquo; &ldquo;us&rdquo;) is a free tool that generates a personalized
         12-week golf practice plan. This policy explains what we collect, why, and the choices you
         have. Questions? Email{" "}
-        <a href="mailto:hello@golfgains.app">hello@golfgains.app</a>.
+        <a href="mailto:hello@caddova.com">hello@caddova.com</a>.
       </p>
 
       <h2>What we collect</h2>
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
         <li>Unsubscribe from emails anytime via the link in any message.</li>
         <li>
           Request a copy or deletion of your data by emailing{" "}
-          <a href="mailto:hello@golfgains.app">hello@golfgains.app</a>.
+          <a href="mailto:hello@caddova.com">hello@caddova.com</a>.
         </li>
       </ul>
 
