@@ -15,14 +15,14 @@ export function LegalPage({
       {/* Minimal header */}
       <header className="border-b border-border">
         <div className="mx-auto flex max-w-3xl items-center px-4 py-5 sm:px-6">
-          <Link href="/" className="flex items-center gap-2" aria-label="GolfGains home">
+          <Link href="/" className="flex items-center gap-2" aria-label="Caddova home">
             <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
               <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-primary-foreground">
                 <circle cx="12" cy="12" r="3" fill="currentColor" />
                 <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </span>
-            <span className="text-xl font-semibold tracking-tight text-foreground">GolfGains</span>
+            <span className="text-xl font-semibold tracking-tight text-foreground">Caddova</span>
           </Link>
         </div>
       </header>

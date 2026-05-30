@@ -1,4 +1,4 @@
-# GolfGains
+# Caddova
 
 AI-powered personalized 12-week golf training plans. Built by Luis Acosta.
 

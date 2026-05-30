@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'GolfGains — a 12-week golf practice plan built around your game'
+export const alt = 'Caddova — a 12-week golf practice plan built around your game'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -37,7 +37,7 @@ export default function OpengraphImage() {
           >
             <div style={{ width: 22, height: 22, borderRadius: 22, background: '#06140d' }} />
           </div>
-          <div style={{ display: 'flex', fontSize: 36, fontWeight: 600 }}>GolfGains</div>
+          <div style={{ display: 'flex', fontSize: 36, fontWeight: 600 }}>Caddova</div>
         </div>
 
         {/* Headline */}

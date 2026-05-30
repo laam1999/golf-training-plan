@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal/legal-page"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | GolfGains",
-  description: "How GolfGains collects, uses, and protects your information.",
+  title: "Privacy Policy | Caddova",
+  description: "How Caddova collects, uses, and protects your information.",
   alternates: { canonical: "/privacy" },
 }
 
@@ -11,7 +11,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage title="Privacy Policy" updated="May 29, 2026">
       <p>
-        GolfGains (&ldquo;we,&rdquo; &ldquo;us&rdquo;) is a free tool that generates a personalized
+        Caddova (&ldquo;we,&rdquo; &ldquo;us&rdquo;) is a free tool that generates a personalized
         12-week golf practice plan. This policy explains what we collect, why, and the choices you
         have. Questions? Email{" "}
         <a href="mailto:hello@golfgains.app">hello@golfgains.app</a>.

@@ -24,7 +24,7 @@ export function Footer() {
                 </svg>
               </div>
               <span className="text-xl font-semibold tracking-tight text-foreground">
-                GolfGains
+                Caddova
               </span>
             </div>
             <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
@@ -81,7 +81,7 @@ export function Footer() {
         {/* Bottom row */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} GolfGains · Built by Luis Acosta
+            &copy; {new Date().getFullYear()} Caddova · Built by Luis Acosta
           </p>
           <p className="text-xs text-muted-foreground/70 max-w-md md:text-right">
             AI-generated plans for general guidance — not a substitute for professional coaching or

@@ -9,7 +9,7 @@ const testimonials = [
     location: "San Francisco, CA",
     avatar: "D",
     quote:
-      "I was stuck at 16 for years. GolfGains identified my putting as the issue I was ignoring. 12 weeks later, I broke 80 for the first time.",
+      "I was stuck at 16 for years. Caddova identified my putting as the issue I was ignoring. 12 weeks later, I broke 80 for the first time.",
     rating: 5,
   },
   {
@@ -27,7 +27,7 @@ const testimonials = [
     location: "Chicago, IL",
     avatar: "M",
     quote:
-      "Breaking into single digits felt impossible until GolfGains. The course management insights alone were worth it. This is the real deal.",
+      "Breaking into single digits felt impossible until Caddova. The course management insights alone were worth it. This is the real deal.",
     rating: 5,
   },
   {
@@ -36,7 +36,7 @@ const testimonials = [
     location: "Seattle, WA",
     avatar: "J",
     quote:
-      "As a busy mom, I needed efficient practice. GolfGains gave me a plan that worked with my life. Six strokes down in three months!",
+      "As a busy mom, I needed efficient practice. Caddova gave me a plan that worked with my life. Six strokes down in three months!",
     rating: 5,
   },
   {
@@ -54,7 +54,7 @@ const testimonials = [
     location: "Denver, CO",
     avatar: "E",
     quote:
-      "Started golf during the pandemic with no idea what I was doing. GolfGains gave me structure and confidence. Now I actually love the game.",
+      "Started golf during the pandemic with no idea what I was doing. Caddova gave me structure and confidence. Now I actually love the game.",
     rating: 5,
   },
 ]

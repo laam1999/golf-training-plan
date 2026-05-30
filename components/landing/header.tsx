@@ -43,7 +43,7 @@ export function Header() {
               </svg>
             </div>
             <span className="text-xl font-semibold tracking-tight text-foreground">
-              GolfGains
+              Caddova
             </span>
           </div>
 

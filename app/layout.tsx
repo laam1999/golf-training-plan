@@ -10,9 +10,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.golfgains.app'),
-  title: 'GolfGains | A 12-week golf practice plan built around your game',
+  title: 'Caddova | A 12-week golf practice plan built around your game',
   description: 'Get a specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup — email or print it and start this week.',
-  applicationName: 'GolfGains',
+  applicationName: 'Caddova',
   keywords: ['golf practice plan', 'AI golf coach', 'golf training plan', 'lower your handicap', 'golf drills'],
   authors: [{ name: 'Luis Acosta' }],
   alternates: {
@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    siteName: 'GolfGains',
+    siteName: 'Caddova',
     url: 'https://www.golfgains.app',
-    title: 'GolfGains | A 12-week golf practice plan built around your game',
+    title: 'Caddova | A 12-week golf practice plan built around your game',
     description: 'A specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GolfGains | Your 12-week golf practice plan',
+    title: 'Caddova | Your 12-week golf practice plan',
     description: 'A specific, drill-by-drill 12-week golf practice plan built around your clubs, weak spots, and schedule. Free, no signup.',
   },
   icons: {

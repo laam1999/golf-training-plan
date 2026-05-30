@@ -39,7 +39,7 @@ export function HowItWorks() {
             Simple Process
           </span>
           <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl text-balance">
-            How GolfGains Works
+            How Caddova Works
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground text-pretty">
             From questionnaire to practice plan in three simple steps.

@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { LegalPage } from "@/components/legal/legal-page"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | GolfGains",
-  description: "The terms for using GolfGains.",
+  title: "Terms of Service | Caddova",
+  description: "The terms for using Caddova.",
   alternates: { canonical: "/terms" },
 }
 
@@ -11,14 +11,14 @@ export default function TermsPage() {
   return (
     <LegalPage title="Terms of Service" updated="May 29, 2026">
       <p>
-        By using GolfGains, you agree to these terms. If you don&rsquo;t agree, please don&rsquo;t
+        By using Caddova, you agree to these terms. If you don&rsquo;t agree, please don&rsquo;t
         use the service. Questions? Email{" "}
         <a href="mailto:hello@golfgains.app">hello@golfgains.app</a>.
       </p>
 
-      <h2>What GolfGains is</h2>
+      <h2>What Caddova is</h2>
       <p>
-        GolfGains generates a personalized 12-week golf practice plan from the answers you provide.
+        Caddova generates a personalized 12-week golf practice plan from the answers you provide.
         The plan is created by AI and is for general informational purposes only.
       </p>
 
@@ -40,7 +40,7 @@ export default function TermsPage() {
 
       <h2>Your plan content</h2>
       <p>
-        The plan we generate is yours to use, keep, print, and share for personal use. The GolfGains
+        The plan we generate is yours to use, keep, print, and share for personal use. The Caddova
         name, site, and design remain ours.
       </p>
 
@@ -53,7 +53,7 @@ export default function TermsPage() {
 
       <h2>Limitation of liability</h2>
       <p>
-        To the fullest extent permitted by law, GolfGains and its creator are not liable for any
+        To the fullest extent permitted by law, Caddova and its creator are not liable for any
         indirect, incidental, or consequential damages arising from your use of the service or
         reliance on a generated plan, including injury resulting from practice.
       </p>
