@@ -913,6 +913,66 @@ body {
   .stepper-section { font-size: 10px; }
   .header { padding-bottom: 2rem; }
 }
+
+
+/* renderPlan() structured output styles */
+.rp-plan { font-size: 15px; line-height: 1.7; color: var(--text-primary); }
+.rp-intro { color: var(--text-secondary); font-size: 14.5px; line-height: 1.75; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-faint); }
+.rp-phase-strip { display: flex; gap: 0.625rem; margin-bottom: 2rem; }
+.rp-phase-chip { flex: 1; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px 14px; display: flex; flex-direction: column; gap: 3px; }
+.rp-chip-weeks { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); }
+.rp-chip-title { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.rp-phase { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-faint); }
+.rp-phase:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.rp-phase-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.875rem; }
+.rp-phase-num { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--mint-text); opacity: 0.4; flex-shrink: 0; padding-top: 5px; }
+.rp-phase-week { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint); margin-bottom: 3px; }
+.rp-phase-title { font-size: 18px; font-weight: 500; letter-spacing: -0.02em; color: var(--text-primary); margin: 0 0 3px 0; }
+.rp-phase-theme { font-size: 13px; color: var(--text-secondary); margin: 0; }
+.rp-rationale { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem; padding: 0.875rem 1.125rem; background: var(--bg-elevated); border-radius: var(--radius-md); border-left: 2px solid var(--mint-border); }
+.rp-sessions { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.25rem; }
+.rp-session { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; }
+.rp-session-header { display: flex; align-items: center; justify-content: space-between; padding: 0.625rem 1rem; background: oklch(1 0 0 / 0.03); border-bottom: 1px solid var(--border-faint); gap: 0.75rem; }
+.rp-session-left { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.rp-session-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+.rp-session-facility { font-size: 11px; color: var(--text-tertiary); padding: 1px 6px; background: var(--bg-elevated); border: 1px solid var(--border-faint); border-radius: 99px; }
+.rp-session-meta { font-size: 11px; color: var(--text-tertiary); white-space: nowrap; flex-shrink: 0; }
+.rp-drills { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.625rem; }
+.rp-drill { padding: 0.875rem 1rem; background: oklch(1 0 0 / 0.025); border: 1px solid var(--border-faint); border-radius: var(--radius-md); }
+.rp-drill-header { display: flex; align-items: flex-start; gap: 0.625rem; margin-bottom: 0.75rem; }
+.rp-drill-num { width: 20px; height: 20px; border-radius: 50%; background: var(--mint-soft); border: 1px solid var(--mint-border); color: var(--mint-text); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.rp-drill-meta { flex: 1; min-width: 0; }
+.rp-drill-name { font-size: 13.5px; font-weight: 500; color: var(--text-primary); display: block; margin-bottom: 5px; }
+.rp-drill-tags { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+.rp-focus { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; border-radius: 99px; border: 1px solid var(--border-subtle); color: var(--text-tertiary); background: oklch(1 0 0 / 0.04); }
+.rp-focus-irons             { color: var(--mint-text); border-color: var(--mint-border); background: var(--mint-soft); }
+.rp-focus-driving           { color: oklch(0.75 0.14 290); border-color: oklch(0.75 0.14 290 / 0.30); background: oklch(0.75 0.14 290 / 0.08); }
+.rp-focus-short-game        { color: oklch(0.78 0.15 65);  border-color: oklch(0.78 0.15 65  / 0.30); background: oklch(0.78 0.15 65  / 0.08); }
+.rp-focus-putting           { color: oklch(0.72 0.14 240); border-color: oklch(0.72 0.14 240 / 0.30); background: oklch(0.72 0.14 240 / 0.08); }
+.rp-focus-course-management { color: oklch(0.80 0.14 95);  border-color: oklch(0.80 0.14 95  / 0.30); background: oklch(0.80 0.14 95  / 0.08); }
+.rp-focus-mental            { color: oklch(0.78 0.14 330); border-color: oklch(0.78 0.14 330 / 0.30); background: oklch(0.78 0.14 330 / 0.08); }
+.rp-clubs { display: flex; flex-wrap: wrap; gap: 3px; }
+.rp-club { font-size: 10px; color: var(--text-tertiary); padding: 1px 5px; background: var(--bg-elevated); border: 1px solid var(--border-faint); border-radius: var(--radius-sm); }
+.rp-drill-reps { font-size: 12px; font-weight: 500; color: var(--mint-text); white-space: nowrap; flex-shrink: 0; padding-top: 3px; }
+.rp-steps { margin: 0 0 0.75rem 1.3rem; padding: 0; }
+.rp-steps li { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 4px; padding-left: 0.2rem; }
+.rp-why { background: var(--mint-soft); border: 1px solid var(--mint-border); border-radius: var(--radius-sm); padding: 0.625rem 0.875rem; margin-bottom: 0.625rem; }
+.rp-why-label { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mint-text); margin-bottom: 3px; }
+.rp-why p { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.rp-success { display: flex; align-items: flex-start; gap: 0.4rem; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+.rp-success-icon { color: var(--mint); font-weight: 700; flex-shrink: 0; font-size: 13px; }
+.rp-milestone { background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 0.875rem 1.125rem; margin-top: 1.25rem; }
+.rp-milestone-label { display: block; font-size: 9.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint); margin-bottom: 5px; }
+.rp-milestone p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.rp-mindset { font-size: 13px; font-style: italic; color: var(--text-tertiary); margin-top: 0.875rem; padding: 0 1.125rem; border-left: 2px solid var(--border-subtle); line-height: 1.6; }
+.rp-closing { margin-top: 2rem; padding: 1.25rem 1.375rem; background: var(--mint-soft); border: 1px solid var(--mint-border); border-radius: var(--radius-lg); }
+.rp-closing p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 0; }
+@media (max-width: 640px) {
+  .rp-phase-strip { flex-direction: column; }
+  .rp-drill-header { flex-wrap: wrap; }
+  .rp-drill-reps { order: 3; flex-basis: 100%; padding-top: 0; margin-top: 4px; }
+  .rp-session-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
 </style>
 </head>
 <body>
@@ -2091,6 +2151,78 @@ function markdownToHtml(md) {
   return out.join('\n');
 }
 
+
+function renderPlan(plan) {
+  const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const FACILITY_LABELS = {'range':'Driving Range','putting-green':'Putting Green','chipping-area':'Chipping Area','bunker':'Bunker','simulator':'Simulator','home':'Home','any':'Any Facility'};
+  const FOCUS_LABELS = {'driving':'Driving','irons':'Irons','short-game':'Short Game','putting':'Putting','course-management':'Course Mgmt','mental':'Mental'};
+
+  function renderDrill(drill, idx) {
+    const clubs = (drill.clubs||[]).filter(Boolean).map(c=>'<span class="rp-club">'+esc(c)+'</span>').join('');
+    const steps = (drill.instructions||[]).map(s=>'<li>'+esc(s)+'</li>').join('');
+    const fc = 'rp-focus rp-focus-'+(drill.focusArea||'').replace(/_/g,'-');
+    return '<div class="rp-drill">'
+      +'<div class="rp-drill-header">'
+        +'<span class="rp-drill-num">'+(idx+1)+'</span>'
+        +'<div class="rp-drill-meta">'
+          +'<span class="rp-drill-name">'+esc(drill.name)+'</span>'
+          +'<div class="rp-drill-tags">'
+            +'<span class="'+fc+'">'+esc(FOCUS_LABELS[drill.focusArea]||drill.focusArea||'')+'</span>'
+            +(clubs?'<div class="rp-clubs">'+clubs+'</div>':'')
+          +'</div>'
+        +'</div>'
+        +(drill.reps?'<span class="rp-drill-reps">'+esc(drill.reps)+'</span>':'')
+      +'</div>'
+      +(steps?'<ol class="rp-steps">'+steps+'</ol>':'')
+      +(drill.why?'<div class="rp-why"><span class="rp-why-label">Why this matters</span><p>'+esc(drill.why)+'</p></div>':'')
+      +(drill.successMarker?'<div class="rp-success"><span class="rp-success-icon">&#10003;</span>'+esc(drill.successMarker)+'</div>':'')
+    +'</div>';
+  }
+
+  function renderSession(session) {
+    const label = FACILITY_LABELS[session.facility]||session.facility||'';
+    const drills = (session.drills||[]).map((d,i)=>renderDrill(d,i)).join('');
+    return '<div class="rp-session">'
+      +'<div class="rp-session-header">'
+        +'<div class="rp-session-left">'
+          +'<span class="rp-session-name">'+esc(session.name)+'</span>'
+          +(label?'<span class="rp-session-facility">'+esc(label)+'</span>':'')
+        +'</div>'
+        +'<span class="rp-session-meta">'+session.durationMinutes+' min &middot; '+session.frequencyPerWeek+'&times;/week</span>'
+      +'</div>'
+      +'<div class="rp-drills">'+drills+'</div>'
+    +'</div>';
+  }
+
+  function renderPhase(phase) {
+    const wk = phase.weekRange?'Weeks '+phase.weekRange.replace('-','&ndash;'):'';
+    const sessions = (phase.sessions||[]).map(s=>renderSession(s)).join('');
+    return '<div class="rp-phase">'
+      +'<div class="rp-phase-header">'
+        +'<span class="rp-phase-num">0'+phase.phaseNumber+'</span>'
+        +'<div>'
+          +'<span class="rp-phase-week">'+wk+'</span>'
+          +'<h2 class="rp-phase-title">'+esc(phase.title)+'</h2>'
+          +'<p class="rp-phase-theme">'+esc(phase.theme)+'</p>'
+        +'</div>'
+      +'</div>'
+      +(phase.rationale?'<p class="rp-rationale">'+esc(phase.rationale)+'</p>':'')
+      +'<div class="rp-sessions">'+sessions+'</div>'
+      +(phase.milestone?'<div class="rp-milestone"><span class="rp-milestone-label">Phase '+phase.phaseNumber+' Milestone</span><p>'+esc(phase.milestone)+'</p></div>':'')
+      +(phase.mindsetTip?'<p class="rp-mindset">&ldquo;'+esc(phase.mindsetTip)+'&rdquo;</p>':'')
+    +'</div>';
+  }
+
+  const phases = (plan.phases||[]).map(p=>renderPhase(p)).join('');
+  const chips = (plan.phases||[]).map(p=>'<div class="rp-phase-chip"><span class="rp-chip-weeks">Weeks '+(p.weekRange||'').replace('-','&ndash;')+'</span><span class="rp-chip-title">'+esc(p.title)+'</span></div>').join('');
+  return '<div class="rp-plan">'
+    +(plan.intro?'<p class="rp-intro">'+esc(plan.intro)+'</p>':'')
+    +'<div class="rp-phase-strip">'+chips+'</div>'
+    +phases
+    +(plan.closingNote?'<div class="rp-closing"><p>'+esc(plan.closingNote)+'</p></div>':'')
+  +'</div>';
+}
+
 async function generatePlan() {
   document.getElementById('questionnaire').style.display = 'none';
   const rw = document.getElementById('result-wrap');
@@ -2122,9 +2254,7 @@ async function generatePlan() {
     window.currentPlan = plan;
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('plan-output').style.display = 'block';
-    // TODO: replace with renderPlan(plan) once schema is validated
-    const safeJson = JSON.stringify(plan, null, 2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    document.getElementById('plan-output').innerHTML = '<pre style="white-space:pre-wrap;font-size:11px;font-family:monospace;line-height:1.5;overflow:auto;background:rgba(0,0,0,0.3);padding:1rem;border-radius:8px;color:#e2e8f0">' + safeJson + '</pre>';
+    document.getElementById('plan-output').innerHTML = renderPlan(plan);
     document.getElementById('email-capture').classList.add('visible');
     // Allow Enter key to submit email
     document.getElementById('email-input').onkeydown = e => { if(e.key === 'Enter') savePlan(); };
