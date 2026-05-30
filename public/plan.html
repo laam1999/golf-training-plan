@@ -1895,7 +1895,17 @@ function formatClubs() {
 }
 
 function buildPrompt() {
-  return `You are a top-tier golf coach writing a personalized 12-week training plan. The golfer below has filled out a detailed questionnaire. Write their plan now.
+  const FACILITY_SLUGS = {
+    'Driving range': 'range',
+    'Putting green': 'putting-green',
+    'Chipping / short game area': 'chipping-area',
+    'Practice bunker': 'bunker',
+    'Indoor simulator': 'simulator',
+    'My home (backyard / putting mat)': 'home'
+  };
+  const facilityOptions = answers.facilities.map(f => FACILITY_SLUGS[f] || 'any').join(' | ');
+
+  return `You are a top-tier golf coach. Generate a personalized 12-week practice plan for the golfer below as structured JSON.
 
 GOLFER PROFILE:
 Name: ${answers.name}
@@ -1913,50 +1923,101 @@ Practice facilities available: ${answers.facilities.join(', ')}
 Lessons: ${answers.lessons}
 Physical considerations: ${answers.physical}
 
-CRITICAL WRITING RULES — read these carefully before you write a single word:
+COACHING QUALITY RULES:
 
-1. ZERO GENERIC ADVICE. Every single drill, instruction, and example must reference THIS golfer's actual clubs (by name and brand when provided), their actual struggles (in priority order), their actual facilities, and their actual practice time. If you find yourself writing something that could apply to any beginner, STOP and rewrite it to be specific to ${answers.name}.
+1. ZERO GENERIC ADVICE. Every drill, instruction, and "why" must reference THIS golfer's actual clubs (by name/brand when provided), their struggles in priority order, their actual facilities, and their practice schedule. If it could apply to any beginner, rewrite it.
 
-2. THE INTRO PARAGRAPH SETS THE TONE — KEEP IT THROUGHOUT. Write in a direct, encouraging, slightly conversational voice. Like a coach who knows the player personally. Never drop into stiff instructional textbook language. If a sentence feels like it belongs in a generic golf manual, rewrite it.
+2. DIRECT, PERSONAL VOICE. Write like a coach who knows this player — encouraging, honest, slightly conversational. No stiff instructional-manual language.
 
-3. EVERY DRILL MUST HAVE: a name, the exact clubs to use (referencing their bag), specific reps or time, a clear "why this matters for YOU" reason tied to one of their stated struggles, and a measurable success marker. No vague drills.
+3. EVERY DRILL: exact clubs from their bag, specific numbers for reps/time ("15 balls" not "some balls"), a personalized "why" tied to one of their actual stated struggles, and a measurable success marker with a number.
 
-4. NO GIANT TABLES. A simple "Plan Overview" table at the top is fine (Phase / Weeks / Theme). After that, write in prose and bullet points. Do NOT structure every phase as a table.
+4. SESSIONS MATCH THEIR FACILITIES. Only create sessions for facilities they actually listed. The facility field for each session must be one of: ${facilityOptions || 'range | putting-green | chipping-area | bunker | simulator | home'}.
 
-5. NUMBERS, NOT VIBES. "Hit 15 balls" not "hit several balls". "Pace within 2 feet" not "good distance control". "30-yard target" not "a target".
+5. ADDRESS ${answers.name} BY NAME once in the intro. Twice more naturally across the whole plan. Not more.
 
-6. ADDRESS THEM BY NAME ONCE IN THE INTRO, then twice more across the rest of the plan in moments that feel natural (encouragement, calling out a specific challenge). Don't overdo it.
+6. EQUAL DEPTH. All 3 phases get the same level of detail — do not rush phase 3.
 
-STRUCTURE:
+OUTPUT FORMAT:
+Output a single \`\`\`json code block. Nothing before it, nothing after it.
 
-Start with a 1-paragraph intro that:
-- Addresses ${answers.name} by name
-- Acknowledges where they are honestly
-- Connects their stated goal to what's realistic in 12 weeks
-- References at least 2 specific things from their profile (their clubs OR their struggles OR their facilities)
-- Sets an encouraging but honest tone
+Use this exact JSON structure (replace placeholder text with real personalized content):
 
-Then a simple Plan Overview table (3 columns: Phase, Weeks, Theme).
+\`\`\`json
+{
+  "version": "1",
+  "generatedAt": "WILL_BE_SET_BY_SERVER",
+  "language": "${currentLang}",
+  "golferName": "${answers.name}",
+  "intro": "1-2 sentences: address them by name, acknowledge where they are honestly, connect their goal to 12-week reality. Reference at least one specific club or struggle.",
+  "closingNote": "2-3 motivating sentences tied specifically to their stated goal.",
+  "phases": [
+    {
+      "phaseNumber": 1,
+      "title": "e.g. Foundation",
+      "theme": "e.g. Building consistent ball contact",
+      "weekRange": "1-4",
+      "rationale": "2-3 sentences: why this phase matters for THIS golfer. Tie directly to their top struggles and specific clubs.",
+      "sessions": [
+        {
+          "id": "phase-1-range",
+          "name": "Range Session",
+          "facility": "range",
+          "durationMinutes": 45,
+          "frequencyPerWeek": 2,
+          "drills": [
+            {
+              "id": "9-to-3-swing-drill",
+              "name": "9-to-3 Swing Drill",
+              "focusArea": "irons",
+              "clubs": ["7-iron"],
+              "reps": "20 balls",
+              "instructions": [
+                "Tee up a ball at normal iron height.",
+                "Take the club back to 9 o'clock (hip height) only.",
+                "Swing through to 3 o'clock on the follow-through.",
+                "Focus on keeping the clubface square at both checkpoints."
+              ],
+              "why": "1-2 sentences: why this specific drill for THIS golfer, tied to one of their stated struggles.",
+              "successMarker": "15 out of 20 balls make clean contact with a consistent ball flight"
+            }
+          ]
+        }
+      ],
+      "milestone": "Specific measurable end-of-phase goal — what they can do by week 4 that proves improvement.",
+      "mindsetTip": "One sentence mindset note for this phase."
+    },
+    {
+      "phaseNumber": 2,
+      "title": "PHASE 2 TITLE",
+      "theme": "PHASE 2 THEME",
+      "weekRange": "5-8",
+      "rationale": "PHASE 2 RATIONALE — 2-3 sentences specific to this golfer",
+      "sessions": [],
+      "milestone": "PHASE 2 MILESTONE",
+      "mindsetTip": "PHASE 2 MINDSET TIP"
+    },
+    {
+      "phaseNumber": 3,
+      "title": "PHASE 3 TITLE",
+      "theme": "PHASE 3 THEME",
+      "weekRange": "9-12",
+      "rationale": "PHASE 3 RATIONALE — 2-3 sentences specific to this golfer",
+      "sessions": [],
+      "milestone": "PHASE 3 MILESTONE",
+      "mindsetTip": "PHASE 3 MINDSET TIP"
+    }
+  ]
+}
+\`\`\`
 
-Then for each of the 3 phases (Weeks 1–4, 5–8, 9–12):
-- ## Phase header with theme
-- A 2–3 sentence "Why this phase matters for YOU, ${answers.name}" — tying directly to their specific struggles and clubs
-- ### Weekly Schedule with their actual session structure
-- ### Drills — broken into named drills (use ### subheaders for each drill). Each drill: equipment, reps, why, success marker
-- ### Phase milestone — how they'll KNOW they're improving (specific, measurable)
-- A 1-sentence mindset tip at the end of each phase
+IMPORTANT: Fill in ALL 3 phases completely with full sessions and drills arrays. Phases 2 and 3 must have the same depth as phase 1 — never leave sessions as empty arrays in your output.
 
-End with a short closing note (2-3 sentences) that's motivating and specific to their goal.
+Per phase: 2-3 sessions (only for this golfer's listed facilities). Per session: 2-4 drills.
+The sum of frequencyPerWeek across all sessions in a phase should match their stated practice frequency.
+focusArea must be one of: driving | irons | short-game | putting | course-management | mental
+${currentLang === 'es' ? 'CRITICAL: ALL text fields (intro, closingNote, rationale, title, theme, name, instructions, why, successMarker, milestone, mindsetTip) must be in natural fluent Spanish. JSON keys stay in English.' : ''}
 
-Use Markdown: # for the title, ## for phase headers, ### for sections within phases, **bold** for emphasis on key terms, bullet lists for drill steps. Use --- for horizontal rules between phases.
-
-LENGTH: Be comprehensive but focused. Target roughly 1200 words total — enough to be specific and useful, not so long that it becomes overwhelming. Quality and specificity over volume. Every sentence should earn its place.
-
-PACING: Allocate your words wisely. Don't write 600 words on Phase 1 and rush through Phase 3 in 200. Each phase should get roughly equal depth. Make sure you include the closing note at the end — don't run out of room.
-
-${currentLang === 'es' ? '\n\nCRITICAL: Write the ENTIRE plan in natural, fluent Spanish. Use proper golf terminology in Spanish (drive, hierro, palo, swing are commonly used as-is in Spanish golf vocabulary). Be encouraging and direct in tone. All headings, drill names, and body text must be in Spanish.' : ''}
-
-Begin writing the plan now.`;
+Output ONLY the \`\`\`json code block. Begin now.`;
 }
 
 function markdownToHtml(md) {
@@ -2056,16 +2117,19 @@ async function generatePlan() {
       throw new Error(errData.error || ('HTTP ' + resp.status));
     }
     const data = await resp.json();
-    const text = (data.content || []).filter(b=>b.type==='text').map(b=>b.text).join('');
-    if(!text) throw new Error('No content returned from the API.');
+    const plan = data.plan;
+    if(!plan) throw new Error('No plan returned from the API.');
+    window.currentPlan = plan;
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('plan-output').style.display = 'block';
-    document.getElementById('plan-output').innerHTML = markdownToHtml(text);
+    // TODO: replace with renderPlan(plan) once schema is validated
+    const safeJson = JSON.stringify(plan, null, 2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    document.getElementById('plan-output').innerHTML = '<pre style="white-space:pre-wrap;font-size:11px;font-family:monospace;line-height:1.5;overflow:auto;background:rgba(0,0,0,0.3);padding:1rem;border-radius:8px;color:#e2e8f0">' + safeJson + '</pre>';
     document.getElementById('email-capture').classList.add('visible');
     // Allow Enter key to submit email
     document.getElementById('email-input').onkeydown = e => { if(e.key === 'Enter') savePlan(); };
     if(data.stop_reason === 'max_tokens') {
-      const warningHtml = '<div style="background:#FFF4E5;border:1px solid #FFB84D;border-radius:8px;padding:1rem;margin-top:1rem;color:#7A4A00;font-size:13px;line-height:1.6"><strong>Heads up:</strong> Your plan was longer than expected and got cut off at the end. Click "Try again" to regenerate, or use the existing plan as-is — the first three phases are usually the most important.</div>';
+      const warningHtml = '<div style="background:#FFF4E5;border:1px solid #FFB84D;border-radius:8px;padding:1rem;margin-top:1rem;color:#7A4A00;font-size:13px;line-height:1.6"><strong>Heads up:</strong> Your plan was longer than expected and got cut off at the end. Click "Try again" to regenerate, or use the existing plan as-is.</div>';
       document.getElementById('plan-output').insertAdjacentHTML('beforeend', warningHtml);
     }
     document.getElementById('action-row').style.display = 'flex';

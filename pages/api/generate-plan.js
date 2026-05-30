@@ -39,6 +39,19 @@ async function isRateLimited(ip) {
   }
 }
 
+function extractPlan(text) {
+  try {
+    // Strip ```json ... ``` or ``` ... ``` fences if present
+    const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    const json = fenced ? fenced[1].trim() : text.trim();
+    const plan = JSON.parse(json);
+    if (!plan.version || !Array.isArray(plan.phases) || plan.phases.length !== 3) return null;
+    return plan;
+  } catch {
+    return null;
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
@@ -93,7 +106,17 @@ export default async function handler(req, res) {
       return res.status(anthropicResp.status).json({ error: message });
     }
 
-    return res.status(200).json(data);
+    const rawText = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+    const plan = extractPlan(rawText);
+
+    if (!plan) {
+      console.error('JSON parse failed. Raw output:\n', rawText.slice(0, 500));
+      return res.status(500).json({ error: 'Plan generation returned an unexpected format. Please try again.' });
+    }
+
+    plan.generatedAt = new Date().toISOString();
+
+    return res.status(200).json({ plan, stop_reason: data.stop_reason });
 
   } catch (err) {
     console.error('Generate plan error:', err.message);
