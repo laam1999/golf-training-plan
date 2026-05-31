@@ -1,7 +1,7 @@
 // Vercel serverless function — runs on Vercel's servers, NOT in the user's browser.
 // The Anthropic API key lives here as an environment variable, never exposed.
 
-const RATE_LIMIT = 3;
+const RATE_LIMIT = 10;
 const WINDOW_SECS = 24 * 60 * 60; // 24 hours
 
 // ── Persistent rate limiting via Upstash Redis REST API ───────────────────────
