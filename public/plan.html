@@ -2074,12 +2074,20 @@ Use this exact JSON structure (replace placeholder text with real personalized c
 }
 \`\`\`
 
-IMPORTANT: Fill in ALL 3 phases completely with full sessions and drills arrays. Phases 2 and 3 must have the same depth as phase 1 — never leave sessions as empty arrays in your output.
+FIELD LENGTH LIMITS — stay within these budgets or the plan will be cut off:
+- intro: 2 sentences max
+- closingNote: 2 sentences max
+- rationale: 2 sentences max
+- per phase: 2 sessions max (only for listed facilities)
+- per session: 2-3 drills max
+- instructions per drill: 3-4 steps max, each under 20 words
+- why per drill: 1 sentence max, tied to one specific struggle
+- successMarker: under 15 words, measurable number included
+- milestone: 2 sentences max
+- mindsetTip: 1 short sentence max
 
-Per phase: 2-3 sessions (only for this golfer's listed facilities). Per session: 2-4 drills.
-The sum of frequencyPerWeek across all sessions in a phase should match their stated practice frequency.
 focusArea must be one of: driving | irons | short-game | putting | course-management | mental
-${currentLang === 'es' ? 'CRITICAL: ALL text fields (intro, closingNote, rationale, title, theme, name, instructions, why, successMarker, milestone, mindsetTip) must be in natural fluent Spanish. JSON keys stay in English.' : ''}
+${currentLang === 'es' ? 'CRITICAL: ALL text fields must be in natural fluent Spanish. JSON keys stay in English.' : ''}
 
 Output ONLY the \`\`\`json code block. Begin now.`;
 }
