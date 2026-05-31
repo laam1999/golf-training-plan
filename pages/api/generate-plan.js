@@ -40,16 +40,30 @@ async function isRateLimited(ip) {
 }
 
 function extractPlan(text) {
-  try {
-    // Strip ```json ... ``` or ``` ... ``` fences if present
-    const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-    const json = fenced ? fenced[1].trim() : text.trim();
-    const plan = JSON.parse(json);
-    if (!plan.version || !Array.isArray(plan.phases) || plan.phases.length !== 3) return null;
-    return plan;
-  } catch {
-    return null;
+  // Try every ```json / ``` block in the response (Claude sometimes outputs
+  // the schema template AND the filled-in plan as two separate blocks).
+  // We want the block that actually parses as a valid plan, not a placeholder.
+  const fenceRe = /```(?:json)?\s*([\s\S]+?)```/g;
+  let match;
+  while ((match = fenceRe.exec(text)) !== null) {
+    try {
+      const candidate = JSON.parse(match[1].trim());
+      if (candidate && Array.isArray(candidate.phases) && candidate.phases.length > 0) {
+        return candidate;
+      }
+    } catch { /* try next block */ }
   }
+  // Fallback: find the largest {...} object in the text (no code fence used)
+  const objMatch = text.match(/\{[\s\S]*"phases"[\s\S]*\}/);
+  if (objMatch) {
+    try {
+      const candidate = JSON.parse(objMatch[0]);
+      if (candidate && Array.isArray(candidate.phases) && candidate.phases.length > 0) {
+        return candidate;
+      }
+    } catch { /* not valid JSON */ }
+  }
+  return null;
 }
 
 export default async function handler(req, res) {
@@ -110,7 +124,11 @@ export default async function handler(req, res) {
     const plan = extractPlan(rawText);
 
     if (!plan) {
-      console.error('JSON parse failed. Raw output:\n', rawText.slice(0, 500));
+      console.error('extractPlan failed. stop_reason:', data.stop_reason, '\nRaw output (first 800 chars):\n', rawText.slice(0, 800));
+      // Surface stop_reason to client so we can distinguish truncation vs bad format
+      if (data.stop_reason === 'max_tokens') {
+        return res.status(500).json({ error: 'The plan was too long to generate in one go. Please try again — it usually works on the second attempt.' });
+      }
       return res.status(500).json({ error: 'Plan generation returned an unexpected format. Please try again.' });
     }
 
