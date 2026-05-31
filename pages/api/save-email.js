@@ -83,7 +83,11 @@ export default async function handler(req, res) {
   .closing-note { font-size: 14px; color: #2a2a2a; padding: 0.75rem 1rem; background: #f0faf4; border-left: 3px solid #0F6E56; margin-top: 0.5rem; }
 
   /* Phase */
-  h2 { font-size: 17px; font-weight: 700; color: #0F6E56; margin: 2rem 0 0.15rem; padding-bottom: 0.35rem; border-bottom: 2px solid #0F6E56; }
+  .phase-block { margin-bottom: 1.5rem; }
+  .phase-header-row { display: table; width: 100%; margin-bottom: 0.5rem; }
+  .phase-big-num { display: table-cell; font-size: 28px; font-weight: 700; color: #0F6E56; opacity: 0.2; line-height: 1; width: 40px; vertical-align: top; padding-top: 2px; }
+  .phase-header-text { display: table-cell; vertical-align: top; }
+  h2 { font-size: 17px; font-weight: 700; color: #0F6E56; margin: 0 0 1px; padding-bottom: 0.25rem; border-bottom: 2px solid #0F6E56; }
   .phase-meta { font-size: 11px; color: #888; margin: 0 0 0.5rem; }
   .rationale { font-size: 13px; color: #3a3a3a; line-height: 1.6; padding: 0.6rem 0.875rem; background: #f8f8f5; border-left: 2px solid #ccc; margin: 0 0 1rem; }
 
@@ -96,10 +100,25 @@ export default async function handler(req, res) {
 
   /* Drill */
   .drill-block { padding: 0.625rem 0.875rem; border-top: 1px solid #efefeb; }
-  .drill-name { font-size: 13.5px; font-weight: 600; color: #085041; margin: 0 0 2px; }
-  .drill-meta { font-size: 12px; color: #666; margin: 0 0 0.5rem; }
+  .drill-header-row { display: table; width: 100%; margin-bottom: 0.5rem; }
+  .drill-num { display: table-cell; width: 22px; height: 22px; background: #f0faf4; border: 1px solid #86EFAC; color: #0F6E56; font-size: 11px; font-weight: 700; text-align: center; vertical-align: top; padding-top: 2px; border-radius: 50%; }
+  .drill-title-group { display: table-cell; vertical-align: top; padding-left: 6px; }
+  .drill-name { display: block; font-size: 13.5px; font-weight: 600; color: #085041; margin-bottom: 4px; }
+  .drill-tags { font-size: 0; }
+  .drill-reps { display: table-cell; font-size: 12px; font-weight: 600; color: #0F6E56; white-space: nowrap; vertical-align: top; padding-left: 6px; padding-top: 2px; }
   .drill-steps { margin: 0 0 0.5rem 1.3rem; padding: 0; }
   .drill-steps li { font-size: 13px; margin-bottom: 3px; line-height: 1.55; color: #333; }
+
+  /* Focus badges */
+  .focus-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 1px 5px; border-radius: 99px; border: 1px solid; margin-right: 3px; margin-bottom: 2px; }
+  .focus-irons             { color: #065F46; background: #D1FAE5; border-color: #6EE7B7; }
+  .focus-driving           { color: #4C1D95; background: #EDE9FE; border-color: #C4B5FD; }
+  .focus-short-game        { color: #92400E; background: #FEF3C7; border-color: #FCD34D; }
+  .focus-putting           { color: #1E3A8A; background: #DBEAFE; border-color: #93C5FD; }
+  .focus-course-management { color: #78350F; background: #FEF9C3; border-color: #FDE047; }
+  .focus-mental            { color: #831843; background: #FCE7F3; border-color: #F9A8D4; }
+  .club-chips { display: inline; }
+  .club-chip { display: inline-block; font-size: 10px; color: #555; padding: 1px 5px; background: #f5f5f0; border: 1px solid #d8d8d0; border-radius: 3px; margin-right: 2px; }
 
   /* Why this matters */
   .why-box { background: #f0faf4; border-left: 3px solid #0F6E56; padding: 0.45rem 0.75rem; margin: 0 0 0.45rem; }
@@ -107,7 +126,7 @@ export default async function handler(req, res) {
   .why-box p { font-size: 12.5px; color: #2a2a2a; line-height: 1.55; margin: 0; }
 
   /* Success marker */
-  .success-marker { font-size: 12.5px; color: #085041; font-weight: 500; margin: 0; padding: 2px 0; }
+  .success-marker { font-size: 12.5px; color: #065F46; font-weight: 500; margin: 0; padding: 2px 0; }
 
   /* Milestone */
   .milestone-box { margin: 0.875rem 0 0.5rem; padding: 0.625rem 0.875rem; background: #f8f8f5; border: 1px solid #e0e0d8; border-radius: 4px; }
@@ -117,7 +136,6 @@ export default async function handler(req, res) {
   /* Mindset tip */
   .mindset-tip { font-style: italic; color: #666; border-left: 2px solid #ccc; padding: 0.35rem 0.75rem; margin: 0.5rem 0 0; font-size: 13px; }
 
-  .phase-rule { border: none; border-top: 1px solid #e8e8e0; margin: 1.5rem 0; }
   strong { font-weight: 600; color: #1a1a1a; }
   .footer { background: #f7f7f5; padding: 1.25rem 2rem; text-align: center; border-top: 1px solid #e0e0e0; }
   .footer p { font-size: 12px; color: #8a8a8a; margin: 0 0 4px; }
