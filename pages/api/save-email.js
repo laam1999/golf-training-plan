@@ -73,23 +73,52 @@ export default async function handler(req, res) {
   body { margin: 0; padding: 0; background: #f0f0ed; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
   .wrapper { max-width: 640px; margin: 2rem auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
   .header { background: linear-gradient(135deg, #053D31 0%, #0F6E56 100%); padding: 2rem 2rem 1.5rem; text-align: center; }
-  .header h1 { color: #ffffff; font-size: 22px; font-weight: 500; margin: 0 0 4px; }
-  .header p { color: #A7F3D0; font-size: 14px; margin: 0; }
-  .body { padding: 2rem; }
-  .plan-content { font-size: 14px; color: #1a1a1a; line-height: 1.7; }
-  .plan-content h1 { font-size: 20px; font-weight: 600; color: #0F6E56; margin: 0 0 0.5rem; }
-  .plan-content h2 { font-size: 17px; font-weight: 600; color: #0F6E56; margin: 1.5rem 0 0.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid #e0e0e0; }
-  .plan-content h3 { font-size: 15px; font-weight: 600; color: #085041; margin: 1.25rem 0 0.3rem; }
-  .plan-content h4 { font-size: 14px; font-weight: 600; color: #085041; margin: 1.25rem 0 0.25rem; }
-  .plan-content p { margin: 0 0 0.7rem; }
-  .plan-content ul, .plan-content ol { margin: 0.25rem 0 0.75rem 1.5rem; padding: 0; }
-  .plan-content li { margin-bottom: 0.3rem; line-height: 1.6; }
-  .plan-content strong { color: #1a1a1a; font-weight: 600; }
-  .plan-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 13px; }
-  .plan-content th, .plan-content td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: left; }
-  .plan-content th { background: #f0f0ed; color: #0F6E56; font-weight: 600; }
-  .plan-content hr { border: none; border-top: 2px solid #e8e8e4; margin: 2rem 0; }
-  .plan-content blockquote { border-left: 3px solid #0F6E56; padding: 0.5rem 0 0.5rem 1rem; margin: 1rem 0; color: #5a5a5a; font-style: italic; background: #f7faf7; border-radius: 0 4px 4px 0; }
+  .header h1 { color: #ffffff; font-size: 22px; font-weight: 600; margin: 0 0 4px; }
+  .header p { color: #A7F3D0; font-size: 13px; margin: 0; }
+  .body { padding: 1.75rem 2rem; }
+  .plan-content { font-size: 14px; color: #1a1a1a; line-height: 1.65; }
+
+  /* Intro / closing */
+  .plan-intro { font-size: 14px; color: #2a2a2a; line-height: 1.75; margin: 0 0 1rem; }
+  .closing-note { font-size: 14px; color: #2a2a2a; padding: 0.75rem 1rem; background: #f0faf4; border-left: 3px solid #0F6E56; margin-top: 0.5rem; }
+
+  /* Phase */
+  h2 { font-size: 17px; font-weight: 700; color: #0F6E56; margin: 2rem 0 0.15rem; padding-bottom: 0.35rem; border-bottom: 2px solid #0F6E56; }
+  .phase-meta { font-size: 11px; color: #888; margin: 0 0 0.5rem; }
+  .rationale { font-size: 13px; color: #3a3a3a; line-height: 1.6; padding: 0.6rem 0.875rem; background: #f8f8f5; border-left: 2px solid #ccc; margin: 0 0 1rem; }
+
+  /* Session */
+  .session-block { border: 1px solid #e8e8e0; border-radius: 6px; margin: 0.75rem 0 1.25rem; overflow: hidden; }
+  .session-header { padding: 0.5rem 0.875rem; background: #f5f5f0; border-bottom: 1px solid #e8e8e0; }
+  .session-name { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+  .session-facility { font-size: 11px; color: #888; margin-left: 0.4rem; }
+  .session-meta { font-size: 11px; color: #999; margin: 0; padding: 2px 0.875rem 0; }
+
+  /* Drill */
+  .drill-block { padding: 0.625rem 0.875rem; border-top: 1px solid #efefeb; }
+  .drill-name { font-size: 13.5px; font-weight: 600; color: #085041; margin: 0 0 2px; }
+  .drill-meta { font-size: 12px; color: #666; margin: 0 0 0.5rem; }
+  .drill-steps { margin: 0 0 0.5rem 1.3rem; padding: 0; }
+  .drill-steps li { font-size: 13px; margin-bottom: 3px; line-height: 1.55; color: #333; }
+
+  /* Why this matters */
+  .why-box { background: #f0faf4; border-left: 3px solid #0F6E56; padding: 0.45rem 0.75rem; margin: 0 0 0.45rem; }
+  .why-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0F6E56; margin-bottom: 2px; }
+  .why-box p { font-size: 12.5px; color: #2a2a2a; line-height: 1.55; margin: 0; }
+
+  /* Success marker */
+  .success-marker { font-size: 12.5px; color: #085041; font-weight: 500; margin: 0; padding: 2px 0; }
+
+  /* Milestone */
+  .milestone-box { margin: 0.875rem 0 0.5rem; padding: 0.625rem 0.875rem; background: #f8f8f5; border: 1px solid #e0e0d8; border-radius: 4px; }
+  .milestone-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0F6E56; margin-bottom: 3px; }
+  .milestone-box p { font-size: 13px; color: #2a2a2a; line-height: 1.55; margin: 0; }
+
+  /* Mindset tip */
+  .mindset-tip { font-style: italic; color: #666; border-left: 2px solid #ccc; padding: 0.35rem 0.75rem; margin: 0.5rem 0 0; font-size: 13px; }
+
+  .phase-rule { border: none; border-top: 1px solid #e8e8e0; margin: 1.5rem 0; }
+  strong { font-weight: 600; color: #1a1a1a; }
   .footer { background: #f7f7f5; padding: 1.25rem 2rem; text-align: center; border-top: 1px solid #e0e0e0; }
   .footer p { font-size: 12px; color: #8a8a8a; margin: 0 0 4px; }
 </style>

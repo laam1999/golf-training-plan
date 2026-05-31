@@ -2352,47 +2352,56 @@ function buildEmailHtml(plan) {
 
   let html = '';
 
-  // Intro
-  if (plan.intro) html += '<p>' + esc(plan.intro) + '</p><hr>';
+  if (plan.intro) html += '<p class="plan-intro">' + esc(plan.intro) + '</p><hr class="phase-rule">';
 
   (plan.phases || []).forEach(phase => {
     const wk = (phase.weekRange || '').replace('-', '–');
-    html += '<h2>Phase ' + phase.phaseNumber + ': ' + esc(phase.title) + ' &mdash; Weeks ' + wk + '</h2>';
-    if (phase.theme) html += '<p><em>' + esc(phase.theme) + '</em></p>';
-    if (phase.rationale) html += '<p>' + esc(phase.rationale) + '</p>';
+    html += '<h2>Phase ' + phase.phaseNumber + ': ' + esc(phase.title) + '</h2>';
+    html += '<p class="phase-meta">Weeks ' + wk + ' &nbsp;&bull;&nbsp; <em>' + esc(phase.theme) + '</em></p>';
+    if (phase.rationale) html += '<p class="rationale">' + esc(phase.rationale) + '</p>';
 
     (phase.sessions || []).forEach(session => {
       const facility = FACILITY_LABELS[session.facility] || session.facility || '';
-      html += '<h3>' + esc(session.name);
-      if (facility) html += ' &mdash; ' + esc(facility);
-      html += '</h3>';
-      html += '<p style="color:#5a5a5a;font-size:13px;margin-top:-4px">' + session.durationMinutes + ' min &middot; ' + session.frequencyPerWeek + '&times;/week</p>';
+      html += '<div class="session-block">';
+      html += '<div class="session-header"><span class="session-name">' + esc(session.name) + '</span>';
+      if (facility) html += '<span class="session-facility">' + esc(facility) + '</span>';
+      html += '</div>';
+      html += '<p class="session-meta">' + session.durationMinutes + ' min &nbsp;&middot;&nbsp; ' + session.frequencyPerWeek + '&times; per week</p>';
 
       (session.drills || []).forEach((drill, idx) => {
         const clubs = (drill.clubs || []).filter(Boolean).join(', ');
         const focus = FOCUS_LABELS[drill.focusArea] || drill.focusArea || '';
-        html += '<h4>' + (idx + 1) + '. ' + esc(drill.name) + '</h4>';
-        html += '<p>';
+        html += '<div class="drill-block">';
+        html += '<p class="drill-name">' + (idx + 1) + '. ' + esc(drill.name) + '</p>';
+        html += '<p class="drill-meta">';
         if (focus) html += '<strong>' + esc(focus) + '</strong>';
-        if (clubs) html += ' &nbsp;|&nbsp; <strong>Clubs:</strong> ' + esc(clubs);
-        if (drill.reps) html += ' &nbsp;|&nbsp; ' + esc(drill.reps);
+        if (clubs) html += ' &nbsp;|&nbsp; ' + esc(clubs);
+        if (drill.reps) html += ' &nbsp;|&nbsp; <strong>' + esc(drill.reps) + '</strong>';
         html += '</p>';
         if (drill.instructions && drill.instructions.length) {
-          html += '<ol>';
+          html += '<ol class="drill-steps">';
           drill.instructions.forEach(s => { html += '<li>' + esc(s) + '</li>'; });
           html += '</ol>';
         }
-        if (drill.why) html += '<p><strong>Why this matters:</strong> ' + esc(drill.why) + '</p>';
-        if (drill.successMarker) html += '<p>&#10003; <em>' + esc(drill.successMarker) + '</em></p>';
+        if (drill.why) {
+          html += '<div class="why-box"><span class="why-label">Why this matters</span><p>' + esc(drill.why) + '</p></div>';
+        }
+        if (drill.successMarker) {
+          html += '<p class="success-marker">&#10003; ' + esc(drill.successMarker) + '</p>';
+        }
+        html += '</div>';
       });
+      html += '</div>';
     });
 
-    if (phase.milestone) html += '<p><strong>Phase ' + phase.phaseNumber + ' Milestone:</strong> ' + esc(phase.milestone) + '</p>';
-    if (phase.mindsetTip) html += '<blockquote>' + esc(phase.mindsetTip) + '</blockquote>';
-    html += '<hr>';
+    if (phase.milestone) {
+      html += '<div class="milestone-box"><span class="milestone-label">Phase ' + phase.phaseNumber + ' Milestone</span><p>' + esc(phase.milestone) + '</p></div>';
+    }
+    if (phase.mindsetTip) html += '<blockquote class="mindset-tip">' + esc(phase.mindsetTip) + '</blockquote>';
+    html += '<hr class="phase-rule">';
   });
 
-  if (plan.closingNote) html += '<p>' + esc(plan.closingNote) + '</p>';
+  if (plan.closingNote) html += '<p class="closing-note">' + esc(plan.closingNote) + '</p>';
   return html;
 }
 
@@ -2454,43 +2463,79 @@ async function savePlan() {
 function retryGeneration() { generatePlan(); }
 
 function downloadPdf() {
-  const planHtml = document.getElementById('plan-output').innerHTML;
+  if (!window.currentPlan) { alert('No plan to download. Please generate a plan first.'); return; }
   const title = document.getElementById('result-title').textContent;
   const sub = document.getElementById('result-sub').textContent;
   const w = window.open('', '_blank');
-  if(!w) { alert(currentLang === 'es' ? 'Por favor permite las ventanas emergentes para descargar el PDF.' : 'Please allow popups to download the PDF.'); return; }
+  if (!w) { alert(currentLang === 'es' ? 'Por favor permite las ventanas emergentes para descargar el PDF.' : 'Please allow popups to download the PDF.'); return; }
   trackEvent('plan_downloaded_pdf', { language: currentLang });
+  const planHtml = buildEmailHtml(window.currentPlan);
   w.document.write(`<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>${title}</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 720px; margin: 2rem auto; padding: 1.5rem; color: #1a1a1a; line-height: 1.7; }
-  .header { border-bottom: 2px solid #0F6E56; padding-bottom: 1rem; margin-bottom: 2rem; }
-  .header h1 { font-size: 24px; margin: 0 0 4px; color: #0F6E56; }
-  .header p { font-size: 14px; color: #5a5a5a; margin: 0; }
-  h1, h2, h3, h4 { color: #0F6E56; page-break-after: avoid; }
-  h2 { font-size: 18px; border-bottom: 1px solid #d0d0d0; padding-bottom: 0.3rem; margin-top: 1.5rem; }
-  h3 { font-size: 16px; margin-top: 1.25rem; }
-  h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: #5a5a5a; }
-  p { margin: 0 0 0.8rem; }
-  ul, ol { margin: 0 0 1rem 1.5rem; }
-  li { margin-bottom: 0.3rem; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; max-width: 700px; margin: 2rem auto; padding: 1.5rem 2rem; color: #1a1a1a; line-height: 1.65; font-size: 14px; }
+  .doc-header { border-bottom: 3px solid #0F6E56; padding-bottom: 1rem; margin-bottom: 2rem; }
+  .doc-header h1 { font-size: 22px; margin: 0 0 3px; color: #0F6E56; font-weight: 700; }
+  .doc-header p { font-size: 13px; color: #666; margin: 0; }
+
+  /* Intro & closing */
+  .plan-intro { font-size: 14.5px; color: #2a2a2a; line-height: 1.75; margin-bottom: 0; }
+  .closing-note { font-size: 14px; color: #2a2a2a; line-height: 1.75; padding: 1rem 1.25rem; background: #f0faf4; border-left: 3px solid #0F6E56; border-radius: 0 4px 4px 0; }
+
+  /* Phase headers */
+  h2 { font-size: 19px; font-weight: 700; color: #0F6E56; margin: 2.5rem 0 0.2rem; page-break-after: avoid; }
+  .phase-meta { font-size: 12px; color: #777; margin: 0 0 0.5rem; }
+  .rationale { font-size: 13.5px; color: #3a3a3a; line-height: 1.65; margin: 0 0 1rem; padding: 0.75rem 1rem; background: #f8f8f5; border-left: 2px solid #ccc; border-radius: 0 4px 4px 0; }
+
+  /* Session card */
+  .session-block { margin: 1rem 0 1.5rem; border: 1px solid #e0e0d8; border-radius: 6px; overflow: hidden; page-break-inside: avoid; }
+  .session-header { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.5rem 1rem; background: #f5f5f0; border-bottom: 1px solid #e0e0d8; }
+  .session-name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .session-facility { font-size: 11px; color: #777; padding: 1px 6px; border: 1px solid #ddd; border-radius: 99px; }
+  .session-meta { font-size: 11px; color: #888; margin: 0; padding: 3px 1rem 0; }
+
+  /* Drill */
+  .drill-block { padding: 0.75rem 1rem; border-top: 1px solid #ebebeb; }
+  .drill-block:first-of-type { border-top: none; }
+  .drill-name { font-size: 14px; font-weight: 600; color: #085041; margin: 0 0 3px; }
+  .drill-meta { font-size: 12px; color: #555; margin: 0 0 0.5rem; }
+  .drill-steps { margin: 0 0 0.6rem 1.4rem; padding: 0; }
+  .drill-steps li { font-size: 13px; margin-bottom: 3px; line-height: 1.6; }
+
+  /* Why this matters */
+  .why-box { background: #f0faf4; border-left: 3px solid #0F6E56; padding: 0.5rem 0.75rem; margin: 0 0 0.5rem; border-radius: 0 4px 4px 0; }
+  .why-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0F6E56; margin-bottom: 2px; }
+  .why-box p { font-size: 12.5px; color: #2a2a2a; line-height: 1.6; margin: 0; }
+
+  /* Success marker */
+  .success-marker { font-size: 12.5px; color: #085041; font-weight: 500; margin: 0; padding: 3px 0; }
+
+  /* Milestone */
+  .milestone-box { margin: 1rem 0 0.5rem; padding: 0.75rem 1rem; background: #f8f8f5; border: 1px solid #d0d0c8; border-radius: 4px; }
+  .milestone-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0F6E56; margin-bottom: 4px; }
+  .milestone-box p { font-size: 13px; color: #2a2a2a; line-height: 1.6; margin: 0; }
+
+  /* Mindset tip */
+  .mindset-tip { font-style: italic; color: #555; border-left: 2px solid #ccc; padding: 0.4rem 0.75rem; margin: 0.75rem 0 0; font-size: 13px; }
+
+  /* Dividers */
+  .phase-rule { border: none; border-top: 1px solid #e0e0d8; margin: 1.75rem 0; }
+
   strong { color: #1a1a1a; }
-  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-  th, td { border: 1px solid #d0d0d0; padding: 8px 12px; text-align: left; font-size: 14px; }
-  th { background: #f0f0ed; color: #0F6E56; }
-  hr { border: none; border-top: 1px solid #d0d0d0; margin: 1.5rem 0; }
-  blockquote { border-left: 3px solid #0F6E56; padding-left: 1rem; margin: 1rem 0; color: #5a5a5a; font-style: italic; }
-  .footer-note { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #d0d0d0; font-size: 11px; color: #8a8a8a; text-align: center; }
-  @media print { body { margin: 0; padding: 1rem; } }
+  @media print {
+    body { margin: 0; padding: 1rem 1.5rem; }
+    h2 { page-break-before: always; }
+    h2:first-of-type { page-break-before: avoid; }
+    .session-block { page-break-inside: avoid; }
+    .drill-block { page-break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
-  <div class="header">
-    <h1>${title}</h1>
-    <p>${sub}</p>
-  </div>
+  <div class="doc-header"><h1>${title}</h1><p>${sub}</p></div>
   ${planHtml}
-  <div class="footer-note">Caddova · Built by Luis Acosta</div>
+  <div style="margin-top:3rem;padding-top:1rem;border-top:1px solid #e0e0d8;font-size:11px;color:#aaa;text-align:center">Caddova &nbsp;&middot;&nbsp; caddova.com</div>
 </body></html>`);
   w.document.close();
   setTimeout(() => { w.print(); }, 500);
