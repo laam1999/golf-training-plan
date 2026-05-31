@@ -1995,7 +1995,9 @@ COACHING QUALITY RULES:
 
 5. ADDRESS ${answers.name} BY NAME once in the intro. Twice more naturally across the whole plan. Not more.
 
-6. EQUAL DEPTH. All 3 phases get the same level of detail — do not rush phase 3.
+6. EQUAL DEPTH. All 3 phases get the same level of detail — do not rush phase 3. Phase 3 must have the same number of sessions and drills as phase 1, written out in full.
+
+7. COACHING CUES NOT QUOTES. The mindsetTip for each phase must be a specific technical instruction the golfer recites during practice — like a swing thought or setup cue. Never a motivational quote or life philosophy.
 
 OUTPUT FORMAT:
 Output a single \`\`\`json code block. Nothing before it, nothing after it.
@@ -2008,8 +2010,8 @@ Use this exact JSON structure (replace placeholder text with real personalized c
   "generatedAt": "WILL_BE_SET_BY_SERVER",
   "language": "${currentLang}",
   "golferName": "${answers.name}",
-  "intro": "1-2 sentences: address them by name, acknowledge where they are honestly, connect their goal to 12-week reality. Reference at least one specific club or struggle.",
-  "closingNote": "2-3 motivating sentences tied specifically to their stated goal.",
+  "intro": "3-4 sentences structured as: (1) Honest, specific read of where they are right now — what their score and experience level actually means for their game, not generic encouragement. (2) Name the root cause of their #1 struggle in coaching terms — WHY this happens at their level and roughly how many strokes it's costing per round. (3) Preview all 3 phases: what skill each phase builds and the concrete outcome after 12 weeks. Write like a coach who read their full profile, not a template-filler.",
+  "closingNote": "3-4 sentences: (1) Name the specific skills they will have built — reference actual drill names and clubs from this plan. (2) Restate their goal as something now within reach after these 12 weeks. (3) Give one concrete first action for tomorrow — specific location, specific club, specific number of balls. End like the last thing a coach says before walking off the lesson tee.",
   "phases": [
     {
       "phaseNumber": 1,
@@ -2044,7 +2046,7 @@ Use this exact JSON structure (replace placeholder text with real personalized c
         }
       ],
       "milestone": "Specific measurable end-of-phase goal — what they can do by week 4 that proves improvement.",
-      "mindsetTip": "One sentence mindset note for this phase."
+      "mindsetTip": "One short coaching cue the golfer recites at the range during this phase — a specific technical reminder they carry into every rep. NOT a motivational quote. E.g.: 'Low point after the ball, every swing.' Under 15 words."
     },
     {
       "phaseNumber": 2,
@@ -2056,35 +2058,53 @@ Use this exact JSON structure (replace placeholder text with real personalized c
         { "SAME STRUCTURE AS PHASE 1 SESSION": "fill in completely with real drills" }
       ],
       "milestone": "Measurable end-of-phase-2 goal",
-      "mindsetTip": "One sentence for phase 2"
+      "mindsetTip": "One short coaching cue for phase 2 — specific technical reminder, NOT a motivational quote. Under 15 words."
     },
     {
       "phaseNumber": 3,
-      "title": "YOUR PHASE 3 TITLE",
-      "theme": "YOUR PHASE 3 THEME",
+      "title": "Phase 3 title — the performance / integration phase",
+      "theme": "One-phrase theme for phase 3",
       "weekRange": "9-12",
-      "rationale": "2-3 sentences specific to this golfer's phase 3",
+      "rationale": "2-3 sentences: why this final phase matters for THIS golfer specifically — how does it connect their built skills to their stated goal?",
       "sessions": [
-        { "SAME STRUCTURE AS PHASE 1 SESSION": "fill in completely with real drills" }
+        {
+          "id": "phase-3-session-a",
+          "name": "Session name for phase 3",
+          "facility": "one of the golfer's listed facilities",
+          "durationMinutes": 45,
+          "frequencyPerWeek": 2,
+          "drills": [
+            {
+              "id": "drill-id",
+              "name": "Drill name",
+              "focusArea": "one of: driving | irons | short-game | putting | course-management | mental",
+              "clubs": ["specific club from their bag"],
+              "reps": "specific number",
+              "instructions": ["step 1", "step 2", "step 3", "step 4"],
+              "why": "1-2 sentences tied to one of their stated struggles.",
+              "successMarker": "Measurable pass/fail criterion with a number"
+            }
+          ]
+        }
       ],
-      "milestone": "Measurable end-of-phase-3 goal",
-      "mindsetTip": "One sentence for phase 3"
+      "milestone": "Measurable end-of-phase-3 goal tied directly to their stated main goal",
+      "mindsetTip": "One short coaching cue for phase 3 — specific technical reminder, NOT a motivational quote. Under 15 words."
     }
   ]
 }
 \`\`\`
 
 FIELD LENGTH LIMITS — stay within these budgets or the plan will be cut off:
-- intro: 2 sentences max
-- closingNote: 2 sentences max
+- intro: 3-4 sentences max
+- closingNote: 3-4 sentences max
 - rationale: 2 sentences max
 - per phase: 2 sessions max (only for listed facilities)
 - per session: 2-3 drills max
 - instructions per drill: 3-4 steps max, each under 20 words
-- why per drill: 1 sentence max, tied to one specific struggle
+- why per drill: 1-2 sentences max, tied to one specific struggle
 - successMarker: under 15 words, measurable number included
 - milestone: 2 sentences max
-- mindsetTip: 1 short sentence max
+- mindsetTip: 1 short sentence max (under 15 words)
 
 focusArea must be one of: driving | irons | short-game | putting | course-management | mental
 ${currentLang === 'es' ? 'CRITICAL: ALL text fields must be in natural fluent Spanish. JSON keys stay in English.' : ''}
@@ -2353,14 +2373,15 @@ function emailPlan() {
 }
 
 
-function buildEmailHtml(plan) {
+function buildEmailHtml(plan, opts) {
+  opts = opts || {};
   const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const FACILITY_LABELS = {'range':'Driving Range','putting-green':'Putting Green','chipping-area':'Chipping Area','bunker':'Bunker','simulator':'Simulator','home':'Home','any':'Any'};
   const FOCUS_LABELS = {'driving':'Driving','irons':'Irons','short-game':'Short Game','putting':'Putting','course-management':'Course Mgmt','mental':'Mental'};
 
   let html = '';
 
-  if (plan.intro) html += '<p class="plan-intro">' + esc(plan.intro) + '</p>';
+  if (!opts.skipIntro && plan.intro) html += '<p class="plan-intro">' + esc(plan.intro) + '</p>';
 
   (plan.phases || []).forEach((phase, pi) => {
     const wk = (phase.weekRange || '').replace('-', '–');
@@ -2426,7 +2447,7 @@ function buildEmailHtml(plan) {
     html += '</div>';
   });
 
-  if (plan.closingNote) html += '<p class="closing-note">' + esc(plan.closingNote) + '</p>';
+  if (!opts.skipClosing && plan.closingNote) html += '<p class="closing-note">' + esc(plan.closingNote) + '</p>';
   return html;
 }
 
@@ -2489,43 +2510,88 @@ function retryGeneration() { generatePlan(); }
 
 function downloadPdf() {
   if (!window.currentPlan) { alert('No plan to download.'); return; }
+  const plan = window.currentPlan;
   const title = document.getElementById('result-title').textContent;
   const sub = document.getElementById('result-sub').textContent;
   const w = window.open('', '_blank');
   if (!w) { alert(currentLang === 'es' ? 'Por favor permite las ventanas emergentes.' : 'Please allow popups to download the PDF.'); return; }
   trackEvent('plan_downloaded_pdf', { language: currentLang });
-  const planHtml = buildEmailHtml(window.currentPlan);
+
+  const pesc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const FAC = {'range':'Driving Range','putting-green':'Putting Green','chipping-area':'Chipping Area','bunker':'Bunker','simulator':'Simulator','home':'Home','any':'Any'};
+
+  // ── Plan-at-a-glance overview (fills page 1) ──────────────────────────
+  let overviewHtml = '<div class="ov-wrap"><div class="ov-heading">YOUR 12-WEEK PLAN AT A GLANCE</div>';
+  (plan.phases || []).forEach(phase => {
+    const wk = (phase.weekRange || '').replace('-','–');
+    overviewHtml += `<div class="ov-phase">`;
+    overviewHtml += `<div class="ov-phase-hd"><span class="ov-num">Phase ${phase.phaseNumber}</span><span class="ov-weeks">Weeks ${wk}</span><span class="ov-bar">|</span><span class="ov-title">${pesc(phase.title)}</span></div>`;
+    (phase.sessions || []).forEach(s => {
+      const fac = FAC[s.facility] || s.facility || '';
+      overviewHtml += `<div class="ov-session"><span class="ov-arrow">→</span><span class="ov-sname">${pesc(s.name)}</span><span class="ov-smeta">${s.durationMinutes}&thinsp;min &middot; ${s.frequencyPerWeek}&times;/week${fac ? ' &middot; ' + pesc(fac) : ''}</span></div>`;
+    });
+    overviewHtml += `</div>`;
+  });
+  overviewHtml += '</div>';
+
+  // ── Phases-only HTML (no intro / closing — rendered separately) ───────
+  const phasesHtml = buildEmailHtml(plan, { skipIntro: true, skipClosing: true });
+
+  // ── Date stamp ────────────────────────────────────────────────────────
+  const dateStr = new Date(plan.generatedAt || Date.now()).toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+
   w.document.write(`<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>${title}</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; max-width: 700px; margin: 2rem auto; padding: 1.5rem 2rem; color: #1a1a1a; line-height: 1.6; font-size: 14px; background: #fff; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: #1a1a1a; line-height: 1.6; font-size: 14px; background: #fff;
+  padding: 2.25rem 2.75rem;
+  max-width: 760px; margin: 0 auto;
+}
 
-/* ── Doc header ── */
-.doc-header { border-bottom: 3px solid #0F6E56; padding-bottom: 1rem; margin-bottom: 2rem; }
-.doc-header h1 { font-size: 24px; color: #0F6E56; font-weight: 700; margin-bottom: 2px; }
-.doc-header p { font-size: 13px; color: #666; }
+/* ── Document header ── */
+.doc-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #0F6E56; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.doc-brand { font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #0F6E56; margin-bottom: 5px; }
+.doc-header h1 { font-size: 21px; font-weight: 700; color: #0a0a0a; line-height: 1.2; margin-bottom: 3px; }
+.doc-sub { font-size: 12px; color: #777; }
+.doc-date { font-size: 11px; color: #aaa; text-align: right; padding-top: 2px; white-space: nowrap; }
 
-/* ── Intro / closing ── */
-.plan-intro { font-size: 14px; color: #2a2a2a; line-height: 1.75; margin-bottom: 1.75rem; }
-.closing-note { font-size: 14px; color: #2a2a2a; line-height: 1.75; padding: 1rem 1.25rem; background: #f0faf4; border-left: 3px solid #0F6E56; border-radius: 0 4px 4px 0; margin-top: 1.5rem; }
+/* ── Intro callout ── */
+.plan-intro { font-size: 13.5px; color: #1e1e1e; line-height: 1.8; margin-bottom: 1.5rem; padding: 0.875rem 1.125rem; background: #f7faf8; border-left: 3px solid #0F6E56; border-radius: 0 6px 6px 0; }
+
+/* ── Plan overview ── */
+.ov-wrap { background: #f8f8f5; border: 1px solid #d8d8d0; border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+.ov-heading { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #0F6E56; margin-bottom: 1rem; }
+.ov-phase { margin-bottom: 0.875rem; padding-bottom: 0.875rem; border-bottom: 1px solid #e8e8e0; }
+.ov-phase:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.ov-phase-hd { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.375rem; flex-wrap: wrap; }
+.ov-num { font-size: 11px; font-weight: 700; color: #0F6E56; }
+.ov-weeks { font-size: 11px; color: #999; }
+.ov-bar { color: #d0d0c8; font-size: 12px; }
+.ov-title { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+.ov-session { display: flex; align-items: baseline; gap: 0.5rem; margin: 0.2rem 0 0.2rem 0.75rem; }
+.ov-arrow { color: #b0b0a8; font-size: 11px; flex-shrink: 0; }
+.ov-sname { font-size: 12.5px; color: #3a3a3a; }
+.ov-smeta { font-size: 11px; color: #aaa; }
 
 /* ── Phase block ── */
 .phase-block { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0d8; }
 .phase-block:last-of-type { border-bottom: none; }
 .phase-header-row { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; }
-.phase-big-num { font-size: 32px; font-weight: 700; color: #0F6E56; opacity: 0.25; line-height: 1; flex-shrink: 0; padding-top: 4px; }
+.phase-big-num { font-size: 32px; font-weight: 700; color: #0F6E56; opacity: 0.22; line-height: 1; flex-shrink: 0; padding-top: 3px; }
 .phase-header-text { flex: 1; }
-h2 { font-size: 20px; font-weight: 700; color: #0F6E56; margin-bottom: 2px; }
+h2 { font-size: 19px; font-weight: 700; color: #0a0a0a; margin-bottom: 2px; }
 .phase-meta { font-size: 12px; color: #888; }
-.rationale { font-size: 13px; color: #3a3a3a; line-height: 1.65; padding: 0.65rem 1rem; background: #f8f8f5; border-left: 2px solid #ccc; border-radius: 0 4px 4px 0; margin: 0.75rem 0 1rem; }
+.rationale { font-size: 13px; color: #3a3a3a; line-height: 1.65; padding: 0.65rem 1rem; background: #f8f8f5; border-left: 2px solid #d0d0c8; border-radius: 0 4px 4px 0; margin: 0.75rem 0 1rem; }
 
 /* ── Session card ── */
 .session-block { border: 1px solid #d8d8d0; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
 .session-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1rem; background: #f5f5f0; border-bottom: 1px solid #d8d8d0; }
 .session-name { font-size: 13.5px; font-weight: 600; color: #1a1a1a; }
 .session-facility { font-size: 11px; color: #888; padding: 1px 7px; border: 1px solid #d0d0c8; border-radius: 99px; background: #fff; }
-.session-meta { font-size: 11px; color: #999; padding: 3px 1rem 0; margin-bottom: 0; }
+.session-meta { font-size: 11px; color: #999; padding: 3px 1rem 4px; }
 
 /* ── Drill ── */
 .drill-block { padding: 0.75rem 1rem; border-top: 1px solid #eeeee8; }
@@ -2554,7 +2620,7 @@ h2 { font-size: 20px; font-weight: 700; color: #0F6E56; margin-bottom: 2px; }
 /* ── Why this matters ── */
 .why-box { background: #f0faf4; border-left: 3px solid #0F6E56; padding: 0.45rem 0.75rem; margin-bottom: 0.5rem; border-radius: 0 4px 4px 0; }
 .why-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #0F6E56; margin-bottom: 2px; }
-.why-box p { font-size: 12.5px; color: #2a2a2a; line-height: 1.55; }
+.why-box p { font-size: 12.5px; color: #2a2a2a; line-height: 1.55; margin: 0; }
 
 /* ── Success marker ── */
 .success-marker { font-size: 12.5px; color: #065F46; font-weight: 500; padding: 2px 0; }
@@ -2562,26 +2628,58 @@ h2 { font-size: 20px; font-weight: 700; color: #0F6E56; margin-bottom: 2px; }
 /* ── Milestone ── */
 .milestone-box { margin: 1rem 0 0.5rem; padding: 0.75rem 1rem; background: #f8f8f5; border: 1px solid #d0d0c8; border-radius: 6px; }
 .milestone-label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #0F6E56; margin-bottom: 4px; }
-.milestone-box p { font-size: 13px; color: #2a2a2a; line-height: 1.6; }
+.milestone-box p { font-size: 13px; color: #2a2a2a; line-height: 1.6; margin: 0; }
 
-/* ── Mindset tip ── */
-.mindset-tip { font-size: 13px; font-style: italic; color: #666; padding: 0.35rem 0.875rem; border-left: 2px solid #d0d0c8; margin-top: 0.875rem; }
+/* ── Coach's cue (mindset tip) ── */
+.mindset-tip { font-size: 12.5px; color: #1a3528; padding: 0.45rem 0.875rem; border-left: 3px solid #86EFAC; background: #f0faf4; margin: 0.875rem 0; border-radius: 0 4px 4px 0; }
+.mindset-tip::before { content: "COACH'S CUE  "; font-size: 8.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #0F6E56; font-style: normal; display: inline; }
 
+/* ── Closing note ── */
+.closing-note { font-size: 13.5px; color: #1e1e1e; line-height: 1.8; padding: 0.875rem 1.125rem; background: #f0faf4; border-left: 3px solid #0F6E56; border-radius: 0 6px 6px 0; margin-top: 1.75rem; }
+
+/* ── Footer ── */
+.doc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; padding-top: 0.875rem; border-top: 1px solid #e8e8e0; }
+.doc-footer-brand { font-size: 11px; font-weight: 700; color: #0F6E56; letter-spacing: 0.06em; }
+.doc-footer-url { font-size: 11px; color: #c0c0b8; }
+
+/* ── Print — suppress browser chrome, preserve colors ── */
 @media print {
-  body { margin: 0; padding: 1rem 1.5rem; }
+  @page { margin: 0; size: letter; }
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { padding: 0.65in 0.75in; max-width: 100%; }
+  /* Page 1: header + intro + overview. Each subsequent phase on its own page. */
+  .ov-wrap { page-break-after: always; }
   .phase-block { page-break-before: always; }
-  .phase-block:first-of-type { page-break-before: avoid; }
-  .session-block, .drill-block { page-break-inside: avoid; }
+  /* Keep these blocks from splitting across pages */
+  .session-block { page-break-inside: avoid; }
+  .drill-block { page-break-inside: avoid; }
+  .milestone-box { page-break-inside: avoid; }
+  .why-box { page-break-inside: avoid; }
+  .closing-note { page-break-inside: avoid; }
+  .doc-footer { page-break-inside: avoid; page-break-before: avoid; }
 }
 </style>
 </head>
 <body>
-  <div class="doc-header"><h1>${title}</h1><p>${sub}</p></div>
-  ${planHtml}
-  <p style="margin-top:2.5rem;padding-top:1rem;border-top:1px solid #e0e0d8;font-size:11px;color:#bbb;text-align:center">Caddova &nbsp;&middot;&nbsp; caddova.com</p>
+  <div class="doc-header">
+    <div>
+      <div class="doc-brand">Caddova &nbsp;&middot;&nbsp; Personalized Golf Plan</div>
+      <h1>${title}</h1>
+      <p class="doc-sub">${sub}</p>
+    </div>
+    <div class="doc-date">Generated ${dateStr}</div>
+  </div>
+  ${plan.intro ? '<p class="plan-intro">' + pesc(plan.intro) + '</p>' : ''}
+  ${overviewHtml}
+  ${phasesHtml}
+  ${plan.closingNote ? '<p class="closing-note">' + pesc(plan.closingNote) + '</p>' : ''}
+  <div class="doc-footer">
+    <span class="doc-footer-brand">Caddova</span>
+    <span class="doc-footer-url">caddova.com</span>
+  </div>
 </body></html>`);
   w.document.close();
-  setTimeout(() => { w.print(); }, 500);
+  setTimeout(() => { w.print(); }, 600);
 }
 
 function restart() {
