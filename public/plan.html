@@ -2344,6 +2344,58 @@ function emailPlan() {
   window.location.href = mailto;
 }
 
+
+function buildEmailHtml(plan) {
+  const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const FACILITY_LABELS = {'range':'Driving Range','putting-green':'Putting Green','chipping-area':'Chipping Area','bunker':'Bunker','simulator':'Simulator','home':'Home','any':'Any'};
+  const FOCUS_LABELS = {'driving':'Driving','irons':'Irons','short-game':'Short Game','putting':'Putting','course-management':'Course Mgmt','mental':'Mental'};
+
+  let html = '';
+
+  // Intro
+  if (plan.intro) html += '<p>' + esc(plan.intro) + '</p><hr>';
+
+  (plan.phases || []).forEach(phase => {
+    const wk = (phase.weekRange || '').replace('-', '–');
+    html += '<h2>Phase ' + phase.phaseNumber + ': ' + esc(phase.title) + ' &mdash; Weeks ' + wk + '</h2>';
+    if (phase.theme) html += '<p><em>' + esc(phase.theme) + '</em></p>';
+    if (phase.rationale) html += '<p>' + esc(phase.rationale) + '</p>';
+
+    (phase.sessions || []).forEach(session => {
+      const facility = FACILITY_LABELS[session.facility] || session.facility || '';
+      html += '<h3>' + esc(session.name);
+      if (facility) html += ' &mdash; ' + esc(facility);
+      html += '</h3>';
+      html += '<p style="color:#5a5a5a;font-size:13px;margin-top:-4px">' + session.durationMinutes + ' min &middot; ' + session.frequencyPerWeek + '&times;/week</p>';
+
+      (session.drills || []).forEach((drill, idx) => {
+        const clubs = (drill.clubs || []).filter(Boolean).join(', ');
+        const focus = FOCUS_LABELS[drill.focusArea] || drill.focusArea || '';
+        html += '<h4>' + (idx + 1) + '. ' + esc(drill.name) + '</h4>';
+        html += '<p>';
+        if (focus) html += '<strong>' + esc(focus) + '</strong>';
+        if (clubs) html += ' &nbsp;|&nbsp; <strong>Clubs:</strong> ' + esc(clubs);
+        if (drill.reps) html += ' &nbsp;|&nbsp; ' + esc(drill.reps);
+        html += '</p>';
+        if (drill.instructions && drill.instructions.length) {
+          html += '<ol>';
+          drill.instructions.forEach(s => { html += '<li>' + esc(s) + '</li>'; });
+          html += '</ol>';
+        }
+        if (drill.why) html += '<p><strong>Why this matters:</strong> ' + esc(drill.why) + '</p>';
+        if (drill.successMarker) html += '<p>&#10003; <em>' + esc(drill.successMarker) + '</em></p>';
+      });
+    });
+
+    if (phase.milestone) html += '<p><strong>Phase ' + phase.phaseNumber + ' Milestone:</strong> ' + esc(phase.milestone) + '</p>';
+    if (phase.mindsetTip) html += '<blockquote>' + esc(phase.mindsetTip) + '</blockquote>';
+    html += '<hr>';
+  });
+
+  if (plan.closingNote) html += '<p>' + esc(plan.closingNote) + '</p>';
+  return html;
+}
+
 async function savePlan() {
   const emailInput = document.getElementById('email-input');
   const submitBtn = document.getElementById('email-submit-btn');
@@ -2362,7 +2414,7 @@ async function savePlan() {
   submitBtn.textContent = '...';
 
   try {
-    const planHtml = document.getElementById('plan-output').innerHTML;
+    const planHtml = window.currentPlan ? buildEmailHtml(window.currentPlan) : document.getElementById('plan-output').innerHTML;
     const planTitle = document.getElementById('result-title').textContent;
     const planSub = document.getElementById('result-sub').textContent;
 

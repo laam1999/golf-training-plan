@@ -80,16 +80,16 @@ export default async function handler(req, res) {
   .plan-content h1 { font-size: 20px; font-weight: 600; color: #0F6E56; margin: 0 0 0.5rem; }
   .plan-content h2 { font-size: 17px; font-weight: 600; color: #0F6E56; margin: 1.5rem 0 0.4rem; padding-bottom: 0.3rem; border-bottom: 1px solid #e0e0e0; }
   .plan-content h3 { font-size: 15px; font-weight: 600; color: #085041; margin: 1.25rem 0 0.3rem; }
-  .plan-content h4 { font-size: 12px; font-weight: 600; color: #5a5a5a; text-transform: uppercase; letter-spacing: 0.04em; margin: 1rem 0 0.3rem; }
-  .plan-content p { margin: 0 0 0.8rem; }
-  .plan-content ul, .plan-content ol { margin: 0 0 1rem 1.5rem; padding: 0; }
-  .plan-content li { margin-bottom: 0.3rem; }
+  .plan-content h4 { font-size: 14px; font-weight: 600; color: #085041; margin: 1.25rem 0 0.25rem; }
+  .plan-content p { margin: 0 0 0.7rem; }
+  .plan-content ul, .plan-content ol { margin: 0.25rem 0 0.75rem 1.5rem; padding: 0; }
+  .plan-content li { margin-bottom: 0.3rem; line-height: 1.6; }
   .plan-content strong { color: #1a1a1a; font-weight: 600; }
   .plan-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 13px; }
   .plan-content th, .plan-content td { border: 1px solid #e0e0e0; padding: 7px 10px; text-align: left; }
   .plan-content th { background: #f0f0ed; color: #0F6E56; font-weight: 600; }
-  .plan-content hr { border: none; border-top: 1px solid #e0e0e0; margin: 1.5rem 0; }
-  .plan-content blockquote { border-left: 3px solid #0F6E56; padding-left: 1rem; margin: 1rem 0; color: #5a5a5a; font-style: italic; }
+  .plan-content hr { border: none; border-top: 2px solid #e8e8e4; margin: 2rem 0; }
+  .plan-content blockquote { border-left: 3px solid #0F6E56; padding: 0.5rem 0 0.5rem 1rem; margin: 1rem 0; color: #5a5a5a; font-style: italic; background: #f7faf7; border-radius: 0 4px 4px 0; }
   .footer { background: #f7f7f5; padding: 1.25rem 2rem; text-align: center; border-top: 1px solid #e0e0e0; }
   .footer p { font-size: 12px; color: #8a8a8a; margin: 0 0 4px; }
 </style>
