@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ChevronDown } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
 import { FOCUS_STYLES, FOCUS_LABELS } from "@/lib/focus"
+import { InstallButton } from "@/components/tracker/InstallButton"
 import type { PlanRow, Phase, Drill } from "@/lib/types"
 
 export default function ThisWeekPage() {
@@ -63,6 +64,8 @@ export default function ThisWeekPage() {
           Full plan →
         </Link>
       </header>
+
+      <InstallButton />
 
       {current && (
         <>
