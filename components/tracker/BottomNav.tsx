@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ClipboardList, PencilLine, TrendingUp } from "lucide-react"
+import { ClipboardList, BookOpen, PencilLine, TrendingUp } from "lucide-react"
 
 const tabs = [
   { href: "/app", label: "This Week", Icon: ClipboardList },
+  { href: "/app/plan", label: "Plan", Icon: BookOpen },
   { href: "/app/log", label: "Log", Icon: PencilLine },
   { href: "/app/progress", label: "Progress", Icon: TrendingUp },
 ]
