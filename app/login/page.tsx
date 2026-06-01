@@ -31,7 +31,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <div className="text-2xl font-bold tracking-tight">Caddova</div>
-          <p className="mt-1 text-sm text-muted-foreground">Sign in to track your training</p>
+          <p className="mt-1 text-sm text-muted-foreground">Enter your email and we&apos;ll send a magic link — no password. Free during beta.</p>
         </div>
 
         {sent ? (

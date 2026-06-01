@@ -20,7 +20,7 @@ export function Hero() {
           <div className="glass-card mb-8 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <span className="h-2 w-2 rounded-full bg-primary animate-pulse-soft" />
             <span className="text-xs font-medium text-muted-foreground">
-              Free AI golf coach · No signup
+              Free during beta · Plan + track your game
             </span>
           </div>
 
@@ -32,7 +32,7 @@ export function Hero() {
 
           {/* Subheadline */}
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground sm:text-xl leading-relaxed text-pretty">
-            Tell us your clubs, your weak spots, and how often you practice. Get a specific, drill-by-drill 12-week roadmap — named clubs, real reps, measurable goals, not generic tips. Email it or print it and start this week.
+            Tell us your clubs, your weak spots, and how often you practice. Get a specific, drill-by-drill 12-week roadmap — named clubs, real reps, measurable goals, not generic tips. Then log every session and track whether you&apos;re actually improving.
           </p>
 
           {/* CTA Buttons */}
@@ -42,7 +42,7 @@ export function Hero() {
               size="lg"
               className="group bg-primary text-primary-foreground hover:bg-primary/90 px-8"
             >
-              <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "hero" })}>
+              <a href="/login" onClick={() => track("cta_get_plan", { location: "hero" })}>
                 Get Your Free Plan
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
@@ -54,7 +54,7 @@ export function Hero() {
             {[
               "Generates in ~30 seconds",
               "Built around your clubs & schedule",
-              "Free · no signup",
+              "Log & track every session",
             ].map((item) => (
               <span
                 key={item}

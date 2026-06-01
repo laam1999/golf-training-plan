@@ -16,7 +16,7 @@ export function CTASection() {
           Ready to Transform Your Game?
         </h2>
         <p className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto text-pretty">
-          Answer a few questions about your game and get a specific 12-week practice plan in about 30 seconds. Free, no signup.
+          Answer a few questions about your game and get a specific 12-week practice plan in about 30 seconds — then log every session and track your progress. Free during beta.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -25,7 +25,7 @@ export function CTASection() {
             size="lg"
             className="group bg-primary text-primary-foreground hover:bg-primary/90 px-8"
           >
-            <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "cta_section" })}>
+            <a href="/login" onClick={() => track("cta_get_plan", { location: "cta_section" })}>
               Get Your Free Plan
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
@@ -54,7 +54,7 @@ export function CTASection() {
             <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
               <path d="M20 6L9 17l-5-5" />
             </svg>
-            <span className="text-sm">Free · no signup</span>
+            <span className="text-sm">Free during beta</span>
           </div>
         </div>
       </div>

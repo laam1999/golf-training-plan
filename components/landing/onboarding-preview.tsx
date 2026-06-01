@@ -84,9 +84,9 @@ export function OnboardingPreview() {
             <ul className="mt-8 space-y-4">
               {[
                 "Takes just a few minutes",
-                "No signup, no credit card",
+                "Free during beta",
                 "Plan generates in ~30 seconds",
-                "Email or print it and start today",
+                "Log and track every session",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-foreground">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/20">
@@ -177,7 +177,7 @@ export function OnboardingPreview() {
                     asChild
                     className="group bg-primary text-primary-foreground hover:bg-primary/90"
                   >
-                    <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "onboarding_preview" })}>
+                    <a href="/login" onClick={() => track("cta_get_plan", { location: "onboarding_preview" })}>
                       Get My Plan
                       <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </a>

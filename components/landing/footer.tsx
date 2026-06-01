@@ -29,7 +29,7 @@ export function Footer() {
             </div>
             <p className="max-w-md text-sm text-muted-foreground leading-relaxed">
               A free AI tool that builds a specific, drill-by-drill 12-week practice plan around your
-              clubs, weak spots, and schedule. Email it or print it and start this week.
+              clubs, weak spots, and schedule — then lets you log every session and track your progress.
             </p>
           </div>
 
@@ -48,8 +48,8 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/plan.html" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Get my plan
+                <a href="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Sign in
                 </a>
               </li>
             </ul>

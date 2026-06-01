@@ -66,7 +66,7 @@ export function Header() {
           {/* CTA Button */}
           <div className="hidden items-center md:flex">
             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <a href="/plan.html" onClick={() => track("cta_get_plan", { location: "header" })}>Get My Plan</a>
+              <a href="/login" onClick={() => track("cta_get_plan", { location: "header" })}>Sign In</a>
             </Button>
           </div>
 
@@ -100,7 +100,7 @@ export function Header() {
               </a>
               <div className="pt-4 border-t border-border">
                 <Button asChild className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                  <a href="/plan.html" onClick={() => { setIsMobileMenuOpen(false); track("cta_get_plan", { location: "header_mobile" }); }}>Get My Plan</a>
+                  <a href="/login" onClick={() => { setIsMobileMenuOpen(false); track("cta_get_plan", { location: "header_mobile" }); }}>Sign In</a>
                 </Button>
               </div>
             </nav>

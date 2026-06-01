@@ -20,9 +20,9 @@ const steps = [
   {
     number: "03",
     icon: Flag,
-    title: "Take it to the range",
+    title: "Track every session",
     description:
-      "Email your plan to yourself or print it, and practice with a clear week-by-week structure. It's yours to keep.",
+      "Log your sessions in the app and watch your progress against each drill's target — week over week, so you know you're actually improving.",
   },
 ]
 
